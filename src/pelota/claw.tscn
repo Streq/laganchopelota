@@ -1,0 +1,106 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://assets/shader/palette.gdshader" type="Shader" id=1]
+[ext_resource path="res://src/pelota/debug/print_state.gd" type="Script" id=2]
+[ext_resource path="res://src/util/color/palette_client.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/pelota/claw.gd" type="Script" id=4]
+[ext_resource path="res://src/pelota/idle.gd" type="Script" id=5]
+[ext_resource path="res://src/pelota/grabbing.gd" type="Script" id=6]
+[ext_resource path="res://src/pelota/retrieving.gd" type="Script" id=7]
+[ext_resource path="res://assets/texture/claw.png" type="Texture" id=8]
+[ext_resource path="res://src/pelota/throw.gd" type="Script" id=9]
+[ext_resource path="res://src/util/state_machine/state_machine.gd" type="Script" id=10]
+
+[sub_resource type="Image" id=36]
+data = {
+"data": PoolByteArray( 255, 255, 255, 0, 255, 227, 99, 255, 57, 189, 24, 255, 0, 0, 0, 255 ),
+"format": "RGBA8",
+"height": 1,
+"mipmaps": false,
+"width": 4
+}
+
+[sub_resource type="ImageTexture" id=31]
+flags = 0
+flags = 0
+image = SubResource( 36 )
+size = Vector2( 4, 1 )
+
+[sub_resource type="ShaderMaterial" id=3]
+resource_local_to_scene = true
+shader = ExtResource( 1 )
+shader_param/palette_size = 4
+shader_param/offset = 0
+shader_param/blue_index_offset = 0.0
+shader_param/palette = SubResource( 31 )
+
+[sub_resource type="RectangleShape2D" id=33]
+extents = Vector2( 7, 10 )
+
+[sub_resource type="CircleShape2D" id=35]
+radius = 19.105
+
+[node name="claw" type="Node2D"]
+process_priority = 1
+script = ExtResource( 4 )
+throw_drag = 1.0
+retrieve_drag = 10.0
+throw_speed = 1000.0
+retrieve_acceleration = 10000.0
+pull_force = 2000.0
+
+[node name="state_machine" type="Node" parent="."]
+script = ExtResource( 10 )
+start_state = "idle"
+
+[node name="throw" type="Node" parent="state_machine"]
+script = ExtResource( 9 )
+
+[node name="lifetime" type="Timer" parent="state_machine/throw"]
+process_mode = 0
+wait_time = 0.75
+one_shot = true
+
+[node name="idle" type="Node" parent="state_machine"]
+script = ExtResource( 5 )
+
+[node name="grabbing" type="Node" parent="state_machine"]
+script = ExtResource( 6 )
+
+[node name="retrieving" type="Node" parent="state_machine"]
+script = ExtResource( 7 )
+
+[node name="Sprite" type="Sprite" parent="."]
+material = SubResource( 3 )
+texture = ExtResource( 8 )
+
+[node name="palette_client" parent="Sprite" instance=ExtResource( 3 )]
+type = 1
+index = 2
+
+[node name="grab_area" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="grab_area"]
+position = Vector2( 8, 0 )
+shape = SubResource( 33 )
+
+[node name="wearer_detect_area" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="wearer_detect_area"]
+position = Vector2( 8, 0 )
+shape = SubResource( 35 )
+
+[node name="state" type="Label" parent="."]
+margin_left = -20.0
+margin_top = -26.0
+margin_right = 20.0
+margin_bottom = -12.0
+text = "state"
+align = 1
+script = ExtResource( 2 )
+
+[connection signal="entered" from="state_machine/throw" to="state_machine/throw/lifetime" method="start"]
+[connection signal="exited" from="state_machine/throw" to="state_machine/throw/lifetime" method="stop"]
