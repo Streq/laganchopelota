@@ -197,7 +197,6 @@ index = 1
 
 [node name="pelota" type="RigidBody2D" parent="."]
 position = Vector2( 147, 77 )
-linear_velocity = Vector2( 100, 0 )
 script = ExtResource( 7 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="pelota"]

@@ -44,10 +44,9 @@ radius = 19.105
 process_priority = 1
 script = ExtResource( 4 )
 throw_drag = 1.0
-retrieve_drag = 10.0
+retrieve_drag = 3.0
 throw_speed = 1000.0
-retrieve_acceleration = 10000.0
-pull_force = 2000.0
+retrieve_acceleration = 3000.0
 
 [node name="state_machine" type="Node" parent="."]
 script = ExtResource( 10 )
