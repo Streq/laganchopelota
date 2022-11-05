@@ -1,1 +1,0 @@
-godot --export "HTML5" --quiet || exit "$?"
