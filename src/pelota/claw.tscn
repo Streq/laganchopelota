@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://assets/shader/palette.gdshader" type="Shader" id=1]
 [ext_resource path="res://src/pelota/debug/print_state.gd" type="Script" id=2]
@@ -7,41 +7,297 @@
 [ext_resource path="res://src/pelota/idle.gd" type="Script" id=5]
 [ext_resource path="res://src/pelota/grabbing.gd" type="Script" id=6]
 [ext_resource path="res://src/pelota/retrieving.gd" type="Script" id=7]
-[ext_resource path="res://assets/texture/claw.png" type="Texture" id=8]
+[ext_resource path="res://src/pelota/claw.png" type="Texture" id=8]
 [ext_resource path="res://src/pelota/throw.gd" type="Script" id=9]
 [ext_resource path="res://src/util/state_machine/state_machine.gd" type="Script" id=10]
+[ext_resource path="res://assets/texture/chain_link.png" type="Texture" id=11]
+[ext_resource path="res://src/pelota/chain.gd" type="Script" id=12]
 
-[sub_resource type="Image" id=36]
+[sub_resource type="Image" id=43]
 data = {
-"data": PoolByteArray( 255, 255, 255, 0, 255, 227, 99, 255, 57, 189, 24, 255, 0, 0, 0, 255 ),
+"data": PoolByteArray( 255, 255, 255, 0, 255, 227, 99, 255, 255, 57, 8, 255, 0, 0, 0, 255 ),
 "format": "RGBA8",
 "height": 1,
 "mipmaps": false,
 "width": 4
 }
 
-[sub_resource type="ImageTexture" id=31]
+[sub_resource type="ImageTexture" id=36]
 flags = 0
 flags = 0
-image = SubResource( 36 )
+image = SubResource( 43 )
 size = Vector2( 4, 1 )
 
-[sub_resource type="ShaderMaterial" id=3]
+[sub_resource type="ShaderMaterial" id=37]
 resource_local_to_scene = true
 shader = ExtResource( 1 )
 shader_param/palette_size = 4
 shader_param/offset = 0
 shader_param/blue_index_offset = 0.0
-shader_param/palette = SubResource( 31 )
+shader_param/palette = SubResource( 36 )
 
 [sub_resource type="RectangleShape2D" id=33]
-extents = Vector2( 7, 10 )
+extents = Vector2( 4, 5 )
 
 [sub_resource type="CircleShape2D" id=35]
 radius = 19.105
 
+[sub_resource type="Animation" id=42]
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 8 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 2 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:vframes")
+tracks/2/interp = 1
+tracks/2/loop_wrap = false
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 2 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Sprite:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = false
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Sprite:frame")
+tracks/4/interp = 1
+tracks/4/loop_wrap = false
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 2.0 ]
+}
+
+[sub_resource type="Animation" id=38]
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 8 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 2 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:vframes")
+tracks/2/interp = 1
+tracks/2/loop_wrap = false
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 2 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Sprite:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = false
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Sprite:frame")
+tracks/4/interp = 1
+tracks/4/loop_wrap = false
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 1.0 ]
+}
+
+[sub_resource type="Animation" id=39]
+length = 0.15
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 8 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 2 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:vframes")
+tracks/2/interp = 1
+tracks/2/loop_wrap = false
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 2 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Sprite:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = false
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Sprite:frame")
+tracks/4/interp = 1
+tracks/4/loop_wrap = false
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.05 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 2.0, 3.0 ]
+}
+
+[sub_resource type="Animation" id=40]
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 8 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 2 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:vframes")
+tracks/2/interp = 1
+tracks/2/loop_wrap = false
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 2 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Sprite:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = false
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Sprite:frame")
+tracks/4/interp = 1
+tracks/4/loop_wrap = false
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0.0 ]
+}
+
 [node name="claw" type="Node2D"]
 process_priority = 1
+z_index = 5
+z_as_relative = false
 script = ExtResource( 4 )
 throw_drag = 1.0
 retrieve_drag = 3.0
@@ -70,18 +326,23 @@ script = ExtResource( 6 )
 script = ExtResource( 7 )
 
 [node name="Sprite" type="Sprite" parent="."]
-material = SubResource( 3 )
+material = SubResource( 37 )
 texture = ExtResource( 8 )
+hframes = 2
+vframes = 2
+frame = 1
+__meta__ = {
+"_editor_description_": "YXNlcHJpdGVfd2l6YXJkX2NvbmZpZwpwbGF5ZXJ8PUFuaW1hdGlvblBsYXllcgpzb3VyY2V8PXJlczovL2Fzc2V0cy9hc2Vwcml0ZS9jbGF3LmFzZXByaXRlCmxheWVyfD0Kb3BfZXhwfD1GYWxzZQpvX2ZvbGRlcnw9Cm9fbmFtZXw9Cm9ubHlfdmlzaWJsZXw9VHJ1ZQpvX2V4X3B8PQo="
+}
 
 [node name="palette_client" parent="Sprite" instance=ExtResource( 3 )]
 type = 1
-index = 2
 
 [node name="grab_area" type="Area2D" parent="."]
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="grab_area"]
-position = Vector2( 8, 0 )
+position = Vector2( 5, 0 )
 shape = SubResource( 33 )
 
 [node name="wearer_detect_area" type="Area2D" parent="."]
@@ -93,6 +354,7 @@ position = Vector2( 8, 0 )
 shape = SubResource( 35 )
 
 [node name="state" type="Label" parent="."]
+visible = false
 margin_left = -20.0
 margin_top = -26.0
 margin_right = 20.0
@@ -100,6 +362,112 @@ margin_bottom = -12.0
 text = "state"
 align = 1
 script = ExtResource( 2 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/grabbing = SubResource( 42 )
+anims/idle = SubResource( 38 )
+anims/retrieving = SubResource( 39 )
+anims/throw = SubResource( 40 )
+
+[node name="chain" type="Node2D" parent="."]
+process_priority = 10
+material = SubResource( 37 )
+z_index = -1
+script = ExtResource( 12 )
+
+[node name="palette_client" parent="chain" instance=ExtResource( 3 )]
+type = 1
+
+[node name="links" type="Node2D" parent="chain"]
+use_parent_material = true
+
+[node name="0" type="Sprite" parent="chain/links"]
+use_parent_material = true
+texture = ExtResource( 11 )
+
+[node name="1" type="Sprite" parent="chain/links"]
+use_parent_material = true
+texture = ExtResource( 11 )
+
+[node name="2" type="Sprite" parent="chain/links"]
+use_parent_material = true
+texture = ExtResource( 11 )
+
+[node name="3" type="Sprite" parent="chain/links"]
+use_parent_material = true
+texture = ExtResource( 11 )
+
+[node name="4" type="Sprite" parent="chain/links"]
+use_parent_material = true
+texture = ExtResource( 11 )
+
+[node name="5" type="Sprite" parent="chain/links"]
+use_parent_material = true
+texture = ExtResource( 11 )
+
+[node name="6" type="Sprite" parent="chain/links"]
+use_parent_material = true
+texture = ExtResource( 11 )
+
+[node name="7" type="Sprite" parent="chain/links"]
+use_parent_material = true
+texture = ExtResource( 11 )
+
+[node name="8" type="Sprite" parent="chain/links"]
+use_parent_material = true
+texture = ExtResource( 11 )
+
+[node name="9" type="Sprite" parent="chain/links"]
+use_parent_material = true
+texture = ExtResource( 11 )
+
+[node name="10" type="Sprite" parent="chain/links"]
+use_parent_material = true
+texture = ExtResource( 11 )
+
+[node name="11" type="Sprite" parent="chain/links"]
+use_parent_material = true
+texture = ExtResource( 11 )
+
+[node name="12" type="Sprite" parent="chain/links"]
+use_parent_material = true
+texture = ExtResource( 11 )
+
+[node name="13" type="Sprite" parent="chain/links"]
+use_parent_material = true
+texture = ExtResource( 11 )
+
+[node name="14" type="Sprite" parent="chain/links"]
+use_parent_material = true
+texture = ExtResource( 11 )
+
+[node name="15" type="Sprite" parent="chain/links"]
+use_parent_material = true
+texture = ExtResource( 11 )
+
+[node name="16" type="Sprite" parent="chain/links"]
+use_parent_material = true
+texture = ExtResource( 11 )
+
+[node name="17" type="Sprite" parent="chain/links"]
+use_parent_material = true
+texture = ExtResource( 11 )
+
+[node name="18" type="Sprite" parent="chain/links"]
+use_parent_material = true
+texture = ExtResource( 11 )
+
+[node name="19" type="Sprite" parent="chain/links"]
+use_parent_material = true
+texture = ExtResource( 11 )
+
+[node name="20" type="Sprite" parent="chain/links"]
+use_parent_material = true
+texture = ExtResource( 11 )
+
+[node name="21" type="Sprite" parent="chain/links"]
+use_parent_material = true
+texture = ExtResource( 11 )
 
 [connection signal="entered" from="state_machine/throw" to="state_machine/throw/lifetime" method="start"]
 [connection signal="exited" from="state_machine/throw" to="state_machine/throw/lifetime" method="stop"]

@@ -1,15 +1,15 @@
 extends State
 
-var dir := Vector2()
 onready var lifetime: Timer = $lifetime
 
 # Initialize the state. E.g. change the animation
 func _enter(params):
 	var wearer = root.wearer
+	var dir : Vector2 = params[0]
+	root.animation_player.play(name)
 	lifetime.connect("timeout",self,"goto",["retrieving"])
 	root.grab_area.connect("body_entered",self,"_on_grabbed_something")
 	root.wearer_detect_area.connect("body_entered",self,"_on_touching_someone")
-	dir = wearer.input_state.dir
 	root.global_position = wearer.global_position+dir*16.0
 	root.global_rotation = dir.angle()
 	root.velocity = root.wearer.linear_velocity+dir*root.throw_speed

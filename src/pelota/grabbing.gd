@@ -2,6 +2,7 @@ extends State
 
 func _enter(params):
 	var grabbed = params[0]
+	root.animation_player.play(name)
 	call_deferred("reparent_to_grabbed",grabbed)
 	root.velocity = Vector2()
 

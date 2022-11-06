@@ -1,6 +1,7 @@
 extends State
 
 func _enter(params):
+	root.animation_player.play(name)
 	call_deferred("reparent_to_world")
 	root.wearer_detect_area.connect("body_entered",self,"_on_touching_someone")
 func reparent_to_world():

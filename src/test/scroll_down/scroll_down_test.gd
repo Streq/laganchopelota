@@ -1,0 +1,25 @@
+extends Node2D
+
+onready var camera_2d: Camera2D = $Camera2D
+onready var lose_label: Label = $"%lose_label"
+onready var win_label: Label = $"%win_label"
+
+export var camera_speed := 25.0
+func _physics_process(delta: float) -> void:
+	camera_2d.position.y-=camera_speed*delta
+
+
+func win():
+	win_label.show()
+	yield(get_tree().create_timer(2.0),"timeout")
+	get_tree().reload_current_scene()
+	
+func lose():
+	lose_label.show()
+	yield(get_tree().create_timer(2.0),"timeout")
+	get_tree().reload_current_scene()
+	
+
+
+func _on_player_lose_zone_area_entered(area: Area2D) -> void:
+	lose()

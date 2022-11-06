@@ -21,6 +21,7 @@ onready var grab_area: Area2D = $grab_area
 onready var wearer := get_parent() 
 onready var state_machine: Node = $state_machine
 
+onready var animation_player: AnimationPlayer = $AnimationPlayer
 func _ready():
 	state_machine.initialize()
 

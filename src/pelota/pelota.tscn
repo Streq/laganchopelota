@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://assets/shader/palette.gdshader" type="Shader" id=1]
 [ext_resource path="res://src/transform/fix_rotation.gd" type="Script" id=2]
@@ -13,119 +13,191 @@
 [ext_resource path="res://src/pelota/input_state.gd" type="Script" id=11]
 [ext_resource path="res://src/pelota/leg.gd" type="Script" id=12]
 [ext_resource path="res://src/transform/fix_rotation.tscn" type="PackedScene" id=13]
-[ext_resource path="res://assets/texture/icon.png" type="Texture" id=14]
+[ext_resource path="res://src/pelota/time_bar.gd" type="Script" id=14]
+[ext_resource path="res://assets/texture/dark_gray_square.png" type="Texture" id=15]
+[ext_resource path="res://assets/texture/gray_square.png" type="Texture" id=16]
+[ext_resource path="res://assets/texture/black_square.png" type="Texture" id=17]
 
 [sub_resource type="CircleShape2D" id=23]
 radius = 15.0
 
-[sub_resource type="Image" id=35]
+[sub_resource type="Image" id=44]
 data = {
-"data": PoolByteArray( 255, 255, 255, 0, 255, 227, 99, 255, 57, 189, 24, 255, 0, 0, 0, 255 ),
+"data": PoolByteArray( 255, 255, 255, 0, 255, 227, 99, 255, 255, 57, 8, 255, 0, 0, 0, 255 ),
 "format": "RGBA8",
 "height": 1,
 "mipmaps": false,
 "width": 4
 }
 
-[sub_resource type="ImageTexture" id=31]
+[sub_resource type="ImageTexture" id=36]
 flags = 0
 flags = 0
-image = SubResource( 35 )
+image = SubResource( 44 )
 size = Vector2( 4, 1 )
 
-[sub_resource type="ShaderMaterial" id=3]
+[sub_resource type="ShaderMaterial" id=37]
 resource_local_to_scene = true
 shader = ExtResource( 1 )
 shader_param/palette_size = 4
 shader_param/offset = 0
 shader_param/blue_index_offset = 0.0
-shader_param/palette = SubResource( 31 )
+shader_param/palette = SubResource( 36 )
 
-[sub_resource type="RectangleShape2D" id=34]
-extents = Vector2( 32, 32 )
+[sub_resource type="AtlasTexture" id=41]
+atlas = ExtResource( 17 )
+region = Rect2( 0, 0, 32, 4 )
 
-[node name="pelota" type="KinematicBody2D"]
+[sub_resource type="AtlasTexture" id=39]
+atlas = ExtResource( 15 )
+region = Rect2( 0, 0, 32, 4 )
+
+[sub_resource type="GDScript" id=43]
+
+[sub_resource type="Animation" id=33]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("display/ball:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=34]
+resource_name = "jump"
+length = 0.2
+step = 0.01
+tracks/0/type = "value"
+tracks/0/path = NodePath("display/ball:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1.2, 1.2 ), Vector2( 1, 1 ) ]
+}
+
+[node name="pelota" type="RigidBody2D"]
 position = Vector2( 147, 77 )
+z_index = 10
 collision_layer = 2
+continuous_cd = 2
+contacts_reported = 2
+contact_monitor = true
 script = ExtResource( 8 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 23 )
 
+[node name="claw" parent="." instance=ExtResource( 3 )]
+
 [node name="display" type="Node2D" parent="."]
+material = SubResource( 37 )
 
 [node name="ball" type="Sprite" parent="display"]
-material = SubResource( 3 )
+material = SubResource( 37 )
+use_parent_material = true
 texture = ExtResource( 5 )
-
-[node name="palette_client" parent="display/ball" instance=ExtResource( 4 )]
-type = 1
-index = 2
 
 [node name="fix_rotation" type="Node" parent="display/ball"]
 script = ExtResource( 2 )
 
 [node name="eye_white" type="Sprite" parent="display"]
-material = SubResource( 3 )
+material = SubResource( 37 )
+use_parent_material = true
 texture = ExtResource( 6 )
-
-[node name="palette_client" parent="display/eye_white" instance=ExtResource( 4 )]
-type = 1
-index = 2
 
 [node name="fix_rotation" parent="display/eye_white" instance=ExtResource( 13 )]
 
 [node name="pupil_movement" type="Node2D" parent="display"]
+use_parent_material = true
 script = ExtResource( 7 )
 
 [node name="eye_pupil" type="Sprite" parent="display/pupil_movement"]
-material = SubResource( 3 )
+material = SubResource( 37 )
+use_parent_material = true
 texture = ExtResource( 9 )
-
-[node name="palette_client" parent="display/pupil_movement/eye_pupil" instance=ExtResource( 4 )]
-type = 1
-index = 2
 
 [node name="fix_rotation" type="Node" parent="display/pupil_movement"]
 script = ExtResource( 2 )
 
 [node name="eye_border" type="Sprite" parent="display"]
-material = SubResource( 3 )
+material = SubResource( 37 )
+use_parent_material = true
 texture = ExtResource( 10 )
-
-[node name="palette_client" parent="display/eye_border" instance=ExtResource( 4 )]
-type = 1
-index = 2
 
 [node name="fix_rotation" type="Node" parent="display/eye_border"]
 script = ExtResource( 2 )
 step = 0
 
-[node name="Camera2D" type="Camera2D" parent="."]
-current = true
+[node name="palette_client" parent="display" instance=ExtResource( 4 )]
+type = 1
+
+[node name="bar_pivot" type="Node2D" parent="display"]
+use_parent_material = true
+
+[node name="TextureProgress" type="TextureProgress" parent="display/bar_pivot"]
+material = SubResource( 37 )
+use_parent_material = true
+margin_left = -26.0
+margin_top = 16.0
+margin_right = 6.0
+margin_bottom = 20.0
+rect_rotation = -89.9999
+value = 50.0
+texture_under = SubResource( 41 )
+texture_progress = SubResource( 39 )
+script = ExtResource( 14 )
+timer = NodePath("../../../leg/air_jump_cooldown")
+
+[node name="full_bar_marker" type="MarginContainer" parent="display/bar_pivot/TextureProgress"]
+show_behind_parent = true
+use_parent_material = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = -1
+custom_constants/margin_top = -1
+custom_constants/margin_left = -1
+custom_constants/margin_bottom = -1
+script = SubResource( 43 )
+
+[node name="background" type="TextureRect" parent="display/bar_pivot/TextureProgress/full_bar_marker"]
+show_behind_parent = true
+use_parent_material = true
+margin_left = -1.0
+margin_top = -1.0
+margin_right = 33.0
+margin_bottom = 5.0
+texture = ExtResource( 16 )
+expand = true
+stretch_mode = 1
+
+[node name="fix_rotation" parent="display/bar_pivot" instance=ExtResource( 13 )]
+step = 360
 
 [node name="input_state" type="Node" parent="."]
 process_priority = 10
 script = ExtResource( 11 )
 
-[node name="claw" parent="." instance=ExtResource( 3 )]
-
 [node name="leg" type="Node2D" parent="."]
-visible = false
+use_parent_material = true
+rotation = -1.57079
 script = ExtResource( 12 )
 
-[node name="wall_detect" type="Area2D" parent="leg"]
-position = Vector2( -9, 0 )
-rotation = 1.5708
-scale = Vector2( 0.3, 0.5 )
-collision_layer = 0
+[node name="air_jump_cooldown" type="Timer" parent="leg"]
+process_mode = 0
+wait_time = 5.0
+one_shot = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="leg/wall_detect"]
-position = Vector2( 0, 14 )
-shape = SubResource( 34 )
-
-[node name="Sprite" type="Sprite" parent="leg/wall_detect"]
-show_behind_parent = true
-position = Vector2( 0, 14 )
-rotation = -1.5708
-texture = ExtResource( 14 )
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 33 )
+anims/jump = SubResource( 34 )
