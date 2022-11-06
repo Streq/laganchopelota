@@ -23,3 +23,7 @@ func lose():
 
 func _on_player_lose_zone_area_entered(area: Area2D) -> void:
 	lose()
+
+
+func _on_player_win_zone_area_entered(area: Area2D) -> void:
+	win()

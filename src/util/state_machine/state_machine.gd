@@ -1,5 +1,6 @@
 extends Node
 class_name StateMachine
+signal pre_state_change()
 signal state_changed(state)
 
 export (String) var start_state
@@ -28,5 +29,6 @@ func handle_input(event: InputEvent):
 func _change_state(state_name: String, params = []):
 	current.exit()
 	current = states[state_name]
+	emit_signal("pre_state_change")
 	current.enter(params)
 	emit_signal("state_changed", state_name)

@@ -24,6 +24,8 @@ onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 export var jump_speed := 250.0
 
+export var PARTICLE : PackedScene 
+
 func is_on_wall():
 	return get_colliding_bodies().size()>0
 
@@ -35,9 +37,11 @@ func jump_against_walls():
 
 var jump_in_dir = false
 func jump_in_dir():
+	if !input_state.dir:
+		return false
 	jump_in_dir = true
 	animation_player.play("jump")
-	pass
+	return true
 
 
 func _integrate_forces(state: Physics2DDirectBodyState) -> void:
@@ -49,6 +53,19 @@ func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 		apply_central_impulse(normal.normalized()*jump_speed)
 	if jump_in_dir:
 		var dir = input_state.dir
+		call_deferred("fart_particles", dir)
 		apply_central_impulse(dir.normalized()*jump_speed)
 	jump_against_walls = false
 	jump_in_dir = false
+
+func fart_particles(dir:Vector2):
+	print(material)
+		
+	for i in int(rand_range(5,9)):
+		var particle = PARTICLE.instance()
+		particle.material = material
+		get_parent().add_child(particle)
+		particle.global_position = self.global_position
+		particle.velocity += linear_velocity
+		particle.velocity -= dir.rotated(deg2rad(rand_range(-45,45)))*(500.0+rand_range(-100,100))
+		

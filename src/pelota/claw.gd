@@ -27,6 +27,7 @@ func _ready():
 
 
 func _physics_process(delta: float) -> void:
+	animation_player.advance(delta)
 	state_machine.physics_update(delta)
 func shoot():
 	pass

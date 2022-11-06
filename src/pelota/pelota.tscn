@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://assets/shader/palette.gdshader" type="Shader" id=1]
 [ext_resource path="res://src/transform/fix_rotation.gd" type="Script" id=2]
@@ -17,9 +17,7 @@
 [ext_resource path="res://assets/texture/dark_gray_square.png" type="Texture" id=15]
 [ext_resource path="res://assets/texture/gray_square.png" type="Texture" id=16]
 [ext_resource path="res://assets/texture/black_square.png" type="Texture" id=17]
-
-[sub_resource type="CircleShape2D" id=23]
-radius = 15.0
+[ext_resource path="res://src/pelota/particle.tscn" type="PackedScene" id=18]
 
 [sub_resource type="Image" id=44]
 data = {
@@ -43,6 +41,9 @@ shader_param/palette_size = 4
 shader_param/offset = 0
 shader_param/blue_index_offset = 0.0
 shader_param/palette = SubResource( 36 )
+
+[sub_resource type="CircleShape2D" id=23]
+radius = 15.0
 
 [sub_resource type="AtlasTexture" id=41]
 atlas = ExtResource( 17 )
@@ -87,13 +88,16 @@ tracks/0/keys = {
 }
 
 [node name="pelota" type="RigidBody2D"]
+material = SubResource( 37 )
 position = Vector2( 147, 77 )
 z_index = 10
 collision_layer = 2
 continuous_cd = 2
 contacts_reported = 2
 contact_monitor = true
+can_sleep = false
 script = ExtResource( 8 )
+PARTICLE = ExtResource( 18 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 23 )
@@ -102,6 +106,7 @@ shape = SubResource( 23 )
 
 [node name="display" type="Node2D" parent="."]
 material = SubResource( 37 )
+use_parent_material = true
 
 [node name="ball" type="Sprite" parent="display"]
 material = SubResource( 37 )
@@ -138,9 +143,6 @@ texture = ExtResource( 10 )
 [node name="fix_rotation" type="Node" parent="display/eye_border"]
 script = ExtResource( 2 )
 step = 0
-
-[node name="palette_client" parent="display" instance=ExtResource( 4 )]
-type = 1
 
 [node name="bar_pivot" type="Node2D" parent="display"]
 use_parent_material = true
@@ -189,6 +191,7 @@ process_priority = 10
 script = ExtResource( 11 )
 
 [node name="leg" type="Node2D" parent="."]
+show_behind_parent = true
 use_parent_material = true
 rotation = -1.57079
 script = ExtResource( 12 )
@@ -201,3 +204,6 @@ one_shot = true
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/RESET = SubResource( 33 )
 anims/jump = SubResource( 34 )
+
+[node name="palette_client" parent="." instance=ExtResource( 4 )]
+type = 1

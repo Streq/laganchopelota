@@ -12,5 +12,5 @@ func _physics_process(delta: float) -> void:
 #	if input.B.is_just_pressed() and owner.is_on_wall():
 #		owner.jump_against_walls()
 	if input.B.is_just_pressed() and air_jump_cooldown.is_stopped():
-		owner.jump_in_dir()
-		air_jump_cooldown.start()
+		if owner.jump_in_dir():
+			air_jump_cooldown.start()

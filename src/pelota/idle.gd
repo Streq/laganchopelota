@@ -4,6 +4,8 @@ extends State
 
 # Initialize the state. E.g. change the animation
 func _enter(params):
+	if params:
+		dir = params[0]
 	root.animation_player.play(name)
 #	root.hide()
 	call_deferred("reparent_to_wearer")
@@ -22,9 +24,16 @@ func _physics_update(delta: float):
 	var wearer = root.wearer
 	var input_dir = root.wearer.input_state.dir
 	if input_dir:
-		dir = input_dir.normalized()
+		dir = spin_toward_dir(dir,input_dir,delta)
 	root.global_position = wearer.global_position+dir*16.0
 	root.global_rotation = dir.angle()
 	
 	if owner.wearer.input_state.A.is_just_pressed():
 		goto_args("throw",[dir])
+
+func spin_toward_dir(dir,input_dir,delta):
+	var current_angle = dir.angle()
+	var target_angle = input_dir.angle()
+	return Vector2.RIGHT.rotated(lerp_angle(current_angle,target_angle,20.0*delta))
+#	return Vector2.RIGHT.rotated(Math.approach_angle(current_angle,target_angle,delta*10.0))
+	

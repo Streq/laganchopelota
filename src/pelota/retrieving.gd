@@ -26,4 +26,6 @@ func _physics_update(delta: float):
 
 func _on_touching_someone(someone):
 	if someone == root.wearer:
-		goto("idle")
+		var dist = (root.global_position - root.wearer.global_position)
+		var aiming_direction = dist.normalized()
+		goto_args("idle",[aiming_direction])
