@@ -31,6 +31,7 @@ script = ExtResource( 1 )
 polygon = NodePath("../..")
 
 [node name="gap" type="Node2D" parent="."]
+unique_name_in_owner = true
 
 [node name="StaticBody2D" type="StaticBody2D" parent="gap"]
 
