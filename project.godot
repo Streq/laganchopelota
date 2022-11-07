@@ -117,6 +117,7 @@ _global_script_class_icons={
 [application]
 
 config/name="laganchopelota"
+run/main_scene="res://src/test/scroll_down/segment_test.tscn"
 config/icon="res://assets/texture/icon.png"
 
 [autoload]
