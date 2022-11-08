@@ -88,3 +88,22 @@ static func _generate_polygon_block(tilemap:TileMap,x0,y0,w,h):
 					islands.append(transformed_outline)
 	return {"islands":islands,"holes":holes}
 
+static func fill_world_rect(
+		tilemap: TileMap, 
+		rect_in_global_coords: Rect2, 
+		cell: int,  
+		flip_x: bool = false, 
+		flip_y: bool = false, 
+		transpose: bool = false, 
+		autotile_coord: Vector2 = Vector2( 0, 0 )
+		):
+	var local_start = tilemap.to_local(rect_in_global_coords.position)
+	var tile_start = tilemap.world_to_map(local_start)
+	
+	var local_end = tilemap.to_local(rect_in_global_coords.end)
+	var tile_end = tilemap.world_to_map(local_end)
+	
+	for i in range (tile_start.x, tile_end.x):
+		for j in range(tile_start.y, tile_end.y):
+			tilemap.set_cell(i,j,cell)
+	

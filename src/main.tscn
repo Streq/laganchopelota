@@ -18,7 +18,7 @@ data = {
 "width": 4
 }
 
-[sub_resource type="ImageTexture" id=27]
+[sub_resource type="ImageTexture" id=8]
 flags = 0
 flags = 0
 image = SubResource( 32 )
@@ -30,7 +30,7 @@ shader = ExtResource( 2 )
 shader_param/palette_size = 4
 shader_param/offset = 0
 shader_param/blue_index_offset = 0.0
-shader_param/palette = SubResource( 27 )
+shader_param/palette = SubResource( 8 )
 
 [sub_resource type="ConvexPolygonShape2D" id=29]
 points = PoolVector2Array( 16, 16, 0, 16, 0, 0, 16, 0 )

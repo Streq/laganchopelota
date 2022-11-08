@@ -13,7 +13,7 @@ data = {
 "width": 4
 }
 
-[sub_resource type="ImageTexture" id=27]
+[sub_resource type="ImageTexture" id=8]
 flags = 0
 flags = 0
 image = SubResource( 29 )
@@ -25,12 +25,12 @@ shader = ExtResource( 1 )
 shader_param/palette_size = 4
 shader_param/offset = 0
 shader_param/blue_index_offset = 0.0
-shader_param/palette = SubResource( 27 )
+shader_param/palette = SubResource( 8 )
 
 [sub_resource type="ConvexPolygonShape2D" id=7]
 points = PoolVector2Array( 16, 16, 0, 16, 0, 0, 16, 0 )
 
-[sub_resource type="ConvexPolygonShape2D" id=8]
+[sub_resource type="ConvexPolygonShape2D" id=30]
 points = PoolVector2Array( 16, 16, 0, 16, 0, 0, 16, 0 )
 
 [sub_resource type="ConvexPolygonShape2D" id=9]
@@ -108,7 +108,7 @@ points = PoolVector2Array( 16, 16, 0, 16, 0, 0, 16, 0 )
 "autotile_coord": Vector2( 0, 1 ),
 "one_way": false,
 "one_way_margin": 1.0,
-"shape": SubResource( 8 ),
+"shape": SubResource( 30 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 }, {
 "autotile_coord": Vector2( 0, 2 ),
