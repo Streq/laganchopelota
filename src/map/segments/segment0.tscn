@@ -1,6 +1,5 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://src/util/polygon/polygon_shape_as.gd" type="Script" id=1]
 [ext_resource path="res://src/map/segments/segment.gd" type="Script" id=2]
 
 [node name="segment" type="Node2D"]
@@ -9,26 +8,12 @@ height = 144.0
 
 [node name="wall" type="StaticBody2D" parent="."]
 
-[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="wall"]
-polygon = PoolVector2Array( 0, 0, 0, 120, 32, 120, 32, 0 )
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="wall" groups=["fill_tilemap_polygon"]]
+polygon = PoolVector2Array( -32, 0, -32, 120, 32, 120, 32, 0 )
 
-[node name="Polygon2D" type="Polygon2D" parent="wall/CollisionPolygon2D3"]
-polygon = PoolVector2Array( 157, -1603, 950, -1608, 1431, -1865, 960, -1981, 540, -2120, 887, -2232, 1227, -2109, 1643, -2085, 1977, -1726, 1831, -1460, 1456, -1358, 986, -1368, 469, -1361, 15, -1387, -490, -1536, -604, -1936, -474, -2291, -220, -2412, -42, -2339, -185, -2136, -261, -2022, 15, -2079, 81, -1939, -138, -1863, -150, -1739, 31, -1729, 173, -1790, 237, -1983, 154, -2193, 85, -2434, 240, -2812, 332, -2917, 539, -2968, 799, -2984, 1116, -2977, 1424, -2968, 1888, -2993, 2275, -2885, 2529, -2539, 2536, -2307, 2482, -2155, 2358, -2107, 2361, -2199, 2383, -2377, 2307, -2498, 2037, -2615, 1789, -2666, 1253, -2780, 786, -2768, 415, -2558, 335, -2009, 335, -1907, 288, -1793 )
-
-[node name="shape_as" type="Node" parent="wall/CollisionPolygon2D3/Polygon2D"]
-script = ExtResource( 1 )
-polygon = NodePath("../..")
-
-[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="wall"]
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="wall" groups=["fill_tilemap_polygon"]]
 position = Vector2( 896, 0 )
-polygon = PoolVector2Array( 32, 0, 32, 120, 64, 120, 64, 208, 64, 0 )
-
-[node name="Polygon2D" type="Polygon2D" parent="wall/CollisionPolygon2D4"]
-polygon = PoolVector2Array( 157, -1603, 950, -1608, 1431, -1865, 960, -1981, 540, -2120, 887, -2232, 1227, -2109, 1643, -2085, 1977, -1726, 1831, -1460, 1456, -1358, 986, -1368, 469, -1361, 15, -1387, -490, -1536, -604, -1936, -474, -2291, -220, -2412, -42, -2339, -185, -2136, -261, -2022, 15, -2079, 81, -1939, -138, -1863, -150, -1739, 31, -1729, 173, -1790, 237, -1983, 154, -2193, 85, -2434, 240, -2812, 332, -2917, 539, -2968, 799, -2984, 1116, -2977, 1424, -2968, 1888, -2993, 2275, -2885, 2529, -2539, 2536, -2307, 2482, -2155, 2358, -2107, 2361, -2199, 2383, -2377, 2307, -2498, 2037, -2615, 1789, -2666, 1253, -2780, 786, -2768, 415, -2558, 335, -2009, 335, -1907, 288, -1793 )
-
-[node name="shape_as" type="Node" parent="wall/CollisionPolygon2D4/Polygon2D"]
-script = ExtResource( 1 )
-polygon = NodePath("../..")
+polygon = PoolVector2Array( 32, 0, 32, 120, 96, 120, 96, 0 )
 
 [node name="gap" type="Node2D" parent="."]
 unique_name_in_owner = true
@@ -37,24 +22,10 @@ position = Vector2( 0, 144 )
 [node name="StaticBody2D" type="StaticBody2D" parent="gap"]
 position = Vector2( 0, -136 )
 
-[node name="left_side" type="CollisionPolygon2D" parent="gap/StaticBody2D"]
+[node name="left_side" type="CollisionPolygon2D" parent="gap/StaticBody2D" groups=["fill_tilemap_polygon"]]
 position = Vector2( -448, -135 )
 polygon = PoolVector2Array( -192, 240, -192, 272, 832, 272, 832, 240 )
 
-[node name="Polygon2D" type="Polygon2D" parent="gap/StaticBody2D/left_side"]
-polygon = PoolVector2Array( 157, -1603, 950, -1608, 1431, -1865, 960, -1981, 540, -2120, 887, -2232, 1227, -2109, 1643, -2085, 1977, -1726, 1831, -1460, 1456, -1358, 986, -1368, 469, -1361, 15, -1387, -490, -1536, -604, -1936, -474, -2291, -220, -2412, -42, -2339, -185, -2136, -261, -2022, 15, -2079, 81, -1939, -138, -1863, -150, -1739, 31, -1729, 173, -1790, 237, -1983, 154, -2193, 85, -2434, 240, -2812, 332, -2917, 539, -2968, 799, -2984, 1116, -2977, 1424, -2968, 1888, -2993, 2275, -2885, 2529, -2539, 2536, -2307, 2482, -2155, 2358, -2107, 2361, -2199, 2383, -2377, 2307, -2498, 2037, -2615, 1789, -2666, 1253, -2780, 786, -2768, 415, -2558, 335, -2009, 335, -1907, 288, -1793 )
-
-[node name="shape_as" type="Node" parent="gap/StaticBody2D/left_side/Polygon2D"]
-script = ExtResource( 1 )
-polygon = NodePath("../..")
-
-[node name="right_side" type="CollisionPolygon2D" parent="gap/StaticBody2D"]
+[node name="right_side" type="CollisionPolygon2D" parent="gap/StaticBody2D" groups=["fill_tilemap_polygon"]]
 position = Vector2( 768, -135 )
 polygon = PoolVector2Array( -192, 240, -192, 272, 832, 272, 832, 240 )
-
-[node name="Polygon2D" type="Polygon2D" parent="gap/StaticBody2D/right_side"]
-polygon = PoolVector2Array( 157, -1603, 950, -1608, 1431, -1865, 960, -1981, 540, -2120, 887, -2232, 1227, -2109, 1643, -2085, 1977, -1726, 1831, -1460, 1456, -1358, 986, -1368, 469, -1361, 15, -1387, -490, -1536, -604, -1936, -474, -2291, -220, -2412, -42, -2339, -185, -2136, -261, -2022, 15, -2079, 81, -1939, -138, -1863, -150, -1739, 31, -1729, 173, -1790, 237, -1983, 154, -2193, 85, -2434, 240, -2812, 332, -2917, 539, -2968, 799, -2984, 1116, -2977, 1424, -2968, 1888, -2993, 2275, -2885, 2529, -2539, 2536, -2307, 2482, -2155, 2358, -2107, 2361, -2199, 2383, -2377, 2307, -2498, 2037, -2615, 1789, -2666, 1253, -2780, 786, -2768, 415, -2558, 335, -2009, 335, -1907, 288, -1793 )
-
-[node name="shape_as" type="Node" parent="gap/StaticBody2D/right_side/Polygon2D"]
-script = ExtResource( 1 )
-polygon = NodePath("../..")

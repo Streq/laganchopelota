@@ -1,34 +1,40 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=11 format=2]
 
-[ext_resource path="res://src/util/polygon/polygon_shape_as.gd" type="Script" id=1]
+[ext_resource path="res://src/map/segments/fill_tilemap.gd" type="Script" id=1]
 [ext_resource path="res://src/map/segments/segment.gd" type="Script" id=2]
+[ext_resource path="res://assets/font/Ink Stamp.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://src/pelota/pelota.tscn" type="PackedScene" id=4]
+[ext_resource path="res://src/player/controller.tscn" type="PackedScene" id=5]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 32, 56.5 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 1332, 16 )
+
+[sub_resource type="DynamicFont" id=3]
+font_data = ExtResource( 3 )
+
+[sub_resource type="Theme" id=4]
+Label/fonts/font = SubResource( 3 )
+
+[sub_resource type="CircleShape2D" id=5]
+radius = 14.0
 
 [node name="segment" type="Node2D"]
 script = ExtResource( 2 )
-height = 144.0
+height = 544.0
 
 [node name="wall" type="StaticBody2D" parent="."]
-
-[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="wall"]
-polygon = PoolVector2Array( 0, 0, 0, 120, 32, 120, 32, 0 )
-
-[node name="Polygon2D" type="Polygon2D" parent="wall/CollisionPolygon2D3"]
-polygon = PoolVector2Array( 157, -1603, 950, -1608, 1431, -1865, 960, -1981, 540, -2120, 887, -2232, 1227, -2109, 1643, -2085, 1977, -1726, 1831, -1460, 1456, -1358, 986, -1368, 469, -1361, 15, -1387, -490, -1536, -604, -1936, -474, -2291, -220, -2412, -42, -2339, -185, -2136, -261, -2022, 15, -2079, 81, -1939, -138, -1863, -150, -1739, 31, -1729, 173, -1790, 237, -1983, 154, -2193, 85, -2434, 240, -2812, 332, -2917, 539, -2968, 799, -2984, 1116, -2977, 1424, -2968, 1888, -2993, 2275, -2885, 2529, -2539, 2536, -2307, 2482, -2155, 2358, -2107, 2361, -2199, 2383, -2377, 2307, -2498, 2037, -2615, 1789, -2666, 1253, -2780, 786, -2768, 415, -2558, 335, -2009, 335, -1907, 288, -1793 )
-
-[node name="shape_as" type="Node" parent="wall/CollisionPolygon2D3/Polygon2D"]
 script = ExtResource( 1 )
-polygon = NodePath("../..")
 
-[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="wall"]
-position = Vector2( 896, 0 )
-polygon = PoolVector2Array( 32, 0, 32, 120, 64, 120, 64, 208, 64, 0 )
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="wall"]
+position = Vector2( 0, 56 )
+shape = SubResource( 1 )
 
-[node name="Polygon2D" type="Polygon2D" parent="wall/CollisionPolygon2D4"]
-polygon = PoolVector2Array( 157, -1603, 950, -1608, 1431, -1865, 960, -1981, 540, -2120, 887, -2232, 1227, -2109, 1643, -2085, 1977, -1726, 1831, -1460, 1456, -1358, 986, -1368, 469, -1361, 15, -1387, -490, -1536, -604, -1936, -474, -2291, -220, -2412, -42, -2339, -185, -2136, -261, -2022, 15, -2079, 81, -1939, -138, -1863, -150, -1739, 31, -1729, 173, -1790, 237, -1983, 154, -2193, 85, -2434, 240, -2812, 332, -2917, 539, -2968, 799, -2984, 1116, -2977, 1424, -2968, 1888, -2993, 2275, -2885, 2529, -2539, 2536, -2307, 2482, -2155, 2358, -2107, 2361, -2199, 2383, -2377, 2307, -2498, 2037, -2615, 1789, -2666, 1253, -2780, 786, -2768, 415, -2558, 335, -2009, 335, -1907, 288, -1793 )
-
-[node name="shape_as" type="Node" parent="wall/CollisionPolygon2D4/Polygon2D"]
-script = ExtResource( 1 )
-polygon = NodePath("../..")
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="wall"]
+position = Vector2( 960, 56 )
+shape = SubResource( 1 )
 
 [node name="gap" type="Node2D" parent="."]
 unique_name_in_owner = true
@@ -36,14 +42,76 @@ position = Vector2( 0, 144 )
 
 [node name="StaticBody2D" type="StaticBody2D" parent="gap"]
 position = Vector2( 0, -136 )
-
-[node name="left_side" type="CollisionPolygon2D" parent="gap/StaticBody2D"]
-position = Vector2( -448, -136 )
-polygon = PoolVector2Array( -192, 240, -192, 272, 2472, 272, 2472, 240 )
-
-[node name="Polygon2D" type="Polygon2D" parent="gap/StaticBody2D/left_side"]
-polygon = PoolVector2Array( 157, -1603, 950, -1608, 1431, -1865, 960, -1981, 540, -2120, 887, -2232, 1227, -2109, 1643, -2085, 1977, -1726, 1831, -1460, 1456, -1358, 986, -1368, 469, -1361, 15, -1387, -490, -1536, -604, -1936, -474, -2291, -220, -2412, -42, -2339, -185, -2136, -261, -2022, 15, -2079, 81, -1939, -138, -1863, -150, -1739, 31, -1729, 173, -1790, 237, -1983, 154, -2193, 85, -2434, 240, -2812, 332, -2917, 539, -2968, 799, -2984, 1116, -2977, 1424, -2968, 1888, -2993, 2275, -2885, 2529, -2539, 2536, -2307, 2482, -2155, 2358, -2107, 2361, -2199, 2383, -2377, 2307, -2498, 2037, -2615, 1789, -2666, 1253, -2780, 786, -2768, 415, -2558, 335, -2009, 335, -1907, 288, -1793 )
-
-[node name="shape_as" type="Node" parent="gap/StaticBody2D/left_side/Polygon2D"]
 script = ExtResource( 1 )
-polygon = NodePath("../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="gap/StaticBody2D"]
+position = Vector2( 692, 120 )
+shape = SubResource( 2 )
+
+[node name="Label" type="Label" parent="."]
+margin_left = 80.0
+margin_top = -104.0
+margin_right = 912.0
+margin_bottom = -22.0
+grow_horizontal = 2
+theme = SubResource( 4 )
+text = "BUENOS DIAS PELOTA"
+align = 1
+
+[node name="Label3" type="Label" parent="."]
+margin_left = 80.0
+margin_top = -240.0
+margin_right = 912.0
+margin_bottom = -158.0
+grow_horizontal = 2
+theme = SubResource( 4 )
+text = "TENES QUE LLEGAR A LA CIMA SIN CAERTE DE LA PANTALLA
+"
+align = 1
+
+[node name="Label4" type="Label" parent="."]
+margin_left = 80.0
+margin_top = -376.0
+margin_right = 912.0
+margin_bottom = -294.0
+grow_horizontal = 2
+theme = SubResource( 4 )
+text = "(PORQUE HAY LAVA ABAJO)"
+align = 1
+
+[node name="Label5" type="Label" parent="."]
+margin_left = 80.0
+margin_top = -480.0
+margin_right = 912.0
+margin_bottom = -398.0
+grow_horizontal = 2
+theme = SubResource( 4 )
+text = "(Y TE MORIS)"
+align = 1
+
+[node name="Label2" type="Label" parent="."]
+margin_left = 304.0
+margin_top = 200.0
+margin_right = 688.0
+margin_bottom = 231.0
+grow_horizontal = 2
+theme = SubResource( 4 )
+text = "CLICK IZQUIERDO - GANCHO
+CLICK DERECHO - PEDO"
+align = 1
+
+[node name="pelota" parent="." instance=ExtResource( 4 )]
+position = Vector2( 360, 88 )
+
+[node name="controller" parent="pelota" instance=ExtResource( 5 )]
+
+[node name="player_zone" type="Area2D" parent="pelota"]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="pelota/player_zone"]
+shape = SubResource( 5 )
+
+[node name="Camera2D" type="Camera2D" parent="pelota"]
+limit_left = 0
+limit_right = 960

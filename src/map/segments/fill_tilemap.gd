@@ -1,6 +1,4 @@
 extends Node2D
-tool
-onready var tile_map: TileMap = $"../../../TileMap"
 
 func _ready() -> void:
 	add_to_group("tilemap_fill")

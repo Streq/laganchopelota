@@ -110,3 +110,15 @@ static func merge_polys(polys)-> Dictionary:
 		polys[i] = a
 		i += 1
 	return result
+
+static func get_polygon_bounding_rect(polygon):
+	var min_x = INF
+	var max_x = -INF
+	var min_y = INF
+	var max_y = -INF
+	for point in polygon:
+		min_x = min(point.x,min_x)
+		max_x = max(point.x,max_x)
+		min_y = min(point.y,min_y)
+		max_y = max(point.y,max_y)
+	return Rect2(Vector2(min_x,min_y), Vector2(max_x-min_x, max_y-min_y))

@@ -4,7 +4,7 @@
 [ext_resource path="res://src/util/color/palette_client.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/texture/some_autotiles.png" type="Texture" id=4]
 
-[sub_resource type="Image" id=29]
+[sub_resource type="Image" id=31]
 data = {
 "data": PoolByteArray( 252, 252, 252, 255, 188, 188, 188, 255, 255, 0, 0, 255, 0, 0, 0, 255 ),
 "format": "RGBA8",
@@ -16,7 +16,7 @@ data = {
 [sub_resource type="ImageTexture" id=8]
 flags = 0
 flags = 0
-image = SubResource( 29 )
+image = SubResource( 31 )
 size = Vector2( 4, 1 )
 
 [sub_resource type="ShaderMaterial" id=6]
