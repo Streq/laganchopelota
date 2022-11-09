@@ -4,14 +4,14 @@
 [ext_resource path="res://src/map/segments/pivot.gd" type="Script" id=3]
 [ext_resource path="res://src/map/segments/fill_tilemap.gd" type="Script" id=4]
 
-[sub_resource type="RectangleShape2D" id=31]
-extents = Vector2( 512, 16 )
-
 [sub_resource type="RectangleShape2D" id=30]
 extents = Vector2( 32, 288 )
 
 [sub_resource type="RectangleShape2D" id=34]
 extents = Vector2( 32, 288 )
+
+[sub_resource type="RectangleShape2D" id=31]
+extents = Vector2( 512, 16 )
 
 [sub_resource type="RectangleShape2D" id=32]
 extents = Vector2( 16, 60 )
@@ -33,10 +33,6 @@ script = ExtResource( 3 )
 [node name="wall" type="StaticBody2D" parent="pivot"]
 position = Vector2( -480, 328 )
 script = ExtResource( 4 )
-
-[node name="right_side11" type="CollisionShape2D" parent="pivot/wall"]
-position = Vector2( -160, 72 )
-shape = SubResource( 31 )
 
 [node name="right_side10" type="CollisionShape2D" parent="pivot/wall"]
 position = Vector2( 0, -40 )
@@ -76,3 +72,7 @@ shape = SubResource( 32 )
 [node name="right_side8" type="CollisionShape2D" parent="pivot/gap/StaticBody2D"]
 position = Vector2( 304, 192 )
 shape = SubResource( 33 )
+
+[node name="right_side11" type="CollisionShape2D" parent="pivot/gap/StaticBody2D"]
+position = Vector2( -480, 80 )
+shape = SubResource( 31 )

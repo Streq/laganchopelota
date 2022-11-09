@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://assets/shader/palette.gdshader" type="Shader" id=1]
 [ext_resource path="res://src/pelota/debug/print_state.gd" type="Script" id=2]
@@ -25,10 +25,33 @@ data = {
 "width": 4
 }
 
-[sub_resource type="ImageTexture" id=36]
+[sub_resource type="ImageTexture" id=2]
 flags = 0
 flags = 0
 image = SubResource( 45 )
+size = Vector2( 4, 1 )
+
+[sub_resource type="ShaderMaterial" id=3]
+resource_local_to_scene = true
+shader = ExtResource( 1 )
+shader_param/palette_size = 4
+shader_param/offset = 0
+shader_param/blue_index_offset = 0.0
+shader_param/palette = SubResource( 2 )
+
+[sub_resource type="Image" id=46]
+data = {
+"data": PoolByteArray( 255, 255, 255, 0, 255, 227, 99, 255, 255, 57, 8, 255, 0, 0, 0, 255 ),
+"format": "RGBA8",
+"height": 1,
+"mipmaps": false,
+"width": 4
+}
+
+[sub_resource type="ImageTexture" id=36]
+flags = 0
+flags = 0
+image = SubResource( 46 )
 size = Vector2( 4, 1 )
 
 [sub_resource type="ShaderMaterial" id=37]
@@ -326,7 +349,7 @@ tracks/4/keys = {
 
 [node name="claw" type="Node2D"]
 process_priority = 1
-material = SubResource( 37 )
+material = SubResource( 3 )
 z_index = 5
 z_as_relative = false
 script = ExtResource( 4 )
@@ -503,6 +526,8 @@ texture = ExtResource( 11 )
 [node name="aim_pivot" type="Node2D" parent="."]
 visible = false
 use_parent_material = true
+z_index = -1
+z_as_relative = false
 
 [node name="aim" type="Line2D" parent="aim_pivot"]
 visible = false

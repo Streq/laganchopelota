@@ -4,28 +4,28 @@
 [ext_resource path="res://src/util/color/palette_client.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/texture/some_autotiles.png" type="Texture" id=4]
 
-[sub_resource type="Image" id=31]
+[sub_resource type="Image" id=34]
 data = {
-"data": PoolByteArray( 252, 252, 252, 255, 188, 188, 188, 255, 255, 0, 0, 255, 0, 0, 0, 255 ),
+"data": PoolByteArray( 240, 188, 60, 255, 0, 0, 0, 255, 0, 0, 0, 255, 15, 89, 0, 255 ),
 "format": "RGBA8",
 "height": 1,
 "mipmaps": false,
 "width": 4
 }
 
-[sub_resource type="ImageTexture" id=8]
+[sub_resource type="ImageTexture" id=32]
 flags = 0
 flags = 0
-image = SubResource( 31 )
+image = SubResource( 34 )
 size = Vector2( 4, 1 )
 
-[sub_resource type="ShaderMaterial" id=6]
+[sub_resource type="ShaderMaterial" id=33]
 resource_local_to_scene = true
 shader = ExtResource( 1 )
 shader_param/palette_size = 4
 shader_param/offset = 0
 shader_param/blue_index_offset = 0.0
-shader_param/palette = SubResource( 8 )
+shader_param/palette = SubResource( 32 )
 
 [sub_resource type="ConvexPolygonShape2D" id=7]
 points = PoolVector2Array( 16, 16, 0, 16, 0, 0, 16, 0 )
@@ -198,7 +198,7 @@ points = PoolVector2Array( 16, 16, 0, 16, 0, 0, 16, 0 )
 0/z_index = 0
 
 [node name="TileMap" type="TileMap"]
-material = SubResource( 6 )
+material = SubResource( 33 )
 tile_set = SubResource( 28 )
 cell_size = Vector2( 16, 16 )
 format = 1
