@@ -9,11 +9,11 @@ height = 272.0
 [node name="wall" type="StaticBody2D" parent="."]
 
 [node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="wall" groups=["fill_tilemap_polygon"]]
-polygon = PoolVector2Array( 0, 0, 0, 256, 32, 256, 32, 0 )
+polygon = PoolVector2Array( -32, 0, -32, 256, 32, 256, 32, 0 )
 
 [node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="wall" groups=["fill_tilemap_polygon"]]
 position = Vector2( 896, 0 )
-polygon = PoolVector2Array( 32, 0, 32, 256, 64, 256, 64, 0 )
+polygon = PoolVector2Array( 32, 0, 32, 256, 96, 256, 96, 0 )
 
 [node name="gap" type="Node2D" parent="."]
 unique_name_in_owner = true

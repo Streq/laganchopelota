@@ -16,11 +16,11 @@ position = Vector2( -480, 352 )
 
 [node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="pivot/wall" groups=["fill_tilemap_polygon"]]
 position = Vector2( 0, -80 )
-polygon = PoolVector2Array( 0, -464, 0, 192, 32, 192, 32, -464 )
+polygon = PoolVector2Array( -32, -464, -32, 192, 32, 192, 32, -464 )
 
 [node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="pivot/wall" groups=["fill_tilemap_polygon"]]
 position = Vector2( 896, -80 )
-polygon = PoolVector2Array( 32, -464, 32, 192, 64, 192, 64, -464 )
+polygon = PoolVector2Array( 32, -464, 32, 192, 96, 192, 96, -464 )
 
 [node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="pivot/wall" groups=["fill_tilemap_polygon"]]
 position = Vector2( 432, -272 )
