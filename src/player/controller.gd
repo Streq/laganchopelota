@@ -8,13 +8,14 @@ enum MODE {
 var mode
 
 func _unhandled_input(event: InputEvent) -> void:
-	var state = get_parent().input_state
-	if is_game_event(event):
-		decide_input_mode(event)
-	if event.is_action("A"):
-		state.A.pressed = event.is_pressed()
-	if event.is_action("B"):
-		state.B.pressed = event.is_pressed()
+	if "input_state" in get_parent():
+		var state = get_parent().input_state
+		if is_game_event(event):
+			decide_input_mode(event)
+		if event.is_action("A"):
+			state.A.pressed = event.is_pressed()
+		if event.is_action("B"):
+			state.B.pressed = event.is_pressed()
 
 func _physics_process(delta: float) -> void:
 	match mode:
