@@ -21,6 +21,7 @@ size = 8
 font_data = ExtResource( 3 )
 
 [sub_resource type="Theme" id=4]
+Label/colors/font_color = Color( 1, 0.890196, 0.388235, 1 )
 Label/fonts/font = SubResource( 3 )
 
 [node name="segment" type="Node2D"]

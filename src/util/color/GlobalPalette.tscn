@@ -383,14 +383,14 @@ material = SubResource( 24 )
 string_val = "[\"ffffe363\",\"ff74802c\",\"ff004d49\",\"ff15001f\"]"
 
 [node name="pink" parent="Background" instance=ExtResource( 2 )]
-palette = PoolColorArray( 0.941176, 0.737255, 0.235294, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0588235, 0.34902, 0, 1 )
+palette = PoolColorArray( 0.941176, 0.737255, 0.235294, 1, 0.0823529, 0, 0.121569, 1, 0.0823529, 0, 0.121569, 1, 0.0588235, 0.34902, 0, 1 )
 material = SubResource( 27 )
-string_val = "[\"fff0bc3c\",\"ff000000\",\"ff000000\",\"ff0f5900\"]"
+string_val = "[\"fff0bc3c\",\"ff15001f\",\"ff15001f\",\"ff0f5900\"]"
 
 [node name="grass" parent="Background" instance=ExtResource( 2 )]
-palette = PoolColorArray( 0.584314, 1, 0, 1, 0, 0.341176, 0, 1, 0.25098, 0.172549, 0, 1, 0, 0, 0, 1 )
+palette = PoolColorArray( 0.584314, 1, 0, 1, 0, 0.341176, 0, 1, 0.25098, 0.172549, 0, 1, 0.0823529, 0, 0.121569, 1 )
 material = SubResource( 30 )
-string_val = "[\"ff95ff00\",\"ff005700\",\"ff402c00\",\"ff000000\"]"
+string_val = "[\"ff95ff00\",\"ff005700\",\"ff402c00\",\"ff15001f\"]"
 
 [node name="water" parent="Background" instance=ExtResource( 2 )]
 palette = PoolColorArray( 0.988235, 0.988235, 0.988235, 1, 0.235294, 0.737255, 0.988235, 1, 0, 0.439216, 0.92549, 1, 0, 0, 0, 1 )
@@ -398,9 +398,9 @@ material = SubResource( 33 )
 string_val = "[\"fffcfcfc\",\"ff3cbcfc\",\"ff0070ec\",\"ff000000\"]"
 
 [node name="yellow" parent="Background" instance=ExtResource( 2 )]
-palette = PoolColorArray( 1, 1, 0, 1, 0.494118, 0.494118, 0.00392157, 1, 0.235294, 0.235294, 0.00784314, 1, 0, 0, 0, 1 )
+palette = PoolColorArray( 1, 1, 0, 1, 0.494118, 0.494118, 0.00392157, 1, 0.235294, 0.235294, 0.00784314, 1, 0.0823529, 0, 0.121569, 1 )
 material = SubResource( 36 )
-string_val = "[\"ffffff00\",\"ff7e7e01\",\"ff3c3c02\",\"ff000000\"]"
+string_val = "[\"ffffff00\",\"ff7e7e01\",\"ff3c3c02\",\"ff15001f\"]"
 
 [node name="rock" parent="Background" instance=ExtResource( 2 )]
 palette = PoolColorArray( 0.941176, 0.737255, 0.235294, 1, 0, 0, 0, 1, 0.0156863, 0.137255, 0, 1, 0.054902, 0.329412, 0, 1 )
