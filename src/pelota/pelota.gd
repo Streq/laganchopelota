@@ -19,13 +19,18 @@
 #		apply_central_impulse(collision.normal*jump_speed)
 #		return
 extends RigidBody2D
+signal farted()
+signal bounced()
+
 onready var input_state := $input_state
 onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 export var jump_speed := 250.0
 
 export var PARTICLE : PackedScene 
-
+var collision_velocity : Vector2 = Vector2.ZERO
+var previous_linear_velocity : Vector2 = Vector2.ZERO
+var previous_contacts := 0
 func is_on_wall():
 	return get_colliding_bodies().size()>0
 
@@ -45,6 +50,16 @@ func jump_in_dir():
 
 
 func _integrate_forces(state: Physics2DDirectBodyState) -> void:
+	collision_velocity = Vector2.ZERO
+
+	var current_contacts = state.get_contact_count()
+	if current_contacts > 0:
+		var dv : Vector2 = state.linear_velocity - previous_linear_velocity
+		collision_velocity = dv
+	
+	previous_linear_velocity = state.linear_velocity
+	
+	
 	if jump_against_walls:
 		var normal = Vector2()
 		for contact in state.get_contact_count():
@@ -57,9 +72,16 @@ func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 		apply_central_impulse(dir.normalized()*jump_speed)
 	jump_against_walls = false
 	jump_in_dir = false
+	
+	
+	if previous_contacts < current_contacts and collision_velocity.length_squared()>100*100:
+		emit_signal("bounced")
+	
+	previous_contacts = state.get_contact_count()
+		
 
 func fart_particles(dir:Vector2):
-	print(material)
+	emit_signal("farted")
 		
 	for i in int(rand_range(5,9)):
 		var particle = PARTICLE.instance()

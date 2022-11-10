@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=40 format=2]
 
 [ext_resource path="res://assets/shader/palette.gdshader" type="Shader" id=1]
 [ext_resource path="res://src/transform/fix_rotation.gd" type="Script" id=2]
@@ -18,6 +18,15 @@
 [ext_resource path="res://assets/texture/gray_square.png" type="Texture" id=16]
 [ext_resource path="res://assets/texture/black_square.png" type="Texture" id=17]
 [ext_resource path="res://src/pelota/particle.tscn" type="PackedScene" id=18]
+[ext_resource path="res://src/pelota/pedo.gd" type="Script" id=19]
+[ext_resource path="res://assets/audio/sfx/pedo2.wav" type="AudioStream" id=20]
+[ext_resource path="res://assets/audio/sfx/pedo0.wav" type="AudioStream" id=21]
+[ext_resource path="res://assets/audio/sfx/pedo1.wav" type="AudioStream" id=22]
+[ext_resource path="res://assets/audio/sfx/pedo3.wav" type="AudioStream" id=23]
+[ext_resource path="res://assets/audio/sfx/pedo6.wav" type="AudioStream" id=24]
+[ext_resource path="res://assets/audio/sfx/pedo5.wav" type="AudioStream" id=25]
+[ext_resource path="res://assets/audio/sfx/pedo4.wav" type="AudioStream" id=26]
+[ext_resource path="res://assets/audio/sfx/bounce.wav" type="AudioStream" id=27]
 
 [sub_resource type="Image" id=50]
 data = {
@@ -230,3 +239,16 @@ anims/jump = SubResource( 34 )
 
 [node name="palette_client" parent="." instance=ExtResource( 4 )]
 type = 1
+
+[node name="pedo" type="AudioStreamPlayer2D" parent="."]
+bus = "sfx"
+script = ExtResource( 19 )
+streams = [ ExtResource( 21 ), ExtResource( 22 ), ExtResource( 20 ), ExtResource( 23 ), ExtResource( 26 ), ExtResource( 25 ), ExtResource( 24 ) ]
+
+[node name="bounce" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 27 )
+volume_db = -4.02581
+bus = "sfx"
+
+[connection signal="bounced" from="." to="bounce" method="play"]
+[connection signal="farted" from="." to="pedo" method="play"]

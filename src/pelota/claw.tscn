@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://assets/shader/palette.gdshader" type="Shader" id=1]
 [ext_resource path="res://src/pelota/debug/print_state.gd" type="Script" id=2]
@@ -15,6 +15,9 @@
 [ext_resource path="res://src/util/animation/reset_anim.tscn" type="PackedScene" id=13]
 [ext_resource path="res://assets/texture/dark_gray_square.png" type="Texture" id=14]
 [ext_resource path="res://src/pelota/sprite_aim.gd" type="Script" id=15]
+[ext_resource path="res://assets/audio/sfx/click.wav" type="AudioStream" id=16]
+[ext_resource path="res://assets/audio/sfx/sh.wav" type="AudioStream" id=17]
+[ext_resource path="res://src/pelota/throw_sound.gd" type="Script" id=18]
 
 [sub_resource type="Image" id=50]
 data = {
@@ -3622,6 +3625,21 @@ region_rect = Rect2( 0, 0, 1, 1 )
 [node name="palette_client" parent="." instance=ExtResource( 3 )]
 type = 1
 
+[node name="throw_sound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 17 )
+bus = "sfx"
+script = ExtResource( 18 )
+
+[node name="grab_sound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 16 )
+bus = "sfx"
+
 [connection signal="pre_state_change" from="state_machine" to="AnimationPlayer/reset_anim" method="trigger"]
 [connection signal="entered" from="state_machine/throw" to="state_machine/throw/lifetime" method="start"]
+[connection signal="entered" from="state_machine/throw" to="throw_sound" method="play"]
 [connection signal="exited" from="state_machine/throw" to="state_machine/throw/lifetime" method="stop"]
+[connection signal="entered" from="state_machine/idle" to="throw_sound" method="stop"]
+[connection signal="entered" from="state_machine/grabbing" to="throw_sound" method="stop"]
+[connection signal="entered" from="state_machine/grabbing" to="grab_sound" method="play"]
+[connection signal="entered" from="state_machine/retrieving" to="throw_sound" method="play"]
+[connection signal="exited" from="state_machine/retrieving" to="throw_sound" method="stop"]
