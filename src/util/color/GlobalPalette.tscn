@@ -455,10 +455,10 @@ material = SubResource( 88 )
 string_val = "[\"ff000000\",\"fffcfcfc\",\"ff3cbcfc\",\"ff0070ec\"]"
 is_object = true
 
-[node name="health" parent="Object" instance=ExtResource( 2 )]
-palette = PoolColorArray( 1, 1, 1, 1, 0.992157, 1, 0, 1, 0.129412, 1, 0, 1, 0, 0.356863, 0.407843, 1 )
+[node name="dungeon_object" parent="Object" instance=ExtResource( 2 )]
+palette = PoolColorArray( 1, 1, 1, 1, 0.941176, 0.737255, 0.235294, 1, 0.054902, 0.329412, 0, 1, 0.0823529, 0, 0.121569, 1 )
 material = SubResource( 18 )
-string_val = "[\"ffffffff\",\"fffdff00\",\"ff21ff00\",\"ff005b68\"]"
+string_val = "[\"ffffffff\",\"fff0bc3c\",\"ff0e5400\",\"ff15001f\"]"
 is_object = true
 
 [node name="bullet" parent="Object" instance=ExtResource( 2 )]

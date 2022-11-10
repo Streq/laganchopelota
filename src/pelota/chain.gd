@@ -7,6 +7,8 @@ func _process(delta: float) -> void:
 	var size = links.get_child_count()
 	
 	var start_pos = owner.global_position
+#	if !is_instance_valid(owner.wearer):
+#		return
 	var end_pos = owner.wearer.global_position
 	var distance_vector = end_pos-start_pos
 

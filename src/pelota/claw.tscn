@@ -19,7 +19,7 @@
 [ext_resource path="res://assets/audio/sfx/sh.wav" type="AudioStream" id=17]
 [ext_resource path="res://src/pelota/throw_sound.gd" type="Script" id=18]
 
-[sub_resource type="Image" id=50]
+[sub_resource type="Image" id=47]
 data = {
 "data": PoolByteArray( 255, 255, 255, 0, 255, 227, 99, 255, 255, 57, 8, 255, 0, 0, 0, 255 ),
 "format": "RGBA8",
@@ -28,21 +28,21 @@ data = {
 "width": 4
 }
 
-[sub_resource type="ImageTexture" id=48]
+[sub_resource type="ImageTexture" id=45]
 flags = 0
 flags = 0
-image = SubResource( 50 )
+image = SubResource( 47 )
 size = Vector2( 4, 1 )
 
-[sub_resource type="ShaderMaterial" id=49]
+[sub_resource type="ShaderMaterial" id=46]
 resource_local_to_scene = true
 shader = ExtResource( 1 )
 shader_param/palette_size = 4
 shader_param/offset = 0
 shader_param/blue_index_offset = 0.0
-shader_param/palette = SubResource( 48 )
+shader_param/palette = SubResource( 45 )
 
-[sub_resource type="Image" id=51]
+[sub_resource type="Image" id=48]
 data = {
 "data": PoolByteArray( 255, 255, 255, 0, 255, 227, 99, 255, 255, 57, 8, 255, 0, 0, 0, 255 ),
 "format": "RGBA8",
@@ -54,7 +54,7 @@ data = {
 [sub_resource type="ImageTexture" id=36]
 flags = 0
 flags = 0
-image = SubResource( 51 )
+image = SubResource( 48 )
 size = Vector2( 4, 1 )
 
 [sub_resource type="ShaderMaterial" id=37]
@@ -352,7 +352,7 @@ tracks/4/keys = {
 
 [node name="claw" type="Node2D"]
 process_priority = 1
-material = SubResource( 49 )
+material = SubResource( 46 )
 z_index = 5
 z_as_relative = false
 script = ExtResource( 4 )

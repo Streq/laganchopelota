@@ -22,6 +22,8 @@ func _exit():
 var dir = Vector2.RIGHT
 func _physics_update(delta: float):
 	var wearer = root.wearer
+#	if !is_instance_valid(wearer):
+#		return
 	var input_dir = root.wearer.input_state.dir
 	if input_dir:
 		dir = spin_toward_dir(dir,input_dir,delta)

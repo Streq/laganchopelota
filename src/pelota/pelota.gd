@@ -24,6 +24,8 @@ signal bounced()
 
 onready var input_state := $input_state
 onready var animation_player: AnimationPlayer = $AnimationPlayer
+onready var claw: Node2D = $claw
+
 
 export var jump_speed := 250.0
 
@@ -68,7 +70,7 @@ func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 		apply_central_impulse(normal.normalized()*jump_speed)
 	if jump_in_dir:
 		var dir = input_state.dir
-		call_deferred("fart_particles", dir)
+		call_deferred("fart_parties", dir)
 		apply_central_impulse(dir.normalized()*jump_speed)
 	jump_against_walls = false
 	jump_in_dir = false
@@ -91,3 +93,6 @@ func fart_particles(dir:Vector2):
 		particle.velocity += linear_velocity
 		particle.velocity -= dir.rotated(deg2rad(rand_range(-45,45)))*(500.0+rand_range(-100,100))
 		
+func despawn():
+	queue_free()
+	claw.queue_free()

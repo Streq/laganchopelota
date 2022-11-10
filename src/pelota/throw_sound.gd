@@ -1,6 +1,8 @@
 extends AudioStreamPlayer2D
 
 func _physics_process(delta: float) -> void:
+#	if !is_instance_valid(owner.wearer):
+#		return
 	var relative_velocity = owner.velocity-owner.wearer.linear_velocity
 	var speed = relative_velocity.length()
 	self.pitch_scale = speed/200.0

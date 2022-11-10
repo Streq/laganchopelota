@@ -11,10 +11,12 @@ func _ready() -> void:
 	
 	for difficulty in range(1,2):
 		for i in 4:
+#		for i in 0:
 			var segment = segments[difficulty][randi()%segments[difficulty].size()].instance()
 			add_segment(segment)
 	for difficulty in range(2,segments.size()-1):
 		for i in 3:
+#		for i in 0:
 			var segment = segments[difficulty][randi()%segments[difficulty].size()].instance()
 			add_segment(segment)
 	

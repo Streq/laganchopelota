@@ -34,11 +34,9 @@ tracks/1/keys = {
 }
 
 [sub_resource type="StreamTexture" id=3]
-flags = 4
 load_path = "res://.import/intro.png-823c2ce19bc572976e565ceda848bbce.stex"
 
 [sub_resource type="StreamTexture" id=4]
-flags = 4
 load_path = "res://.import/made_by_streq2.png-2e6acb73e3c4a09c613cd92bcbdbbbc9.stex"
 
 [node name="intro" type="CanvasLayer"]
