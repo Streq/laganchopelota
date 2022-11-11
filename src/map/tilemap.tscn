@@ -5,7 +5,7 @@
 [ext_resource path="res://src/util/color/GlobalPalette.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/texture/dungeon_wall.png" type="Texture" id=4]
 
-[sub_resource type="Image" id=116]
+[sub_resource type="Image" id=114]
 data = {
 "data": PoolByteArray( 255, 227, 99, 255, 116, 128, 44, 255, 0, 77, 73, 255, 21, 0, 31, 255 ),
 "format": "RGBA8",
@@ -14,10 +14,10 @@ data = {
 "width": 4
 }
 
-[sub_resource type="ImageTexture" id=83]
+[sub_resource type="ImageTexture" id=115]
 flags = 0
 flags = 0
-image = SubResource( 116 )
+image = SubResource( 114 )
 size = Vector2( 4, 1 )
 
 [sub_resource type="ShaderMaterial" id=81]
@@ -26,7 +26,7 @@ shader = ExtResource( 1 )
 shader_param/palette_size = 4
 shader_param/offset = 0
 shader_param/blue_index_offset = 0.0
-shader_param/palette = SubResource( 83 )
+shader_param/palette = SubResource( 115 )
 
 [sub_resource type="TileSet" id=28]
 1/name = "dungeon_wall.png 1"
@@ -107,7 +107,7 @@ shader_param/palette = SubResource( 83 )
 4/shapes = [  ]
 4/z_index = 0
 
-[sub_resource type="Image" id=117]
+[sub_resource type="Image" id=116]
 data = {
 "data": PoolByteArray( 240, 188, 60, 255, 21, 0, 31, 255, 21, 0, 31, 255, 15, 89, 0, 255 ),
 "format": "RGBA8",
@@ -116,10 +116,10 @@ data = {
 "width": 4
 }
 
-[sub_resource type="ImageTexture" id=85]
+[sub_resource type="ImageTexture" id=117]
 flags = 0
 flags = 0
-image = SubResource( 117 )
+image = SubResource( 116 )
 size = Vector2( 4, 1 )
 
 [sub_resource type="ShaderMaterial" id=39]
@@ -128,7 +128,7 @@ shader = ExtResource( 1 )
 shader_param/palette_size = 4
 shader_param/offset = 0
 shader_param/blue_index_offset = 0.0
-shader_param/palette = SubResource( 85 )
+shader_param/palette = SubResource( 117 )
 
 [sub_resource type="Image" id=118]
 data = {
@@ -139,7 +139,7 @@ data = {
 "width": 4
 }
 
-[sub_resource type="ImageTexture" id=87]
+[sub_resource type="ImageTexture" id=119]
 flags = 0
 flags = 0
 image = SubResource( 118 )
@@ -151,21 +151,21 @@ shader = ExtResource( 1 )
 shader_param/palette_size = 4
 shader_param/offset = 0.0
 shader_param/blue_index_offset = 0.0
-shader_param/palette = SubResource( 87 )
+shader_param/palette = SubResource( 119 )
 
-[sub_resource type="Image" id=119]
+[sub_resource type="Image" id=120]
 data = {
-"data": PoolByteArray( 255, 245, 0, 255, 252, 60, 60, 255, 130, 0, 0, 255, 0, 0, 0, 255 ),
+"data": PoolByteArray( 205, 255, 0, 255, 0, 0, 0, 255, 128, 255, 0, 255, 1, 140, 0, 255 ),
 "format": "RGBA8",
 "height": 1,
 "mipmaps": false,
 "width": 4
 }
 
-[sub_resource type="ImageTexture" id=89]
+[sub_resource type="ImageTexture" id=121]
 flags = 0
 flags = 0
-image = SubResource( 119 )
+image = SubResource( 120 )
 size = Vector2( 4, 1 )
 
 [sub_resource type="ShaderMaterial" id=90]
@@ -174,9 +174,9 @@ shader = ExtResource( 1 )
 shader_param/palette_size = 4
 shader_param/offset = 0
 shader_param/blue_index_offset = 0.0
-shader_param/palette = SubResource( 89 )
+shader_param/palette = SubResource( 121 )
 
-[sub_resource type="Image" id=120]
+[sub_resource type="Image" id=122]
 data = {
 "data": PoolByteArray( 255, 255, 0, 255, 126, 126, 1, 255, 60, 60, 2, 255, 21, 0, 31, 255 ),
 "format": "RGBA8",
@@ -185,10 +185,10 @@ data = {
 "width": 4
 }
 
-[sub_resource type="ImageTexture" id=92]
+[sub_resource type="ImageTexture" id=123]
 flags = 0
 flags = 0
-image = SubResource( 120 )
+image = SubResource( 122 )
 size = Vector2( 4, 1 )
 
 [sub_resource type="ShaderMaterial" id=48]
@@ -197,9 +197,9 @@ shader = ExtResource( 1 )
 shader_param/palette_size = 4
 shader_param/offset = 0
 shader_param/blue_index_offset = 0.0
-shader_param/palette = SubResource( 92 )
+shader_param/palette = SubResource( 123 )
 
-[sub_resource type="Image" id=121]
+[sub_resource type="Image" id=124]
 data = {
 "data": PoolByteArray( 240, 188, 60, 255, 0, 0, 0, 255, 4, 35, 0, 255, 14, 84, 0, 255 ),
 "format": "RGBA8",
@@ -208,10 +208,10 @@ data = {
 "width": 4
 }
 
-[sub_resource type="ImageTexture" id=94]
+[sub_resource type="ImageTexture" id=125]
 flags = 0
 flags = 0
-image = SubResource( 121 )
+image = SubResource( 124 )
 size = Vector2( 4, 1 )
 
 [sub_resource type="ShaderMaterial" id=33]
@@ -220,9 +220,9 @@ shader = ExtResource( 1 )
 shader_param/palette_size = 4
 shader_param/offset = 0
 shader_param/blue_index_offset = 0.0
-shader_param/palette = SubResource( 94 )
+shader_param/palette = SubResource( 125 )
 
-[sub_resource type="Image" id=122]
+[sub_resource type="Image" id=126]
 data = {
 "data": PoolByteArray( 252, 252, 252, 255, 188, 188, 188, 255, 60, 188, 252, 255, 0, 0, 0, 255 ),
 "format": "RGBA8",
@@ -231,10 +231,10 @@ data = {
 "width": 4
 }
 
-[sub_resource type="ImageTexture" id=96]
+[sub_resource type="ImageTexture" id=127]
 flags = 0
 flags = 0
-image = SubResource( 122 )
+image = SubResource( 126 )
 size = Vector2( 4, 1 )
 
 [sub_resource type="ShaderMaterial" id=51]
@@ -243,9 +243,9 @@ shader = ExtResource( 1 )
 shader_param/palette_size = 4
 shader_param/offset = 0
 shader_param/blue_index_offset = 0.0
-shader_param/palette = SubResource( 96 )
+shader_param/palette = SubResource( 127 )
 
-[sub_resource type="Image" id=123]
+[sub_resource type="Image" id=128]
 data = {
 "data": PoolByteArray( 254, 254, 133, 255, 254, 254, 133, 255, 115, 74, 0, 255, 0, 0, 0, 255 ),
 "format": "RGBA8",
@@ -254,10 +254,10 @@ data = {
 "width": 4
 }
 
-[sub_resource type="ImageTexture" id=98]
+[sub_resource type="ImageTexture" id=129]
 flags = 0
 flags = 0
-image = SubResource( 123 )
+image = SubResource( 128 )
 size = Vector2( 4, 1 )
 
 [sub_resource type="ShaderMaterial" id=54]
@@ -266,9 +266,9 @@ shader = ExtResource( 1 )
 shader_param/palette_size = 4
 shader_param/offset = 0
 shader_param/blue_index_offset = 0.0
-shader_param/palette = SubResource( 98 )
+shader_param/palette = SubResource( 129 )
 
-[sub_resource type="Image" id=124]
+[sub_resource type="Image" id=130]
 data = {
 "data": PoolByteArray( 255, 255, 255, 0, 255, 227, 99, 255, 255, 57, 8, 255, 0, 0, 0, 255 ),
 "format": "RGBA8",
@@ -277,10 +277,10 @@ data = {
 "width": 4
 }
 
-[sub_resource type="ImageTexture" id=100]
+[sub_resource type="ImageTexture" id=131]
 flags = 0
 flags = 0
-image = SubResource( 124 )
+image = SubResource( 130 )
 size = Vector2( 4, 1 )
 
 [sub_resource type="ShaderMaterial" id=57]
@@ -289,9 +289,9 @@ shader = ExtResource( 1 )
 shader_param/palette_size = 4
 shader_param/offset = 0
 shader_param/blue_index_offset = 0.0
-shader_param/palette = SubResource( 100 )
+shader_param/palette = SubResource( 131 )
 
-[sub_resource type="Image" id=125]
+[sub_resource type="Image" id=132]
 data = {
 "data": PoolByteArray( 255, 255, 255, 0, 255, 227, 99, 255, 78, 74, 255, 255, 0, 0, 0, 255 ),
 "format": "RGBA8",
@@ -300,10 +300,10 @@ data = {
 "width": 4
 }
 
-[sub_resource type="ImageTexture" id=102]
+[sub_resource type="ImageTexture" id=133]
 flags = 0
 flags = 0
-image = SubResource( 125 )
+image = SubResource( 132 )
 size = Vector2( 4, 1 )
 
 [sub_resource type="ShaderMaterial" id=60]
@@ -312,9 +312,9 @@ shader = ExtResource( 1 )
 shader_param/palette_size = 4
 shader_param/offset = 0
 shader_param/blue_index_offset = 0.0
-shader_param/palette = SubResource( 102 )
+shader_param/palette = SubResource( 133 )
 
-[sub_resource type="Image" id=126]
+[sub_resource type="Image" id=134]
 data = {
 "data": PoolByteArray( 255, 255, 255, 0, 255, 227, 99, 255, 57, 189, 24, 255, 0, 0, 0, 255 ),
 "format": "RGBA8",
@@ -323,10 +323,10 @@ data = {
 "width": 4
 }
 
-[sub_resource type="ImageTexture" id=104]
+[sub_resource type="ImageTexture" id=135]
 flags = 0
 flags = 0
-image = SubResource( 126 )
+image = SubResource( 134 )
 size = Vector2( 4, 1 )
 
 [sub_resource type="ShaderMaterial" id=63]
@@ -335,9 +335,9 @@ shader = ExtResource( 1 )
 shader_param/palette_size = 4
 shader_param/offset = 0
 shader_param/blue_index_offset = 0.0
-shader_param/palette = SubResource( 104 )
+shader_param/palette = SubResource( 135 )
 
-[sub_resource type="Image" id=127]
+[sub_resource type="Image" id=136]
 data = {
 "data": PoolByteArray( 255, 255, 255, 0, 255, 227, 99, 255, 255, 149, 0, 255, 0, 0, 0, 255 ),
 "format": "RGBA8",
@@ -346,10 +346,10 @@ data = {
 "width": 4
 }
 
-[sub_resource type="ImageTexture" id=106]
+[sub_resource type="ImageTexture" id=137]
 flags = 0
 flags = 0
-image = SubResource( 127 )
+image = SubResource( 136 )
 size = Vector2( 4, 1 )
 
 [sub_resource type="ShaderMaterial" id=66]
@@ -358,9 +358,9 @@ shader = ExtResource( 1 )
 shader_param/palette_size = 4
 shader_param/offset = 0
 shader_param/blue_index_offset = 0.0
-shader_param/palette = SubResource( 106 )
+shader_param/palette = SubResource( 137 )
 
-[sub_resource type="Image" id=128]
+[sub_resource type="Image" id=138]
 data = {
 "data": PoolByteArray( 255, 255, 255, 0, 0, 0, 0, 255, 255, 0, 0, 255, 255, 155, 0, 255 ),
 "format": "RGBA8",
@@ -369,10 +369,10 @@ data = {
 "width": 4
 }
 
-[sub_resource type="ImageTexture" id=108]
+[sub_resource type="ImageTexture" id=139]
 flags = 0
 flags = 0
-image = SubResource( 128 )
+image = SubResource( 138 )
 size = Vector2( 4, 1 )
 
 [sub_resource type="ShaderMaterial" id=69]
@@ -381,9 +381,9 @@ shader = ExtResource( 1 )
 shader_param/palette_size = 4
 shader_param/offset = 0
 shader_param/blue_index_offset = 0.0
-shader_param/palette = SubResource( 108 )
+shader_param/palette = SubResource( 139 )
 
-[sub_resource type="Image" id=129]
+[sub_resource type="Image" id=140]
 data = {
 "data": PoolByteArray( 255, 255, 255, 0, 252, 252, 252, 255, 60, 188, 252, 255, 0, 112, 236, 255 ),
 "format": "RGBA8",
@@ -392,10 +392,10 @@ data = {
 "width": 4
 }
 
-[sub_resource type="ImageTexture" id=110]
+[sub_resource type="ImageTexture" id=141]
 flags = 0
 flags = 0
-image = SubResource( 129 )
+image = SubResource( 140 )
 size = Vector2( 4, 1 )
 
 [sub_resource type="ShaderMaterial" id=72]
@@ -404,9 +404,9 @@ shader = ExtResource( 1 )
 shader_param/palette_size = 4
 shader_param/offset = 0
 shader_param/blue_index_offset = 0.0
-shader_param/palette = SubResource( 110 )
+shader_param/palette = SubResource( 141 )
 
-[sub_resource type="Image" id=130]
+[sub_resource type="Image" id=142]
 data = {
 "data": PoolByteArray( 255, 255, 255, 0, 240, 188, 60, 255, 14, 84, 0, 255, 21, 0, 31, 255 ),
 "format": "RGBA8",
@@ -415,10 +415,10 @@ data = {
 "width": 4
 }
 
-[sub_resource type="ImageTexture" id=112]
+[sub_resource type="ImageTexture" id=143]
 flags = 0
 flags = 0
-image = SubResource( 130 )
+image = SubResource( 142 )
 size = Vector2( 4, 1 )
 
 [sub_resource type="ShaderMaterial" id=113]
@@ -427,9 +427,9 @@ shader = ExtResource( 1 )
 shader_param/palette_size = 4
 shader_param/offset = 0
 shader_param/blue_index_offset = 0.0
-shader_param/palette = SubResource( 112 )
+shader_param/palette = SubResource( 143 )
 
-[sub_resource type="Image" id=131]
+[sub_resource type="Image" id=144]
 data = {
 "data": PoolByteArray( 255, 255, 255, 0, 255, 0, 0, 255, 255, 255, 0, 255, 255, 255, 255, 255 ),
 "format": "RGBA8",
@@ -438,10 +438,10 @@ data = {
 "width": 4
 }
 
-[sub_resource type="ImageTexture" id=115]
+[sub_resource type="ImageTexture" id=145]
 flags = 0
 flags = 0
-image = SubResource( 131 )
+image = SubResource( 144 )
 size = Vector2( 4, 1 )
 
 [sub_resource type="ShaderMaterial" id=78]
@@ -450,7 +450,7 @@ shader = ExtResource( 1 )
 shader_param/palette_size = 4
 shader_param/offset = 0
 shader_param/blue_index_offset = 0.0
-shader_param/palette = SubResource( 115 )
+shader_param/palette = SubResource( 145 )
 
 [node name="TileMap" type="TileMap"]
 material = SubResource( 81 )
@@ -462,48 +462,63 @@ tile_data = PoolIntArray( -3538903, 0, 196609, -3538902, 0, 196610, -3538901, 0,
 [node name="GlobalPalette" parent="." instance=ExtResource( 3 )]
 
 [node name="purple" parent="GlobalPalette/Background" index="0"]
+palette = PoolColorArray( 1, 0.890196, 0.388235, 1, 0.454902, 0.501961, 0.172549, 1, 0, 0.301961, 0.286275, 1, 0.0823529, 0, 0.121569, 1 )
 material = SubResource( 81 )
 
 [node name="pink" parent="GlobalPalette/Background" index="1"]
+palette = PoolColorArray( 0.941176, 0.737255, 0.235294, 1, 0.0823529, 0, 0.121569, 1, 0.0823529, 0, 0.121569, 1, 0.0588235, 0.34902, 0, 1 )
 material = SubResource( 39 )
 
 [node name="grass" parent="GlobalPalette/Background" index="2"]
+palette = PoolColorArray( 0.584314, 1, 0, 1, 0, 0.341176, 0, 1, 0.25098, 0.172549, 0, 1, 0.0823529, 0, 0.121569, 1 )
 material = SubResource( 42 )
 
 [node name="lava" parent="GlobalPalette/Background" index="3"]
+palette = PoolColorArray( 0.803922, 1, 0, 1, 0, 0, 0, 1, 0.501961, 1, 0, 1, 0.00392157, 0.54902, 0, 1 )
 material = SubResource( 90 )
 
 [node name="yellow" parent="GlobalPalette/Background" index="4"]
+palette = PoolColorArray( 1, 1, 0, 1, 0.494118, 0.494118, 0.00392157, 1, 0.235294, 0.235294, 0.00784314, 1, 0.0823529, 0, 0.121569, 1 )
 material = SubResource( 48 )
 
 [node name="rock" parent="GlobalPalette/Background" index="5"]
+palette = PoolColorArray( 0.941176, 0.737255, 0.235294, 1, 0, 0, 0, 1, 0.0156863, 0.137255, 0, 1, 0.054902, 0.329412, 0, 1 )
 material = SubResource( 33 )
 
 [node name="sky" parent="GlobalPalette/Background" index="6"]
+palette = PoolColorArray( 0.988235, 0.988235, 0.988235, 1, 0.737255, 0.737255, 0.737255, 1, 0.235294, 0.737255, 0.988235, 1, 0, 0, 0, 1 )
 material = SubResource( 51 )
 
 [node name="sign_text" parent="GlobalPalette/Background" index="7"]
+palette = PoolColorArray( 0.996078, 0.996078, 0.521569, 1, 0.996078, 0.996078, 0.521569, 1, 0.45098, 0.290196, 0, 1, 0, 0, 0, 1 )
 material = SubResource( 54 )
 
 [node name="red_dude" parent="GlobalPalette/Object" index="0"]
+palette = PoolColorArray( 0.870588, 1, 0.870588, 1, 1, 0.890196, 0.388235, 1, 1, 0.223529, 0.0313726, 1, 0, 0, 0, 1 )
 material = SubResource( 57 )
 
 [node name="blue_dude" parent="GlobalPalette/Object" index="1"]
+palette = PoolColorArray( 0.870588, 1, 0.870588, 1, 1, 0.890196, 0.388235, 1, 0.305882, 0.290196, 1, 1, 0, 0, 0, 1 )
 material = SubResource( 60 )
 
 [node name="green_dude" parent="GlobalPalette/Object" index="2"]
+palette = PoolColorArray( 0.870588, 1, 0.870588, 1, 1, 0.890196, 0.388235, 1, 0.223529, 0.741176, 0.0941176, 1, 0, 0, 0, 1 )
 material = SubResource( 63 )
 
 [node name="brown_dude" parent="GlobalPalette/Object" index="3"]
+palette = PoolColorArray( 0.870588, 1, 0.870588, 1, 1, 0.890196, 0.388235, 1, 1, 0.584314, 0, 1, 0, 0, 0, 1 )
 material = SubResource( 66 )
 
 [node name="hurt" parent="GlobalPalette/Object" index="4"]
+palette = PoolColorArray( 0.870588, 1, 0.870588, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0.607843, 0, 1 )
 material = SubResource( 69 )
 
 [node name="water" parent="GlobalPalette/Object" index="5"]
+palette = PoolColorArray( 0, 0, 0, 1, 0.988235, 0.988235, 0.988235, 1, 0.235294, 0.737255, 0.988235, 1, 0, 0.439216, 0.92549, 1 )
 material = SubResource( 72 )
 
 [node name="dungeon_object" parent="GlobalPalette/Object" index="6"]
+palette = PoolColorArray( 1, 1, 1, 1, 0.941176, 0.737255, 0.235294, 1, 0.054902, 0.329412, 0, 1, 0.0823529, 0, 0.121569, 1 )
 material = SubResource( 113 )
 
 [node name="bullet" parent="GlobalPalette/Object" index="7"]
