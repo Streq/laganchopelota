@@ -242,6 +242,7 @@ anims/jump = SubResource( 34 )
 type = 1
 
 [node name="pedo" type="AudioStreamPlayer2D" parent="."]
+volume_db = -3.0
 bus = "sfx"
 script = ExtResource( 19 )
 streams = [ ExtResource( 21 ), ExtResource( 22 ), ExtResource( 20 ), ExtResource( 23 ), ExtResource( 26 ), ExtResource( 25 ), ExtResource( 24 ) ]

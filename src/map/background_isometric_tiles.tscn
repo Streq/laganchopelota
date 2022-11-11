@@ -4,28 +4,28 @@
 [ext_resource path="res://assets/shader/palette.gdshader" type="Shader" id=2]
 [ext_resource path="res://src/util/color/palette_client.tscn" type="PackedScene" id=3]
 
-[sub_resource type="Image" id=5]
+[sub_resource type="Image" id=20]
 data = {
-"data": PoolByteArray( 255, 255, 0, 255, 126, 126, 1, 255, 60, 60, 2, 255, 0, 0, 0, 255 ),
+"data": PoolByteArray( 255, 255, 0, 255, 126, 126, 1, 255, 60, 60, 2, 255, 21, 0, 31, 255 ),
 "format": "RGBA8",
 "height": 1,
 "mipmaps": false,
 "width": 4
 }
 
-[sub_resource type="ImageTexture" id=3]
+[sub_resource type="ImageTexture" id=18]
 flags = 0
 flags = 0
-image = SubResource( 5 )
+image = SubResource( 20 )
 size = Vector2( 4, 1 )
 
-[sub_resource type="ShaderMaterial" id=4]
+[sub_resource type="ShaderMaterial" id=19]
 resource_local_to_scene = true
 shader = ExtResource( 2 )
 shader_param/palette_size = 4
 shader_param/offset = 0
 shader_param/blue_index_offset = 0.0
-shader_param/palette = SubResource( 3 )
+shader_param/palette = SubResource( 18 )
 
 [sub_resource type="TileSet" id=1]
 0/name = "big_dungeon_background.png 0"
@@ -72,7 +72,7 @@ shader_param/palette = SubResource( 3 )
 2/z_index = 0
 
 [node name="TileMap" type="TileMap"]
-material = SubResource( 4 )
+material = SubResource( 19 )
 mode = 1
 tile_set = SubResource( 1 )
 cell_size = Vector2( 32, 32 )

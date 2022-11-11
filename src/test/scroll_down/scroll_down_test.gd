@@ -3,6 +3,8 @@ extends Node2D
 onready var camera_2d: Camera2D = $Camera2D
 onready var lose_label: Label = $"%lose_label"
 onready var win_label: Label = $"%win_label"
+onready var music: AudioStreamPlayer = $music
+onready var intro_music: AudioStreamPlayer = $intro_music
 
 export var camera_speed := 25.0
 func _physics_process(delta: float) -> void:
@@ -27,3 +29,7 @@ func _on_player_lose_zone_area_entered(area: Area2D) -> void:
 
 func _on_player_win_zone_area_entered(area: Area2D) -> void:
 	win()
+
+func play_music():
+	intro_music.stop()
+	music.play()

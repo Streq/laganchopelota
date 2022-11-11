@@ -5,7 +5,7 @@ enum MODE {
 	KEYBOARD,
 	JOYSTICK
 }
-var mode
+var mode = MODE.MOUSE
 
 func _unhandled_input(event: InputEvent) -> void:
 	if "input_state" in get_parent():

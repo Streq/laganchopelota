@@ -115,6 +115,7 @@ z_index = 4096
 position = Vector2( -56, 0 )
 script = ExtResource( 4 )
 PELOTA = ExtResource( 6 )
+spawn_velocity = Vector2( 350, -20 )
 
 [node name="controller" parent="pipe/player_spawner" instance=ExtResource( 5 )]
 
