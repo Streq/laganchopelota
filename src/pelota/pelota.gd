@@ -70,7 +70,7 @@ func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 		apply_central_impulse(normal.normalized()*jump_speed)
 	if jump_in_dir:
 		var dir = input_state.dir
-		call_deferred("fart_parties", dir)
+		call_deferred("fart_particles", dir)
 		apply_central_impulse(dir.normalized()*jump_speed)
 	jump_against_walls = false
 	jump_in_dir = false

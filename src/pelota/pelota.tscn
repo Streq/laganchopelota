@@ -136,7 +136,6 @@ PARTICLE = ExtResource( 18 )
 shape = SubResource( 23 )
 
 [node name="claw" parent="." instance=ExtResource( 3 )]
-material = SubResource( 46 )
 
 [node name="display" type="Node2D" parent="."]
 material = SubResource( 37 )
