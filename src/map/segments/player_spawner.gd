@@ -10,7 +10,7 @@ func _ready() -> void:
 	controller.set_physics_process(false)
 
 func _on_segment_init() -> void:
-	yield(get_tree().create_timer(4.5),"timeout")
+#	yield(get_tree().create_timer(4.5),"timeout")
 	var pelota = PELOTA.instance()
 	pelota.position = owner.owner.to_local(global_position)
 	owner.owner.add_child(pelota)

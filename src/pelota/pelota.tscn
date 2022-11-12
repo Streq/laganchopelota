@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=2]
+[gd_scene load_steps=37 format=2]
 
 [ext_resource path="res://assets/shader/palette.gdshader" type="Shader" id=1]
 [ext_resource path="res://src/transform/fix_rotation.gd" type="Script" id=2]
@@ -13,10 +13,8 @@
 [ext_resource path="res://src/pelota/input_state.gd" type="Script" id=11]
 [ext_resource path="res://src/pelota/leg.gd" type="Script" id=12]
 [ext_resource path="res://src/transform/fix_rotation.tscn" type="PackedScene" id=13]
-[ext_resource path="res://src/pelota/time_bar.gd" type="Script" id=14]
-[ext_resource path="res://assets/texture/dark_gray_square.png" type="Texture" id=15]
-[ext_resource path="res://assets/texture/gray_square.png" type="Texture" id=16]
-[ext_resource path="res://assets/texture/black_square.png" type="Texture" id=17]
+[ext_resource path="res://src/HUD/energy_bar_segment.tscn" type="PackedScene" id=14]
+[ext_resource path="res://src/HUD/energy_bar.gd" type="Script" id=15]
 [ext_resource path="res://src/pelota/particle.tscn" type="PackedScene" id=18]
 [ext_resource path="res://src/pelota/pedo.gd" type="Script" id=19]
 [ext_resource path="res://assets/audio/sfx/pedo2.wav" type="AudioStream" id=20]
@@ -28,8 +26,9 @@
 [ext_resource path="res://assets/audio/sfx/pedo4.wav" type="AudioStream" id=26]
 [ext_resource path="res://assets/audio/sfx/bounce.wav" type="AudioStream" id=27]
 [ext_resource path="res://src/pelota/pipe_detect.gd" type="Script" id=28]
+[ext_resource path="res://src/pelota/bar.gd" type="Script" id=29]
 
-[sub_resource type="Image" id=44]
+[sub_resource type="Image" id=47]
 data = {
 "data": PoolByteArray( 255, 255, 255, 0, 255, 227, 99, 255, 255, 57, 8, 255, 0, 0, 0, 255 ),
 "format": "RGBA8",
@@ -41,7 +40,7 @@ data = {
 [sub_resource type="ImageTexture" id=45]
 flags = 0
 flags = 0
-image = SubResource( 44 )
+image = SubResource( 47 )
 size = Vector2( 4, 1 )
 
 [sub_resource type="ShaderMaterial" id=46]
@@ -55,7 +54,7 @@ shader_param/palette = SubResource( 45 )
 [sub_resource type="CircleShape2D" id=23]
 radius = 15.0
 
-[sub_resource type="Image" id=47]
+[sub_resource type="Image" id=48]
 data = {
 "data": PoolByteArray( 255, 255, 255, 0, 255, 227, 99, 255, 255, 57, 8, 255, 0, 0, 0, 255 ),
 "format": "RGBA8",
@@ -67,7 +66,7 @@ data = {
 [sub_resource type="ImageTexture" id=36]
 flags = 0
 flags = 0
-image = SubResource( 47 )
+image = SubResource( 48 )
 size = Vector2( 4, 1 )
 
 [sub_resource type="ShaderMaterial" id=37]
@@ -77,16 +76,6 @@ shader_param/palette_size = 4
 shader_param/offset = 0
 shader_param/blue_index_offset = 0.0
 shader_param/palette = SubResource( 36 )
-
-[sub_resource type="AtlasTexture" id=41]
-atlas = ExtResource( 17 )
-region = Rect2( 0, 0, 32, 4 )
-
-[sub_resource type="AtlasTexture" id=39]
-atlas = ExtResource( 15 )
-region = Rect2( 0, 0, 32, 4 )
-
-[sub_resource type="GDScript" id=43]
 
 [sub_resource type="Animation" id=33]
 length = 0.001
@@ -130,7 +119,18 @@ contacts_reported = 2
 contact_monitor = true
 can_sleep = false
 script = ExtResource( 8 )
+jump_speed = 150.0
 PARTICLE = ExtResource( 18 )
+
+[node name="jump" type="Node2D" parent="."]
+show_behind_parent = true
+use_parent_material = true
+rotation = -1.57079
+script = ExtResource( 12 )
+energy_recovery_speed = 0.5
+
+[node name="bar" type="Node" parent="jump"]
+script = ExtResource( 29 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 23 )
@@ -181,41 +181,15 @@ step = 0
 [node name="bar_pivot" type="Node2D" parent="display"]
 use_parent_material = true
 
-[node name="TextureProgress" type="TextureProgress" parent="display/bar_pivot"]
-material = SubResource( 37 )
+[node name="energy_bar" type="VBoxContainer" parent="display/bar_pivot"]
 use_parent_material = true
-margin_left = -26.0
-margin_top = 16.0
-margin_right = 6.0
-margin_bottom = 20.0
-rect_rotation = -89.9999
-value = 50.0
-texture_under = SubResource( 41 )
-texture_progress = SubResource( 39 )
-script = ExtResource( 14 )
-timer = NodePath("../../../leg/air_jump_cooldown")
-
-[node name="full_bar_marker" type="MarginContainer" parent="display/bar_pivot/TextureProgress"]
-show_behind_parent = true
-use_parent_material = true
-anchor_right = 1.0
-anchor_bottom = 1.0
-custom_constants/margin_right = -1
-custom_constants/margin_top = -1
-custom_constants/margin_left = -1
-custom_constants/margin_bottom = -1
-script = SubResource( 43 )
-
-[node name="background" type="TextureRect" parent="display/bar_pivot/TextureProgress/full_bar_marker"]
-show_behind_parent = true
-use_parent_material = true
-margin_left = -1.0
-margin_top = -1.0
-margin_right = 33.0
-margin_bottom = 5.0
-texture = ExtResource( 16 )
-expand = true
-stretch_mode = 1
+margin_left = -23.0
+margin_top = -17.0
+margin_right = -19.0
+margin_bottom = 15.0
+custom_constants/separation = 0
+script = ExtResource( 15 )
+BAR_SEGMENT = ExtResource( 14 )
 
 [node name="fix_rotation" parent="display/bar_pivot" instance=ExtResource( 13 )]
 step = 360
@@ -223,17 +197,6 @@ step = 360
 [node name="input_state" type="Node" parent="."]
 process_priority = 10
 script = ExtResource( 11 )
-
-[node name="leg" type="Node2D" parent="."]
-show_behind_parent = true
-use_parent_material = true
-rotation = -1.57079
-script = ExtResource( 12 )
-
-[node name="air_jump_cooldown" type="Timer" parent="leg"]
-process_mode = 0
-wait_time = 5.0
-one_shot = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/RESET = SubResource( 33 )

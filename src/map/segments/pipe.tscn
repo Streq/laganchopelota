@@ -4,7 +4,7 @@
 [ext_resource path="res://src/util/color/palette_client.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/texture/pipe.png" type="Texture" id=4]
 
-[sub_resource type="Image" id=9]
+[sub_resource type="Image" id=11]
 data = {
 "data": PoolByteArray( 255, 255, 255, 0, 240, 188, 60, 255, 14, 84, 0, 255, 21, 0, 31, 255 ),
 "format": "RGBA8",
@@ -16,7 +16,7 @@ data = {
 [sub_resource type="ImageTexture" id=7]
 flags = 0
 flags = 0
-image = SubResource( 9 )
+image = SubResource( 11 )
 size = Vector2( 4, 1 )
 
 [sub_resource type="ShaderMaterial" id=8]
@@ -27,13 +27,14 @@ shader_param/offset = 0
 shader_param/blue_index_offset = 0.0
 shader_param/palette = SubResource( 7 )
 
-[sub_resource type="RectangleShape2D" id=5]
+[sub_resource type="RectangleShape2D" id=10]
+extents = Vector2( 10, 28 )
 
 [node name="pipe" type="StaticBody2D"]
 z_index = 1000
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-polygon = PoolVector2Array( -96, -24, -48, -24, -48, -32, -32, -32, -32, -20, -76, -20, -76, 20, -32, 20, -32, 32, -48, 32, -48, 24, -96, 24 )
+polygon = PoolVector2Array( -96, -40, -48, -40, -48, -48, -32, -48, -32, -32, -76, -32, -76, 32, -32, 32, -32, 48, -48, 48, -48, 40, -96, 40 )
 
 [node name="Sprite" type="Sprite" parent="."]
 material = SubResource( 8 )
@@ -49,4 +50,4 @@ collision_layer = 16
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="pipe_area"]
-shape = SubResource( 5 )
+shape = SubResource( 10 )

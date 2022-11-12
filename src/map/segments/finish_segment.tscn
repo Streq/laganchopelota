@@ -30,7 +30,7 @@ extents = Vector2( 512, 16 )
 extents = Vector2( 4, 4 )
 
 [sub_resource type="RectangleShape2D" id=9]
-extents = Vector2( 24, 2 )
+extents = Vector2( 37.0002, 2 )
 
 [node name="segment" type="Node2D"]
 script = ExtResource( 2 )

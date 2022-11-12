@@ -254,6 +254,7 @@ color = Color( 0, 0, 0, 1 )
 
 [node name="segment_spawner" parent="." instance=ExtResource( 6 )]
 segments = [ [ ExtResource( 11 ) ], [ ExtResource( 8 ) ], [ ExtResource( 12 ), ExtResource( 13 ) ], [ ExtResource( 9 ), ExtResource( 10 ), ExtResource( 20 ) ], [ ExtResource( 1 ) ] ]
+segment_counts = [ 1, 4, 4, 3, 1 ]
 
 [node name="TileMap2" type="TileMap" parent="."]
 material = SubResource( 31 )

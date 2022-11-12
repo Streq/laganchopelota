@@ -69,6 +69,7 @@ func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 			normal+=local_normal
 		apply_central_impulse(normal.normalized()*jump_speed)
 	if jump_in_dir:
+		
 		var dir = input_state.dir
 		call_deferred("fart_particles", dir)
 		apply_central_impulse(dir.normalized()*jump_speed)
@@ -81,6 +82,8 @@ func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 	
 	previous_contacts = state.get_contact_count()
 		
+
+
 
 func fart_particles(dir:Vector2):
 	emit_signal("farted")

@@ -103,8 +103,8 @@ margin_right = 688.0
 margin_bottom = 231.0
 grow_horizontal = 2
 theme = SubResource( 4 )
-text = "CLICK IZQUIERDO - GANCHO
-CLICK DERECHO - PEDO"
+text = "CLICK IZQUIERDO - GANCHO (MANTENER APRETADO PARA AGARRARSE)
+CLICK DERECHO - PEDO (LA BARRITA AL COSTADO TE DICE SI TE PODES TIRAR)"
 align = 1
 
 [node name="pipe" parent="." instance=ExtResource( 7 )]

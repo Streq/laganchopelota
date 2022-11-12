@@ -1,16 +1,25 @@
 extends Node2D
-onready var air_jump_cooldown: Timer = $air_jump_cooldown
 
-export var jump_speed := 250.0
+export var jump_energy_requirement := 1.0
+export var max_energy := 4.0
+export var energy_recovery_speed := 1.0
+
+onready var energy_bar: Node = $bar
 var dir = Vector2.RIGHT
+
+
+func _ready() -> void:
+	energy_bar.max_value = max_energy
+
+
 func _physics_process(delta: float) -> void:
 	var input = owner.input_state
-	if input.dir:
-		dir = input.dir
-	global_rotation_degrees = -90
 	
 #	if input.B.is_just_pressed() and owner.is_on_wall():
 #		owner.jump_against_walls()
-	if input.B.is_just_pressed() and air_jump_cooldown.is_stopped():
-		if owner.jump_in_dir():
-			air_jump_cooldown.start()
+	if input.B.is_just_pressed() and input.dir and energy_bar.value >= jump_energy_requirement:
+		energy_bar.value -= jump_energy_requirement
+		owner.jump_in_dir()
+	var empty_slots = floor((energy_bar.max_value-energy_bar.value)/jump_energy_requirement)
+	
+	energy_bar.value += delta*energy_recovery_speed/(1.0+empty_slots/2.0)
