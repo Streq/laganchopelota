@@ -5,6 +5,7 @@ onready var lose_label: Label = $"%lose_label"
 onready var win_label: Label = $"%win_label"
 onready var music: AudioStreamPlayer = $music
 onready var intro_music: AudioStreamPlayer = $intro_music
+onready var game_over: AudioStreamPlayer = $game_over
 
 export var camera_speed := 25.0
 func _physics_process(delta: float) -> void:
@@ -18,7 +19,10 @@ func win():
 	
 func lose():
 	lose_label.show()
-	yield(get_tree().create_timer(2.0),"timeout")
+	game_over.play()
+	music.stop()
+	yield(game_over,"finished")
+	
 	get_tree().reload_current_scene()
 	
 

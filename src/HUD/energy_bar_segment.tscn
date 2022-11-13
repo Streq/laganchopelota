@@ -74,6 +74,7 @@ stretch_mode = 1
 
 [node name="bip" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 6 )
+volume_db = 3.35484
 bus = "sfx"
 
 [connection signal="full" from="." to="bip" method="play"]

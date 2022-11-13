@@ -1,0 +1,65 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://src/test/wrappable_rope/wrap_raycast_test.gd" type="Script" id=1]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource( 1 )
+forgiveness_radius = 5.0
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2( 50, 61 )
+shape = SubResource( 1 )
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+position = Vector2( 370, 171 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
+position = Vector2( 50, 61 )
+shape = SubResource( 1 )
+
+[node name="Line2D" type="Line2D" parent="."]
+points = PoolVector2Array( 0, 0 )
+width = 5.0
+default_color = Color( 0, 0.164706, 1, 1 )
+
+[node name="rays" type="Node2D" parent="."]
+
+[node name="RayCast2D" type="RayCast2D" parent="rays"]
+enabled = true
+
+[node name="RayCast2D2" type="RayCast2D" parent="rays"]
+enabled = true
+
+[node name="RayCast2D3" type="RayCast2D" parent="rays"]
+enabled = true
+
+[node name="RayCast2D4" type="RayCast2D" parent="rays"]
+enabled = true
+
+[node name="RayCast2D5" type="RayCast2D" parent="rays"]
+enabled = true
+
+[node name="RayCast2D6" type="RayCast2D" parent="rays"]
+enabled = true
+
+[node name="RayCast2D7" type="RayCast2D" parent="rays"]
+enabled = true
+
+[node name="RayCast2D8" type="RayCast2D" parent="rays"]
+enabled = true
+
+[node name="RayCast2D9" type="RayCast2D" parent="rays"]
+enabled = true
+
+[node name="RayCast2D10" type="RayCast2D" parent="rays"]
+enabled = true
+
+[node name="RayCast2D11" type="RayCast2D" parent="rays"]
+enabled = true
+
+[node name="RayCast2D12" type="RayCast2D" parent="rays"]
+enabled = true

@@ -20,6 +20,11 @@ func _physics_process(delta: float) -> void:
 	if input.B.is_just_pressed() and input.dir and energy_bar.value >= jump_energy_requirement:
 		energy_bar.value -= jump_energy_requirement
 		owner.jump_in_dir()
-	var empty_slots = floor((energy_bar.max_value-energy_bar.value)/jump_energy_requirement)
 	
-	energy_bar.value += delta*energy_recovery_speed/(1.0+empty_slots/2.0)
+	var delta_recovery = delta*energy_recovery_speed
+	var missing_energy = (energy_bar.max_value-energy_bar.value)
+	var empty_slots = floor(missing_energy/jump_energy_requirement)
+	var greediness_penalty = (1.0+empty_slots/2.0)
+	
+#	energy_bar.value += delta_recovery/greediness_penalty
+	energy_bar.value += delta_recovery

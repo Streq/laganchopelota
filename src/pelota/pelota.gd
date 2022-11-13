@@ -30,6 +30,7 @@ onready var claw: Node2D = $claw
 export var jump_speed := 250.0
 
 export var PARTICLE : PackedScene 
+export var DEAD_PELOTA : PackedScene
 var collision_velocity : Vector2 = Vector2.ZERO
 var previous_linear_velocity : Vector2 = Vector2.ZERO
 var previous_contacts := 0
@@ -99,3 +100,14 @@ func fart_particles(dir:Vector2):
 func despawn():
 	queue_free()
 	claw.queue_free()
+
+func die():
+	var dead_body = DEAD_PELOTA.instance()
+	get_parent().add_child(dead_body)
+	dead_body.position = self.position
+	dead_body.material = self.material
+	despawn()
+	
+
+func _on_hurtbox_area_entered(area: Area2D) -> void:
+	die()
