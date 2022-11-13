@@ -63,17 +63,17 @@ jobs:
         if: ${{ env.RELEASE_WINDOWS == 'true' }}
         run: |
           mkdir ./exports/windows
-          ./godot --path ./project.godot --export "Windows Desktop" ./exports/windows/$PROJECT_NAME.exe
+          ./godot --path ./project.godot --export "Windows Desktop" ./exports/windows/"$PROJECT_NAME".exe
       - name: Export Linux Port
         if: ${{ env.RELEASE_LINUX == 'true' }}
         run: |
           mkdir ./exports/linux
-          ./godot --path ./project.godot --export "Linux/X11" ./exports/linux/$PROJECT_NAME.x86_64
+          ./godot --path ./project.godot --export "Linux/X11" ./exports/linux/"$PROJECT_NAME".x86_64
       - name: Export Mac Port
         if: ${{ env.RELEASE_MAC == 'true' }}
         run: |
           mkdir ./exports/mac
-          ./godot --path ./project.godot --export "Mac OSX" ./exports/mac/$PROJECT_NAME.zip
+          ./godot --path ./project.godot --export "Mac OSX" ./exports/mac/"$PROJECT_NAME".zip
       - name: Export HTML5 Port
         if: ${{ env.RELEASE_HTML5 == 'true' || env.UPLOAD_TO_GH_PAGES == 'true' }}
         run: |
