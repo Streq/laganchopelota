@@ -194,6 +194,8 @@ B={
 2d_physics/layer_1="terrain"
 2d_physics/layer_2="being"
 2d_physics/layer_3="player"
+2d_physics/layer_4="hurtbox"
+2d_physics/layer_8="camera"
 
 [physics]
 
