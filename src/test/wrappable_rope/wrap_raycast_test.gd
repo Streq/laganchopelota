@@ -52,13 +52,11 @@ func check_splits(
 			var closest_point = collided_points[0]
 			var closest_pseudo_angle = 1000
 			
-			collided_points.sort()
 			for point in collided_points:
 
 				var OP = point-raycast_origin
 				
 				var pseudo_angle = (pseudoangle(OP)-pseudoangle(OA))*direction_of_spin
-				
 				
 				if pseudo_angle < closest_pseudo_angle:
 					closest_point = point
