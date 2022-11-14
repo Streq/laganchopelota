@@ -1,43 +1,29 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://src/test/wrappable_rope/wrap_raycast_test.gd" type="Script" id=1]
-[ext_resource path="res://src/test/util/collisionRectDisplay.tscn" type="PackedScene" id=2]
-
-[sub_resource type="RectangleShape2D" id=1]
+[ext_resource path="res://src/test/wrappable_rope/Polygon2D.gd" type="Script" id=2]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 1 )
 forgiveness_radius = 5.0
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2( 50, 61 )
-shape = SubResource( 1 )
-
-[node name="ColorRect" parent="StaticBody2D/CollisionShape2D" instance=ExtResource( 2 )]
-margin_left = -10.0
-margin_top = -10.0
-margin_right = 10.0
-margin_bottom = 10.0
-
-[node name="StaticBody2D2" type="StaticBody2D" parent="."]
-position = Vector2( 370, 171 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
-position = Vector2( 50, 61 )
-shape = SubResource( 1 )
-
-[node name="ColorRect2" parent="StaticBody2D2/CollisionShape2D" instance=ExtResource( 2 )]
-margin_left = -380.0
-margin_top = -181.0
-margin_right = -360.0
-margin_bottom = -161.0
-
-[node name="Line2D" type="Line2D" parent="."]
+[node name="line" type="Line2D" parent="."]
+z_index = -1
 points = PoolVector2Array( 0, 0 )
 width = 5.0
 default_color = Color( 0, 0.164706, 1, 1 )
 
 [node name="raycast" type="RayCast2D" parent="."]
+z_index = -1
 enabled = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2( 192, 104 )
+z_index = -1
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PoolVector2Array( -29, -9, 5, -25, 59, -13, 52, 28, 1, 44, -34, 12 )
+
+[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D/CollisionPolygon2D"]
+z_index = -1
+script = ExtResource( 2 )

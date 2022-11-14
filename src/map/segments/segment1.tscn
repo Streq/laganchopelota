@@ -18,7 +18,7 @@ extents = Vector2( 217, 112 )
 
 [sub_resource type="RectangleShape2D" id=6]
 
-[node name="segment" type="Node2D"]
+[node name="segment2" type="Node2D"]
 script = ExtResource( 2 )
 height = 672.0
 

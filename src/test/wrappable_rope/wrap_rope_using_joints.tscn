@@ -10,7 +10,7 @@ extents = Vector2( 118, 2 )
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 18, 10 )
 
-[node name="Node2D" type="Node2D"]
+[node name="Node2D2" type="Node2D"]
 
 [node name="RigidBody2D" type="RigidBody2D" parent="."]
 position = Vector2( 246, 48 )
