@@ -22,8 +22,8 @@ func _physics_process(delta: float) -> void:
 	
 	draw_triangle = PoolVector2Array([raycast.global_position, raycast_previous_end, raycast_current_end])
 	
-	if raycast.is_colliding():
-		check_splits(raycast_origin, raycast_previous_end, raycast_current_end)
+#	if raycast.is_colliding():
+	check_splits(raycast_origin, raycast_previous_end, raycast_current_end)
 	line_points[-1] = raycast.to_global(raycast.cast_to)
 	raycast_previous_cast_to = raycast.cast_to
 	raycast.cast_to = raycast.to_local(get_global_mouse_position())
@@ -35,27 +35,41 @@ func check_splits(
 		current_raycast_end: Vector2
 	):
 	draw_triangle = PoolVector2Array([raycast_origin,previous_raycast_end,current_raycast_end])
-	var OA = previous_raycast_end-raycast_origin
-	var OB = current_raycast_end-raycast_origin
 	
 	
 	var collided_points = get_collided_points(raycast_origin, previous_raycast_end, current_raycast_end)
+	
 	if !collided_points.empty():
-		var OAxOB = OA.cross(OB)
+#		if collided_points.size() == 1:
+#			split_at(collided_points[0])
+#		else:
+			var OA = previous_raycast_end-raycast_origin
+			var OB = current_raycast_end-raycast_origin
+			var OAxOB = OA.cross(OB)
 			
-		if collided_points.size() == 1:
-			var point = collided_points[0]
-			var OP = point-raycast_origin
-			var OAxOP = OA.cross(OP)
-			var OPxOB = OP.cross(OB)
+			var direction_of_spin = sign(OAxOB)
 			
-			if sign(OAxOB) == sign(OAxOP) and sign(OAxOB) == sign(OPxOB):
-				split_at(point)
-	
-	
+			var closest_point = collided_points[0]
+			var closest_pseudo_angle = 1000
+			
+			collided_points.sort()
+			for point in collided_points:
+
+				var OP = point-raycast_origin
+				
+				var pseudo_angle = (pseudoangle(OP)-pseudoangle(OA))*direction_of_spin
+				
+				
+				if pseudo_angle < closest_pseudo_angle:
+					closest_point = point
+					closest_pseudo_angle = pseudo_angle
+				
+			split_at(closest_point)
+				
+			
 func split_at(point:Vector2):
 	var global_end = raycast.cast_to+raycast.global_position
-	raycast.global_position = point
+	raycast.global_position = point+raycast.global_position.direction_to(point)
 	raycast.cast_to = global_end-raycast.global_position
 	line_points[-1] = point
 	line_points.append(global_end)
@@ -105,3 +119,7 @@ func _draw() -> void:
 	for point in draw_points:
 		draw_rect(Rect2(point-Vector2(5,5),Vector2(10,10)),Color.red)
 	draw_polyline(line_points,Color.green)
+
+
+func pseudoangle(vec:Vector2):
+	return 1.0 - vec.x/(abs(vec.x)+abs(vec.y))*sign(vec.y)

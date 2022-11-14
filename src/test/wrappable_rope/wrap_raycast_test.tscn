@@ -18,7 +18,7 @@ z_index = -1
 enabled = true
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
-position = Vector2( 192, 104 )
+position = Vector2( 430, 226 )
 z_index = -1
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
