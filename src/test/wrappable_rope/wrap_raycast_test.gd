@@ -13,6 +13,8 @@ var line_points := PoolVector2Array([Vector2(),Vector2()])
 
 var raycast_previous_cast_to := Vector2()
 
+var raycast_previous_origin := Vector2()
+
 func _physics_process(delta: float) -> void:
 	draw_points = PoolVector2Array()
 	
@@ -22,11 +24,14 @@ func _physics_process(delta: float) -> void:
 	
 	draw_triangle = PoolVector2Array([raycast.global_position, raycast_previous_end, raycast_current_end])
 	
+	if line_points.size()>2:
+		check_join(raycast_previous_origin, raycast_origin, raycast_previous_end, raycast_current_end)
 #	if raycast.is_colliding():
 	check_splits(raycast_origin, raycast_previous_end, raycast_current_end)
 	line_points[-1] = raycast.to_global(raycast.cast_to)
 	raycast_previous_cast_to = raycast.cast_to
 	raycast.cast_to = raycast.to_local(get_global_mouse_position())
+	
 	update()
 	
 func check_splits(
@@ -35,7 +40,6 @@ func check_splits(
 		current_raycast_end: Vector2
 	):
 	draw_triangle = PoolVector2Array([raycast_origin,previous_raycast_end,current_raycast_end])
-	
 	
 	var collided_points = get_collided_points(raycast_origin, previous_raycast_end, current_raycast_end)
 	
@@ -64,14 +68,40 @@ func check_splits(
 				
 			split_at(closest_point)
 				
-			
+
+func check_join(
+		previous_raycast_origin: Vector2,
+		raycast_origin: Vector2, 
+		previous_raycast_end: Vector2, 
+		current_raycast_end: Vector2
+	):
+	var QO = raycast_origin - previous_raycast_origin
+	var OA = previous_raycast_end - raycast_origin
+	var OB = current_raycast_end - raycast_origin
+	
+	var QOxOA = QO.cross(OA)
+	var QOxOB = QO.cross(OB)
+	if sign(QOxOA)!=sign(QOxOB):
+		join_last_two()
+	
 func split_at(point:Vector2):
+	print("splitting:", point)
 	var global_end = raycast.cast_to+raycast.global_position
+	raycast_previous_origin = raycast.global_position
 	raycast.global_position = point+raycast.global_position.direction_to(point)
 	raycast.cast_to = global_end-raycast.global_position
 	line_points[-1] = point
 	line_points.append(global_end)
 	pass
+
+func join_last_two():
+	line_points.remove(line_points.size()-2)
+	var global_end = raycast.cast_to+raycast.global_position
+	raycast_previous_origin = line_points[-3] if line_points.size()>2 else Vector2()
+	var new_origin = line_points[-2] if line_points.size()>1 else Vector2()
+	raycast.global_position = new_origin+raycast.global_position.direction_to(new_origin)
+	line_points[-1] = global_end
+	raycast.cast_to = global_end-raycast.global_position
 
 func get_collided_points(
 		raycast_origin: Vector2,
@@ -120,4 +150,8 @@ func _draw() -> void:
 
 
 func pseudoangle(vec:Vector2):
-	return 1.0 - vec.x/(abs(vec.x)+abs(vec.y))*sign(vec.y)
+	return 1.0 - vec.x/(abs(vec.x)+abs(vec.y))*sign(vec.y) if vec else 0.0
+
+#func _unhandled_input(event: InputEvent) -> void:
+#	if event.is_action_pressed("A"):
+#		join_last_two()
