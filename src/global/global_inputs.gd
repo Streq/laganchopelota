@@ -6,6 +6,10 @@ func _unhandled_key_input(event: InputEventKey) -> void:
 		match event.scancode:
 			KEY_R:
 				if OS.is_debug_build():
+					print("restarting")
+					for i in 10:
+						print()
+					
 					get_tree().reload_current_scene()
 			KEY_F:
 				OS.window_fullscreen = !OS.window_fullscreen

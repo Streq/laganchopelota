@@ -28,12 +28,46 @@ polygon = PoolVector2Array( -29, -9, 5, -25, 59, -13, 52, 28, 1, 44, -34, 12 )
 z_index = -1
 script = ExtResource( 2 )
 
+[node name="StaticBody2D3" type="StaticBody2D" parent="."]
+position = Vector2( 170, 218 )
+z_index = -1
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D3"]
+polygon = PoolVector2Array( -29, -9, 5, -25, 59, -13, 58, 195, -34, 195, -34, 12 )
+
+[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D3/CollisionPolygon2D"]
+z_index = -1
+script = ExtResource( 2 )
+
+[node name="StaticBody2D5" type="StaticBody2D" parent="."]
+position = Vector2( 411, 324 )
+rotation = 0.785397
+z_index = -1
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D5"]
+polygon = PoolVector2Array( -29, -9, 5, -25, 59, -13, 58, 195, -34, 195, -34, 12 )
+
+[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D5/CollisionPolygon2D"]
+z_index = -1
+script = ExtResource( 2 )
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="."]
+position = Vector2( 343, 63 )
+z_index = -1
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D4"]
+polygon = PoolVector2Array( -29, -9, 5, -25, 59, -13, 162, 40, 1, 44, -34, 12 )
+
+[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D4/CollisionPolygon2D"]
+z_index = -1
+script = ExtResource( 2 )
+
 [node name="StaticBody2D2" type="StaticBody2D" parent="."]
 position = Vector2( 707, 274 )
 z_index = -1
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D2"]
-polygon = PoolVector2Array( -29, -9, 18, 8, 59, -13, 52, 28, 1, 44, -138, 35 )
+polygon = PoolVector2Array( -19, -80, -68, 8, 18, 8, 27, -88, 83.0891, 21.6234, 147, 35, 103, -92, 90, -3, 62, -99, -3, -103, -91, -125, -120, -33, -120, -80, -105, -146, 161, -133, 170, 60, 52, 28, 1, 44, -138, 35 )
 
 [node name="Polygon2D" type="Polygon2D" parent="StaticBody2D2/CollisionPolygon2D"]
 z_index = -1
