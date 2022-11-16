@@ -3,11 +3,11 @@ extends Node2D
 onready var line: Line2D = $line
 onready var raycast: RayCast2D = $raycast
 
-var current_unwrapped_ray_index = 0
 export var forgiveness_radius := 50.0
 
-var draw_triangle := PoolVector2Array()
+var draw_triangles := []
 var draw_points := PoolVector2Array()
+var draw_join_points := PoolVector2Array()
 var line_points := PoolVector2Array([Vector2(),Vector2()])
 
 var raycast_previous_cast_to := Vector2()
@@ -15,18 +15,18 @@ var raycast_previous_cast_to := Vector2()
 var raycast_previous_origin := Vector2()
 
 func _physics_process(delta: float) -> void:
-	draw_points = PoolVector2Array()
-	
 	var raycast_origin = raycast.global_position
 	var raycast_previous_end = raycast_previous_cast_to + raycast.global_position
 	var raycast_current_end = raycast.cast_to + raycast.global_position
 	
-	draw_triangle = PoolVector2Array([raycast.global_position, raycast_previous_end, raycast_current_end])
-	
-	while line_points.size()>2:
-		if !check_join(raycast_previous_end, raycast_current_end):
-			break
 	if raycast_previous_end!=raycast_current_end:
+		draw_triangles = []
+		draw_points = PoolVector2Array()
+		draw_join_points = PoolVector2Array()
+		
+		while line_points.size()>2:
+			if !check_join(raycast_previous_end, raycast_current_end):
+				break
 		if Input.is_action_pressed("B") and raycast_current_end.y != raycast_previous_end.y:
 			print("A:",raycast_previous_end)
 			print("B:",raycast_current_end)
@@ -38,7 +38,8 @@ func _physics_process(delta: float) -> void:
 				break
 	line_points[-1] = raycast.to_global(raycast.cast_to)
 	raycast_previous_cast_to = raycast.cast_to
-	if Input.is_action_just_pressed("A"):
+	if Input.is_action_just_pressed("A") or Input.is_key_pressed(KEY_SPACE):
+	
 		raycast.cast_to = raycast.to_local(get_global_mouse_position())
 	
 	update()
@@ -48,8 +49,7 @@ func check_splits(
 		previous_raycast_end: Vector2, 
 		current_raycast_end: Vector2
 	):
-	draw_triangle = PoolVector2Array([raycast_origin,previous_raycast_end,current_raycast_end])
-	
+	draw_triangles.append(PoolVector2Array([raycast_origin,previous_raycast_end,current_raycast_end]))
 	var collided_points = get_collided_points(raycast_origin, previous_raycast_end, current_raycast_end)
 	
 	if !collided_points.empty():
@@ -64,14 +64,21 @@ func check_splits(
 		var direction_of_spin = sign(OAxOB)
 		
 		var closest_point = collided_points[0]
-		var closest_pseudo_angle = 1000
+		var closest_pseudo_angle = -1000
 		
 		for point in collided_points:
 
 			var OP = point-raycast_origin
 			
-			var pseudo_angle = (pseudoangle(OP)-pseudoangle(OA))*direction_of_spin
-			if pseudo_angle < closest_pseudo_angle:
+			"""
+			− ||a|| ||b|| ≤ a · b ≤ ||a|| ||b|| ⇒ |a · b| ≤ ||a|| ||b||
+			which means
+			− 1 ≤ (a · b)/||a|| ||b|| ≤ 1
+			"""
+#			var pseudo_angle = (pseudoangle(OP)-pseudoangle(OA))*direction_of_spin
+			var pseudo_angle = pseudoangle(OP,OA)
+#			print(pseudo_angle)
+			if pseudo_angle > closest_pseudo_angle:
 				closest_point = point
 				closest_pseudo_angle = pseudo_angle
 			
@@ -82,7 +89,7 @@ func check_splits(
 func check_join(
 		previous_raycast_end: Vector2, 
 		current_raycast_end: Vector2
-	)->bool:
+	) -> bool:
 	var raycast_origin = line_points[-2]
 	
 	var join = (
@@ -130,10 +137,13 @@ func split_at(point:Vector2):
 	raycast.cast_to = global_end-raycast.global_position
 	line_points[-1] = point
 	line_points.append(global_end)
+	draw_points.append(point)
+	
 	pass
 
 func join_last_two():
 	print("joining")
+	draw_join_points.append(line_points[-2])
 	line_points.remove(line_points.size()-2)
 	var global_end = raycast.cast_to+raycast.global_position
 	raycast_previous_origin = line_points[-3] if line_points.size()>2 else Vector2()
@@ -149,7 +159,7 @@ func get_collided_points(
 		epsilon_to_ignore = 1.0
 	) -> PoolVector2Array:
 	var query_shape := ConvexPolygonShape2D.new()
-	query_shape.points = draw_triangle
+	query_shape.points = PoolVector2Array([raycast_origin,previous_raycast_end,current_raycast_end])
 	var query = Physics2DShapeQueryParameters.new()
 	query.collision_layer = 1
 	query.shape_rid = query_shape.get_rid()
@@ -188,19 +198,38 @@ func get_collided_points(
 #	update()
 
 func _draw() -> void:
-	if draw_triangle:
-		draw_colored_polygon(draw_triangle,Color.rebeccapurple)
+	var i := 0
+	for draw_triangle in draw_triangles:
+		draw_colored_polygon(draw_triangle,Color.green.linear_interpolate(Color.cyan,i*0.5)*0.25)
+		draw_triangle.append(draw_triangle[0])
+		draw_polyline(draw_triangle,Color.red*0.75)
+		i+=1
+	
+	
+	var rect_size = Vector2(10,10)*$Camera2D.zoom
+	var rect_offset = -rect_size*0.5
 	for point in draw_points:
-		draw_rect(Rect2(point-Vector2(5,5),Vector2(10,10)),Color.red)
+		draw_rect(Rect2(point+rect_offset,rect_size),Color.red)
+	for point in draw_join_points:
+		draw_rect(Rect2(point+rect_offset,rect_size),Color.blue)
 	draw_polyline(line_points,Color.green)
 
 
-func pseudoangle(vec:Vector2):
-	return 1.0 - vec.x/(abs(vec.x)+abs(vec.y))*sign(vec.y) if vec else 0.0
+func pseudoangle(vec:Vector2, vec_base: Vector2 = Vector2.RIGHT):
+	return vec_base.dot(vec)/sqrt(vec_base.length_squared()*vec.length_squared())
+#	return 1.0 - vec.x/(abs(vec.x)+abs(vec.y))*sign(vec.y) if vec else 0.0
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("B"):
 		print(line_points)
+	if event.is_action_pressed("ui_left",true):
+		raycast.cast_to = raycast.cast_to+Vector2.LEFT
+	if event.is_action_pressed("ui_right",true):
+		raycast.cast_to = raycast.cast_to+Vector2.RIGHT
+	if event.is_action_pressed("ui_up",true):
+		raycast.cast_to = raycast.cast_to+Vector2.UP
+	if event.is_action_pressed("ui_down",true):
+		raycast.cast_to = raycast.cast_to+Vector2.DOWN
 
 
 func point_is_inside_triangle_inclusive(p:Vector2,a:Vector2,b:Vector2,c:Vector2):
@@ -213,3 +242,8 @@ func point_is_inside_triangle_inclusive(p:Vector2,a:Vector2,b:Vector2,c:Vector2)
 		
 	)
 	
+func _ready() -> void:
+	raycast.global_position = line_points[-2]
+	raycast.cast_to = raycast.to_local(line_points[-1])
+	raycast_previous_cast_to = raycast.cast_to
+	raycast_previous_origin = line_points[-3]
