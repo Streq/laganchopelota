@@ -170,6 +170,7 @@ func get_collided_points(
 	var result = space.intersect_shape(query)
 	var collided_points = PoolVector2Array()
 
+	var square_epsilon = epsilon_to_ignore*epsilon_to_ignore
 	
 	for entry in result:
 		var collider = entry.collider # The colliding object.
@@ -190,12 +191,23 @@ func get_collided_points(
 		
 		for point in xformed_shape_data:
 			var is_inside = point_is_inside_triangle_inclusive(point,
-		raycast_origin,
-		previous_raycast_end,
-		current_raycast_end)
+				raycast_origin,
+				previous_raycast_end,
+				current_raycast_end)
 			if Input.is_action_pressed("C"):
 				print("point ",point," matches:", is_inside)
-			if is_inside and point.distance_squared_to(raycast_origin)>epsilon_to_ignore*epsilon_to_ignore:
+				
+			if !is_inside:
+				continue
+			point_is_inside_triangle_inclusive(point,
+				raycast_origin,
+				previous_raycast_end,
+				current_raycast_end)
+			var square_dist = point.distance_squared_to(raycast_origin)
+			var is_far_enough_from_last_splitting_point = square_dist>square_epsilon
+			print("square_dist:",square_dist)
+			
+			if is_far_enough_from_last_splitting_point:
 				collided_points.append(point)
 	return collided_points
 #	update()
@@ -213,7 +225,9 @@ func _draw() -> void:
 	var rect_offset = -rect_size*0.5
 	for point in draw_points:
 		draw_rect(Rect2(point+rect_offset,rect_size),Color.red)
+		pass
 	for point in draw_join_points:
+		pass
 		draw_rect(Rect2(point+rect_offset,rect_size),Color.blue)
 	draw_polyline(line_points,Color.green)
 
@@ -236,9 +250,19 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func point_is_inside_triangle_inclusive(p:Vector2,a:Vector2,b:Vector2,c:Vector2):
+#	debugging block
+#	if true:
+#		print ("p == a or p == b or p == c :", p == a or p == b or p == c)
+#		print("triangle_has_area(a,b,c) : ", triangle_has_area(a,b,c))
+#		print("Geometry.point_is_inside_triangle(p,a,b,c) : ",Geometry.point_is_inside_triangle(p,a,b,c))
+#		print("Geometry.get_closest_point_to_segment_2d(p,a,b).is_equal_approx(p) : ", Geometry.get_closest_point_to_segment_2d(p,a,b).is_equal_approx(p))
+#		print("Geometry.get_closest_point_to_segment_2d(p,b,c).is_equal_approx(p) : ", Geometry.get_closest_point_to_segment_2d(p,b,c).is_equal_approx(p))
+#		print("Geometry.get_closest_point_to_segment_2d(p,c,a).is_equal_approx(p) : ", Geometry.get_closest_point_to_segment_2d(p,c,a).is_equal_approx(p))
+	
+	
 	return (
 		(p == a or p == b or p == c) or
-		Geometry.point_is_inside_triangle(p,a,b,c) or
+		(triangle_has_area(a,b,c) and Geometry.point_is_inside_triangle(p,a,b,c)) or
 		Geometry.get_closest_point_to_segment_2d(p,a,b).is_equal_approx(p) or
 		Geometry.get_closest_point_to_segment_2d(p,b,c).is_equal_approx(p) or
 		Geometry.get_closest_point_to_segment_2d(p,c,a).is_equal_approx(p)
@@ -250,3 +274,8 @@ func _ready() -> void:
 	raycast.cast_to = raycast.to_local(line_points[-1])
 	raycast_previous_cast_to = raycast.cast_to
 	raycast_previous_origin = line_points[-3]
+
+func triangle_has_area(a:Vector2,b:Vector2,c:Vector2)->bool:
+#	print("Geometry.get_closest_point_to_segment_uncapped_2d(a,b,c) :", Geometry.get_closest_point_to_segment_uncapped_2d(a,b,c))
+#	print("a : ", a)
+	return !Geometry.get_closest_point_to_segment_uncapped_2d(a,b,c).is_equal_approx(a)
