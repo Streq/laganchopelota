@@ -51,7 +51,6 @@ func check_splits(
 	):
 	draw_triangles.append(PoolVector2Array([raycast_origin,previous_raycast_end,current_raycast_end]))
 	var collided_points = get_collided_points(raycast_origin, previous_raycast_end, current_raycast_end)
-	
 	if !collided_points.empty():
 		if collided_points.size() == 1:
 			split_at(collided_points[0])
@@ -65,6 +64,7 @@ func check_splits(
 		
 		var closest_point = collided_points[0]
 		var closest_pseudo_angle = -1000
+		
 		
 		for point in collided_points:
 
@@ -92,25 +92,27 @@ func check_join(
 	) -> bool:
 	var raycast_origin = line_points[-2]
 	
-	var join = (
-		(raycast_origin == raycast_previous_origin) 
-		or 
-		is_swing_from_side_to_side(
-			raycast_previous_origin, 
-			raycast_origin, 
-			previous_raycast_end, 
-			current_raycast_end
-		)
-	)
-	if join:
+	if raycast_origin == raycast_previous_origin:
 		join_last_two()
-	return join
+		return true
+	
+	
+	if is_swing_from_side_to_side(
+		raycast_previous_origin, 
+		raycast_origin, 
+		previous_raycast_end, 
+		current_raycast_end
+	):
+		join_last_two()
+		return true
+	
+	return false
+	
 
-
-#prev_B accounts for swings that start at exactly 0 degrees from the segment
+#previous_B accounts for swings that start at exactly 0 degrees from the segment
 #we need to remember what was the previous swing so that we can conclude 
 #whether we are moving from A to 0 to B or from A to 0 to A back again
-var prev_B := 0.0
+var previous_B := 0.0
 func is_swing_from_side_to_side(Q:Vector2,O:Vector2,A:Vector2,B:Vector2):
 	var QO = O - Q
 	var OA = A - O
@@ -120,13 +122,14 @@ func is_swing_from_side_to_side(Q:Vector2,O:Vector2,A:Vector2,B:Vector2):
 	var QOxOB = QO.cross(OB)
 	var sign_A = sign(QOxOA)
 	var sign_B = sign(QOxOB)
+	print("sign_B: ", sign_B)
 	if sign_B == 0:
-		print("sign_B", sign_B)
-		prev_B = sign_A if sign_A else prev_B
+		previous_B = sign_A if sign_A else previous_B
 		return false
+	print("sign_A: ", sign_A)
 	if sign_A == 0:
-		print("sign_A", sign_A)
-		sign_A = prev_B
+		sign_A = previous_B
+	previous_B = sign_B
 	return sign(sign_A)!=sign(sign_B)
 	
 func split_at(point:Vector2):
