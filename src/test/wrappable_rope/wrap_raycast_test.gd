@@ -180,7 +180,7 @@ func get_collided_points(
 #		print(entry)
 		var shape_rid = Physics2DServer.body_get_shape(collider.get_rid(),shape)
 		var shape_data = Physics2DServer.shape_get_data(shape_rid)
-		var t : Transform2D = collider.global_transform
+		var t : Transform2D = collider.global_transform*(Physics2DServer.body_get_shape_transform(collider.get_rid(),shape))
 		var xformed_shape_data = t.xform(shape_data)
 		if Input.is_action_pressed("C"):
 			print("checking(",
@@ -190,6 +190,12 @@ func get_collided_points(
 				
 		
 		for point in xformed_shape_data:
+			var square_dist = point.distance_squared_to(raycast_origin)
+			var is_too_close_to_last_splitting_point = square_dist<square_epsilon
+			
+			if is_too_close_to_last_splitting_point:
+				continue
+			
 			var is_inside = point_is_inside_triangle_inclusive(point,
 				raycast_origin,
 				previous_raycast_end,
@@ -199,16 +205,8 @@ func get_collided_points(
 				
 			if !is_inside:
 				continue
-			point_is_inside_triangle_inclusive(point,
-				raycast_origin,
-				previous_raycast_end,
-				current_raycast_end)
-			var square_dist = point.distance_squared_to(raycast_origin)
-			var is_far_enough_from_last_splitting_point = square_dist>square_epsilon
-			print("square_dist:",square_dist)
 			
-			if is_far_enough_from_last_splitting_point:
-				collided_points.append(point)
+			collided_points.append(point)
 	return collided_points
 #	update()
 
@@ -273,7 +271,7 @@ func _ready() -> void:
 	raycast.global_position = line_points[-2]
 	raycast.cast_to = raycast.to_local(line_points[-1])
 	raycast_previous_cast_to = raycast.cast_to
-	raycast_previous_origin = line_points[-3]
+	raycast_previous_origin = line_points[-3] if line_points.size()>=3 else line_points[-2]
 
 func triangle_has_area(a:Vector2,b:Vector2,c:Vector2)->bool:
 #	print("Geometry.get_closest_point_to_segment_uncapped_2d(a,b,c) :", Geometry.get_closest_point_to_segment_uncapped_2d(a,b,c))
