@@ -18,8 +18,10 @@ func _physics_process(delta: float) -> void:
 	var raycast_origin = raycast.global_position
 	var raycast_previous_end = raycast_previous_cast_to + raycast.global_position
 	var raycast_current_end = raycast.cast_to + raycast.global_position
-	
-	if raycast_previous_end!=raycast_current_end:
+	if raycast_previous_end != raycast_current_end:
+		if line_points.size() == 2:
+			previous_non_zero_side_of_swing = get_current_side_of_swing(raycast_origin, raycast_previous_end, raycast_current_end)
+		
 		draw_triangles = []
 		draw_points = PoolVector2Array()
 		draw_join_points = PoolVector2Array()
@@ -38,9 +40,20 @@ func _physics_process(delta: float) -> void:
 				break
 	line_points[-1] = raycast.to_global(raycast.cast_to)
 	raycast_previous_cast_to = raycast.cast_to
+	
+	if line_points.size()>2:
+		var current_side_of_swing  = get_current_side_of_swing(raycast_previous_origin, raycast_origin, raycast_current_end)
+		if current_side_of_swing:
+			previous_non_zero_side_of_swing = current_side_of_swing
+		else:
+#			breakpoint
+			pass
 	if Input.is_action_just_pressed("A") or Input.is_key_pressed(KEY_SPACE):
 	
 		raycast.cast_to = raycast.to_local(get_global_mouse_position())
+	
+	
+	
 	
 	update()
 	
@@ -109,10 +122,10 @@ func check_join(
 	return false
 	
 
-#previous_B accounts for swings that start at exactly 0 degrees from the segment
+#previous_non_zero_side_of_swing accounts for swings that start at exactly 0 degrees from the segment
 #we need to remember what was the previous swing so that we can conclude 
 #whether we are moving from A to 0 to B or from A to 0 to A back again
-var previous_B := 0.0
+var previous_non_zero_side_of_swing := 0.0
 func is_swing_from_side_to_side(Q:Vector2,O:Vector2,A:Vector2,B:Vector2):
 	var QO = O - Q
 	var OA = A - O
@@ -124,16 +137,22 @@ func is_swing_from_side_to_side(Q:Vector2,O:Vector2,A:Vector2,B:Vector2):
 	var sign_B = sign(QOxOB)
 	print("sign_B: ", sign_B)
 	if sign_B == 0:
-		previous_B = sign_A if sign_A else previous_B
 		return false
-	print("sign_A: ", sign_A)
 	if sign_A == 0:
-		sign_A = previous_B
-	previous_B = sign_B
-	return sign(sign_A)!=sign(sign_B)
+		sign_A = previous_non_zero_side_of_swing
+	print("sign_A: ", sign_A)
 	
+	
+	return sign(sign_A)!=sign(sign_B)
+
+
+func get_current_side_of_swing(Q:Vector2, O:Vector2, P:Vector2):
+	return sign((O-Q).cross(P-O))
+
 func split_at(point:Vector2):
 	print("splitting:", point)
+	
+#	previous_non_zero_side_of_swing = get_current_side_of_swing(line_points[-2], point, line_points[-1])
 	var global_end = raycast.cast_to+raycast.global_position
 	raycast_previous_origin = raycast.global_position
 	raycast.global_position = point#+raycast.global_position.direction_to(point)
@@ -141,7 +160,6 @@ func split_at(point:Vector2):
 	line_points[-1] = point
 	line_points.append(global_end)
 	draw_points.append(point)
-	
 	pass
 
 func join_last_two():
@@ -259,16 +277,12 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func point_is_inside_triangle_inclusive(p:Vector2,a:Vector2,b:Vector2,c:Vector2):
-#	debugging block
-
-	
 	var result = (
 		(p == a or p == b or p == c) or
 		(triangle_has_area(a,b,c) and Geometry.point_is_inside_triangle(p,a,b,c)) or
 		Geometry.get_closest_point_to_segment_2d(p,a,b) == p or
 		Geometry.get_closest_point_to_segment_2d(p,b,c) == p or
 		Geometry.get_closest_point_to_segment_2d(p,c,a) == p
-		
 	)
 	
 	if result:
@@ -289,4 +303,6 @@ func _ready() -> void:
 func triangle_has_area(a:Vector2,b:Vector2,c:Vector2)->bool:
 #	print("Geometry.get_closest_point_to_segment_uncapped_2d(a,b,c) :", Geometry.get_closest_point_to_segment_uncapped_2d(a,b,c))
 #	print("a : ", a)
-	return !Geometry.get_closest_point_to_segment_uncapped_2d(a,b,c).is_equal_approx(a)
+#	return Geometry.triangulate_polygon(PoolVector2Array([a,b,c]))
+#	return true
+	return !Geometry.get_closest_point_to_segment_uncapped_2d(a,b,c) == (a)
