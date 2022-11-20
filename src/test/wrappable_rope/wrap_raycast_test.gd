@@ -176,8 +176,7 @@ func join_last_two():
 func get_collided_points(
 		raycast_origin: Vector2,
 		previous_raycast_end: Vector2,
-		current_raycast_end: Vector2,
-		epsilon_to_ignore = 1.0
+		current_raycast_end: Vector2
 	) -> PoolVector2Array:
 	
 	if !triangle_has_area(raycast_origin,previous_raycast_end,current_raycast_end):
@@ -191,18 +190,11 @@ func get_collided_points(
 	var result = space.intersect_shape(query)
 	var collided_points = PoolVector2Array()
 
-	var square_epsilon = epsilon_to_ignore*epsilon_to_ignore
+	var square_epsilon = 1.0
 	
 	for entry in result:
-		var collider = entry.collider # The colliding object.
-		var collider_id = entry.collider_id # The colliding object's ID.
-		var rid = entry.rid # The intersecting object's RID.
-		var shape = entry.shape # The shape index of the colliding shape.
-#		print(entry)
-		var shape_rid = Physics2DServer.body_get_shape(collider.get_rid(),shape)
-		var shape_data = Physics2DServer.shape_get_data(shape_rid)
-		var t : Transform2D = collider.global_transform*(Physics2DServer.body_get_shape_transform(collider.get_rid(),shape))
-		var xformed_shape_data = t.xform(shape_data)
+		var global_polygon_points = get_collider_global_points(entry)
+		
 		if Input.is_action_pressed("C"):
 			print("checking(",
 				raycast_origin,", ",
@@ -210,7 +202,7 @@ func get_collided_points(
 				current_raycast_end,")")
 				
 		
-		for point in xformed_shape_data:
+		for point in global_polygon_points:
 			var square_dist = point.distance_squared_to(raycast_origin)
 			var is_too_close_to_last_splitting_point = square_dist<square_epsilon
 			
@@ -306,3 +298,125 @@ func triangle_has_area(a:Vector2,b:Vector2,c:Vector2)->bool:
 #	return Geometry.triangulate_polygon(PoolVector2Array([a,b,c]))
 #	return true
 	return !Geometry.get_closest_point_to_segment_uncapped_2d(a,b,c) == (a)
+
+
+
+
+func check_new_logic():
+	var O = line_points[-1]
+	var A = line_points[0] #rope pre swing position
+	var B = get_global_mouse_position() #rope post swing position
+	#       .O
+	#	   / \
+	#	  /   \
+	#	 /     \
+	#	/       \
+	#  .A        .B
+	while true:
+		
+		if A==B:
+			break
+		O = line_points[-1] #rope latest split position (or rope origin if no splits)
+		if line_points.size()>=3:
+			#rope previous split position
+			var Q := line_points[-3]
+			
+			#intersection between QO's line and AB
+			#U is null if no intersection or same line
+			var U = Geometry.line_intersects_line_2d(Q,O-Q,A,B-A)
+			var parallel_swing = U == null
+			var A_is_right_at_the_middle = Geometry.line_intersects_line_2d(O,A-O,Q,O-Q) == null
+			if parallel_swing and A_is_right_at_the_middle:
+				#       .Q
+				#       |
+				#       |
+				#       .O
+				#	    |
+				#	    .A
+				#	    |   AB is in the same line as QO
+				#	    |
+				#       .B
+				break
+			if is_swing_from_side_to_side(Q,O,A,B):
+				#       .Q
+				#       |
+				#       |
+				#       .O
+				#	   /.\
+				#	  / . \
+				#	 /  .  \
+				#	/   .   \
+				#  .A   .U   .B
+				if !check_splits_new(A,U):
+					join_last_two()
+					A = U
+					continue
+				check_splits_new(U,B)
+				break
+				
+		else:
+			#.Q_____.O..............(U isn't inside AB)
+			#	   / \
+			#	  /   \
+			#	 /     \
+			#	/       \
+			#  .A        .B
+			check_splits_new(A,B)
+			return
+			
+		
+	pass
+
+func get_collider_global_points(entry):
+	var collider = entry.collider # The colliding object.
+	var collider_id = entry.collider_id # The colliding object's ID.
+	var rid = entry.rid # The intersecting object's RID.
+	var shape = entry.shape # The shape index of the colliding shape.
+	var shape_rid = Physics2DServer.body_get_shape(collider.get_rid(),shape)
+	var shape_data = Physics2DServer.shape_get_data(shape_rid)
+	var t : Transform2D = collider.global_transform*(Physics2DServer.body_get_shape_transform(collider.get_rid(),shape))
+	var xformed_shape_data = t.xform(shape_data)
+	return xformed_shape_data
+
+
+func check_splits_new(A:Vector2,B:Vector2):
+	var O :Vector2 = line_points[-1]
+	var triangle = [O,A,B]
+	
+	var points_in_triangle = get_all_collider_points_inside_triangle(O,A,B)
+	var distances_to_O = points_get_distance_squared_to(O,points_in_triangle)
+	
+func get_all_collider_points_inside_triangle(O:Vector2,A:Vector2,B:Vector2):
+	if !triangle_has_area(O,A,B):
+		return []
+	var points_inside_triangle = []
+	
+	var result = query_triangle(O,A,B)
+	var square_epsilon = 1.0
+	for entry in result:
+		var global_polygon_points = get_collider_global_points(entry)
+		
+		for point in global_polygon_points:
+			var square_dist = point.distance_squared_to(O)
+			if (
+				square_dist<square_epsilon or 
+				!point_is_inside_triangle_inclusive(point,O,A,B)
+			):
+				continue
+			O
+			points_inside_triangle.append(point)
+	return points_inside_triangle
+
+func points_get_distance_squared_to(O:Vector2,points):
+	var ret = []
+	for point in points:
+		ret.append(O.distance_squared_to(point))
+
+func query_triangle(O,A,B):
+	var query_shape := ConvexPolygonShape2D.new()
+	query_shape.points = PoolVector2Array([O,A,B])
+	var query = Physics2DShapeQueryParameters.new()
+	query.collision_layer = 1
+	query.shape_rid = query_shape.get_rid()
+	var space = get_world_2d().direct_space_state
+	return space.intersect_shape(query)

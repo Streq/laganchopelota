@@ -87,6 +87,16 @@ z_index = -1
 color = Color( 0.235294, 0.235294, 0.235294, 1 )
 script = ExtResource( 2 )
 
+[node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="StaticBody2D4"]
+position = Vector2( -190, 97 )
+rotation = -0.785397
+polygon = PoolVector2Array( 28.2843, 15.5563, 29.6985, 15.5563, 30.4056, 17.6776, 28.2843, 18.3848 )
+
+[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D4/CollisionPolygon2D6"]
+z_index = -1
+color = Color( 0.235294, 0.235294, 0.235294, 1 )
+script = ExtResource( 2 )
+
 [node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="StaticBody2D4"]
 position = Vector2( -152, 81 )
 rotation = -0.785397
