@@ -6,15 +6,42 @@ onready var raycast: RayCast2D = $raycast
 export var forgiveness_radius := 50.0
 
 var draw_triangles := []
+var draw_internal_triangles := []
+
 var draw_points := PoolVector2Array()
 var draw_join_points := PoolVector2Array()
 var line_points := PoolVector2Array([Vector2(),Vector2()])
+
+var draw_collided_points := PoolVector2Array()
 
 var raycast_previous_cast_to := Vector2()
 
 var raycast_previous_origin := Vector2()
 
+var current_step_joins = PoolVector2Array()
+
+func clear_render_objects():
+	draw_triangles = []
+	draw_internal_triangles = []
+	draw_points = PoolVector2Array()
+	draw_join_points = PoolVector2Array()
+	draw_collided_points = PoolVector2Array()
+
 func _physics_process(delta: float) -> void:
+	
+	if Input.is_action_just_pressed("A") or Input.is_key_pressed(KEY_SPACE):
+		var to = get_global_mouse_position()
+		step(to)
+	update()
+	
+
+func step(to:Vector2) -> void:
+	current_step_joins = PoolVector2Array()
+	clear_render_objects()
+	check_new_logic(to)
+	
+	return
+	
 	var raycast_origin = raycast.global_position
 	var raycast_previous_end = raycast_previous_cast_to + raycast.global_position
 	var raycast_current_end = raycast.cast_to + raycast.global_position
@@ -162,6 +189,13 @@ func split_at(point:Vector2):
 	draw_points.append(point)
 	pass
 
+func split_at_new(point:Vector2):
+	print("splitting:", point)
+	line_points.insert(line_points.size()-1,point)
+	draw_points.append(point)
+	pass
+
+
 func join_last_two():
 	print("joining")
 	draw_join_points.append(line_points[-2])
@@ -172,6 +206,15 @@ func join_last_two():
 	raycast.global_position = new_origin#+raycast.global_position.direction_to(new_origin)
 	line_points[-1] = global_end
 	raycast.cast_to = global_end-raycast.global_position
+
+
+func join_last_two_new():
+	print("joining")
+	current_step_joins.append(line_points[-2])
+	draw_join_points.append(line_points[-2])
+	line_points.remove(line_points.size()-2)
+	
+	
 
 func get_collided_points(
 		raycast_origin: Vector2,
@@ -231,6 +274,13 @@ func get_collided_points(
 #	update()
 
 func _draw() -> void:
+	
+	for draw_triangle in draw_internal_triangles:
+		draw_triangle.append(draw_triangle[0])
+		if !Geometry.triangulate_polygon(draw_triangle).empty():
+			draw_colored_polygon(draw_triangle,Color.yellow*0.1)
+		draw_polyline(draw_triangle,Color.yellow*0.75)
+
 	var i := 0
 	for draw_triangle in draw_triangles:
 		if !Geometry.triangulate_polygon(draw_triangle).empty():
@@ -239,19 +289,20 @@ func _draw() -> void:
 		draw_polyline(draw_triangle,Color.red*0.75)
 		i+=1
 	
-	
-	var rect_size = Vector2(10,10)*$Camera2D.zoom
+	var zoom = $Camera2D.zoom
+	var rect_size = Vector2(10,10)*zoom
 	var rect_offset = -rect_size*0.5
 	for point in draw_points:
-		draw_rect(Rect2(point+rect_offset,rect_size),Color.red)
+		draw_rect(Rect2(point+rect_offset,rect_size),Color(1.0,0.0,0.0,0.5))
 		pass
 	for point in draw_join_points:
 		pass
-		draw_rect(Rect2(point+rect_offset,rect_size),Color.blue)
+		draw_rect(Rect2(point+rect_offset,rect_size),Color(0.0,0.0,1.0,0.5))
+		
 	draw_polyline(line_points,Color.green)
 
 
-func pseudoangle(vec:Vector2, vec_base: Vector2 = Vector2.RIGHT):
+static func pseudoangle(vec:Vector2, vec_base: Vector2 = Vector2.RIGHT):
 	return vec_base.dot(vec)/sqrt(vec_base.length_squared()*vec.length_squared())
 #	return 1.0 - vec.x/(abs(vec.x)+abs(vec.y))*sign(vec.y) if vec else 0.0
 
@@ -259,13 +310,13 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("B"):
 		print(line_points)
 	if event.is_action_pressed("ui_left",true):
-		raycast.cast_to = raycast.cast_to+Vector2.LEFT
+		step(line_points[-1]+Vector2.LEFT)
 	if event.is_action_pressed("ui_right",true):
-		raycast.cast_to = raycast.cast_to+Vector2.RIGHT
+		step(line_points[-1]+Vector2.RIGHT)
 	if event.is_action_pressed("ui_up",true):
-		raycast.cast_to = raycast.cast_to+Vector2.UP
+		step(line_points[-1]+Vector2.UP)
 	if event.is_action_pressed("ui_down",true):
-		raycast.cast_to = raycast.cast_to+Vector2.DOWN
+		step(line_points[-1]+Vector2.DOWN)
 
 
 func point_is_inside_triangle_inclusive(p:Vector2,a:Vector2,b:Vector2,c:Vector2):
@@ -286,6 +337,24 @@ func point_is_inside_triangle_inclusive(p:Vector2,a:Vector2,b:Vector2,c:Vector2)
 		print("Geometry.get_closest_point_to_segment_2d(p,c,a) == p : ", Geometry.get_closest_point_to_segment_2d(p,c,a) == p)
 
 	return result
+
+func point_is_inside_triangle_inclusive_but_exclude_first_segment(p:Vector2,a:Vector2,b:Vector2,c:Vector2):
+	var result = (
+		(p == c) or
+		(triangle_has_area(a,b,c) and Geometry.point_is_inside_triangle(p,a,b,c)) or
+		Geometry.get_closest_point_to_segment_2d(p,b,c) == p or
+		Geometry.get_closest_point_to_segment_2d(p,c,a) == p
+	)
+	
+	if result:
+		print ("p == c :", p == c)
+		print("triangle_has_area(a,b,c) : ", triangle_has_area(a,b,c))
+		print("Geometry.point_is_inside_triangle(p,a,b,c) : ",Geometry.point_is_inside_triangle(p,a,b,c))
+		print("Geometry.get_closest_point_to_segment_2d(p,b,c) == p : ", Geometry.get_closest_point_to_segment_2d(p,b,c) == p)
+		print("Geometry.get_closest_point_to_segment_2d(p,c,a) == p : ", Geometry.get_closest_point_to_segment_2d(p,c,a) == p)
+
+	return result
+
 func _ready() -> void:
 	raycast.global_position = line_points[-2]
 	raycast.cast_to = raycast.to_local(line_points[-1])
@@ -302,21 +371,23 @@ func triangle_has_area(a:Vector2,b:Vector2,c:Vector2)->bool:
 
 
 
-func check_new_logic():
-	var O = line_points[-1]
-	var A = line_points[0] #rope pre swing position
-	var B = get_global_mouse_position() #rope post swing position
+func check_new_logic(to:Vector2) -> bool:
+	var O = line_points[-2]
+	var A = line_points[-1] #rope pre swing position
+	line_points[-1] = to
+	var B = line_points[-1] #rope post swing position
 	#       .O
 	#	   / \
 	#	  /   \
 	#	 /     \
 	#	/       \
 	#  .A        .B
+	
 	while true:
 		
 		if A==B:
-			break
-		O = line_points[-1] #rope latest split position (or rope origin if no splits)
+			return false
+		O = line_points[-2] #rope latest split position (or rope origin if no splits)
 		if line_points.size()>=3:
 			#rope previous split position
 			var Q := line_points[-3]
@@ -336,7 +407,7 @@ func check_new_logic():
 				#	    |   AB is in the same line as QO
 				#	    |
 				#       .B
-				break
+				return true
 			if is_swing_from_side_to_side(Q,O,A,B):
 				#       .Q
 				#       |
@@ -348,24 +419,33 @@ func check_new_logic():
 				#	/   .   \
 				#  .A   .U   .B
 				if !check_splits_new(A,U):
-					join_last_two()
+					join_last_two_new()
 					A = U
 					continue
 				check_splits_new(U,B)
-				break
-				
+				return true
+			
+			else:
+				#.Q_____.O..............(U isn't inside AB)
+				#	   / \
+				#	  /   \
+				#	 /     \
+				#	/       \
+				#  .A        .B
+				check_splits_new(A,B)
+				return true
 		else:
-			#.Q_____.O..............(U isn't inside AB)
+			#       .O
 			#	   / \
 			#	  /   \
 			#	 /     \
 			#	/       \
 			#  .A        .B
 			check_splits_new(A,B)
-			return
+			return true
 			
 		
-	pass
+	return true
 
 func get_collider_global_points(entry):
 	var collider = entry.collider # The colliding object.
@@ -380,19 +460,49 @@ func get_collider_global_points(entry):
 
 
 func check_splits_new(A:Vector2,B:Vector2):
-	var O :Vector2 = line_points[-1]
-	var triangle = [O,A,B]
+	var O :Vector2 = line_points[-2]
+	draw_triangles.append(PoolVector2Array([O,A,B]))
 	
 	var points_in_triangle = get_all_collider_points_inside_triangle(O,A,B)
-	var distances_to_O = points_get_distance_squared_to(O,points_in_triangle)
+	if points_in_triangle.empty():
+		return false
 	
-func get_all_collider_points_inside_triangle(O:Vector2,A:Vector2,B:Vector2):
+	if points_in_triangle.size()==1:
+		var point = points_in_triangle[0]
+		var valid = check_single_split(point)
+		if valid:
+			split_at_new(point)
+		return valid
+		
+	var comparator = PointComparatorByAngleWithSegment.new(O,A)
+	points_in_triangle.sort_custom(comparator, "compare_points_asc")
+	var current_square_dist = 0
+	var at_least_one_split = false
+	for p in points_in_triangle:
+		draw_collided_points.append(p)
+		var point :Vector2 = p
+		draw_internal_triangles.append(PoolVector2Array([A,B,line_points[-2]]))
+		if (
+			point_is_inside_triangle_inclusive_but_exclude_first_segment(p,line_points[-2],A,B)
+			and check_single_split(point)
+		):
+			split_at_new(point)
+			at_least_one_split = true
+	
+	return at_least_one_split
+		
+		
+	
+func check_single_split(at):
+	var valid = (current_step_joins.find(at) == -1 and line_points[-2]!=at)
+	return valid
+func get_all_collider_points_inside_triangle(O:Vector2,A:Vector2,B:Vector2)->Array:
 	if !triangle_has_area(O,A,B):
 		return []
 	var points_inside_triangle = []
 	
 	var result = query_triangle(O,A,B)
-	var square_epsilon = 1.0
+	var square_epsilon = 0.5
 	for entry in result:
 		var global_polygon_points = get_collider_global_points(entry)
 		
@@ -400,17 +510,14 @@ func get_all_collider_points_inside_triangle(O:Vector2,A:Vector2,B:Vector2):
 			var square_dist = point.distance_squared_to(O)
 			if (
 				square_dist<square_epsilon or 
-				!point_is_inside_triangle_inclusive(point,O,A,B)
+				!point_is_inside_triangle_inclusive_but_exclude_first_segment(point,O,A,B)
 			):
 				continue
-			O
+			
 			points_inside_triangle.append(point)
+	
 	return points_inside_triangle
 
-func points_get_distance_squared_to(O:Vector2,points):
-	var ret = []
-	for point in points:
-		ret.append(O.distance_squared_to(point))
 
 func query_triangle(O,A,B):
 	var query_shape := ConvexPolygonShape2D.new()
@@ -420,3 +527,19 @@ func query_triangle(O,A,B):
 	query.shape_rid = query_shape.get_rid()
 	var space = get_world_2d().direct_space_state
 	return space.intersect_shape(query)
+
+class PointComparatorByAngleWithSegment:
+	var O:Vector2
+	var E:Vector2
+	var OE : Vector2
+
+	func _init(origin:Vector2,end:Vector2):
+		self.O = origin
+		self.E = end
+		self.OE = end-origin
+
+	func compare_points_asc(P1,P2):
+		return pseudoangle(P1-O,OE) > pseudoangle(P2-O,OE)
+	
+	static func pseudoangle(vec:Vector2, vec_base: Vector2 = Vector2.RIGHT):
+		return vec_base.dot(vec)/sqrt(vec_base.length_squared()*vec.length_squared())

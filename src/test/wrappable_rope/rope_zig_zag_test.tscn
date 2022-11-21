@@ -1,9 +1,14 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://src/test/wrappable_rope/wrap_raycast_test.gd" type="Script" id=1]
 [ext_resource path="res://src/test/wrappable_rope/Polygon2D.gd" type="Script" id=2]
 [ext_resource path="res://src/test/wrappable_rope/start_from.gd" type="Script" id=3]
 [ext_resource path="res://src/test/wrappable_rope/Camera2D.gd" type="Script" id=4]
+[ext_resource path="res://assets/font/Ink Stamp.ttf" type="DynamicFontData" id=5]
+[ext_resource path="res://src/test/wrappable_rope/point_drawer.gd" type="Script" id=6]
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 5 )
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 1 )
@@ -90,7 +95,7 @@ script = ExtResource( 2 )
 [node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="StaticBody2D4"]
 position = Vector2( -190, 97 )
 rotation = -0.785397
-polygon = PoolVector2Array( 28.2843, 15.5563, 29.6985, 15.5563, 30.4056, 17.6776, 28.2843, 18.3848 )
+polygon = PoolVector2Array( 28.2843, 15.5563, 29.6985, 15.5563, 30.4056, 16.2634, 31.1127, 18.3847, 30.4056, 19.0918, 28.9914, 19.0918, 27.5772, 17.6776, 27.5772, 16.2634 )
 
 [node name="Polygon2D" type="Polygon2D" parent="StaticBody2D4/CollisionPolygon2D6"]
 z_index = -1
@@ -147,3 +152,9 @@ current = true
 process_mode = 0
 script = ExtResource( 4 )
 zoom_factor = -28.0
+
+[node name="canvas_layer" type="CanvasLayer" parent="."]
+
+[node name="point_drawer" type="Node2D" parent="canvas_layer"]
+script = ExtResource( 6 )
+debug_font = SubResource( 1 )
