@@ -162,17 +162,63 @@ func is_swing_from_side_to_side(Q:Vector2,O:Vector2,A:Vector2,B:Vector2):
 	var QOxOB = QO.cross(OB)
 	var sign_A = sign(QOxOA)
 	var sign_B = sign(QOxOB)
-	print("sign_B: ", sign_B)
+#	print("sign_B: ", sign_B)
+#	if sign_B == 0:
+#		return false
+#	if sign_A == 0:
+#		sign_A = previous_non_zero_side_of_swing
+#	print("sign_A: ", sign_A)
+#
+	
+	return sign_A != sign_B
+
+static func get_side_of_swing(Q:Vector2,O:Vector2,A:Vector2):
+	var QO = O - Q
+	var OA = A - O
+	var QOxOA = QO.cross(OA)
+	
+	return sign(QOxOA)
+
+static func is_swing_from_side_to_middle(Q:Vector2,O:Vector2,A:Vector2,B:Vector2):
+	var QO = O - Q
+	var OA = A - O
+	var OB = B - O
+	
+	var QOxOA = QO.cross(OA)
+	var QOxOB = QO.cross(OB)
+	var sign_A = sign(QOxOA)
+	var sign_B = sign(QOxOB)
+
+	
+	return sign_A != 0 and sign_B == 0
+static func is_swing_from_middle_to_side(Q:Vector2,O:Vector2,A:Vector2,B:Vector2):
+	var QO = O - Q
+	var OA = A - O
+	var OB = B - O
+	
+	var QOxOA = QO.cross(OA)
+	var QOxOB = QO.cross(OB)
+	var sign_A = sign(QOxOA)
+	var sign_B = sign(QOxOB)
+
+	
+	return sign_A == 0 and sign_B != 0
+static func get_side_of_full_swing(Q:Vector2,O:Vector2,A:Vector2,B:Vector2):
+	var QO = O - Q
+	var OA = A - O
+	var OB = B - O
+	
+	var QOxOA = QO.cross(OA)
+	var QOxOB = QO.cross(OB)
+	var sign_A = sign(QOxOA)
+	var sign_B = sign(QOxOB)
+
+	if sign_A == sign_B:
+		return sign_A
 	if sign_B == 0:
-		return false
-	if sign_A == 0:
-		sign_A = previous_non_zero_side_of_swing
-	print("sign_A: ", sign_A)
+		return -sign_A
+	return sign_B
 	
-	
-	return sign(sign_A)!=sign(sign_B)
-
-
 func get_current_side_of_swing(Q:Vector2, O:Vector2, P:Vector2):
 	return sign((O-Q).cross(P-O))
 
@@ -366,11 +412,14 @@ func triangle_has_area(a:Vector2,b:Vector2,c:Vector2)->bool:
 #	print("a : ", a)
 #	return Geometry.triangulate_polygon(PoolVector2Array([a,b,c]))
 #	return true
-	return !Geometry.get_closest_point_to_segment_uncapped_2d(a,b,c) == (a)
+#	print("closest_point_uncapped:",Geometry.get_closest_point_to_segment_uncapped_2d(a,b,c))
+#	print("a:",a)
+	
+	return Geometry.get_closest_point_to_segment_uncapped_2d(a,b,c) != a
 
 
 
-
+var latest_non_zero_side_of_swing := 0.0
 func check_new_logic(to:Vector2) -> bool:
 	var O = line_points[-2]
 	var A = line_points[-1] #rope pre swing position
@@ -397,6 +446,9 @@ func check_new_logic(to:Vector2) -> bool:
 			var U = Geometry.line_intersects_line_2d(Q,O-Q,A,B-A)
 			var parallel_swing = U == null
 			var A_is_right_at_the_middle = Geometry.line_intersects_line_2d(O,A-O,Q,O-Q) == null
+			var current_side_of_swing = get_side_of_swing(Q,O,A)
+			if current_side_of_swing:
+				latest_non_zero_side_of_swing = current_side_of_swing
 			if parallel_swing and A_is_right_at_the_middle:
 				#       .Q
 				#       |
@@ -408,7 +460,40 @@ func check_new_logic(to:Vector2) -> bool:
 				#	    |
 				#       .B
 				return true
-			if is_swing_from_side_to_side(Q,O,A,B):
+			elif is_swing_from_side_to_middle(Q,O,A,B):
+				#       .Q
+				#       |
+				#       |
+				#       .O
+				#	   /|
+				#	  / |
+				#	 /  |
+				#	/   |
+				#  .A   .B
+				
+				
+				if check_splits_new(A,B):
+					Q = line_points[-3]
+					O = line_points[-2]
+					latest_non_zero_side_of_swing = get_side_of_full_swing(Q,O,A,B)
+				
+				return true
+			elif is_swing_from_middle_to_side(Q,O,A,B):
+				#       .Q
+				#       |
+				#       |
+				#       .O
+				#	    |\
+				#	    | \
+				#	    |  \
+				#	    |   \
+				#       .A   .B
+				if latest_non_zero_side_of_swing != get_side_of_swing(Q,O,B):
+					join_last_two_new()
+					continue
+				
+				return true
+			elif is_swing_from_side_to_side(Q,O,A,B):
 				#       .Q
 				#       |
 				#       |
@@ -424,7 +509,6 @@ func check_new_logic(to:Vector2) -> bool:
 					continue
 				check_splits_new(U,B)
 				return true
-			
 			else:
 				#.Q_____.O..............(U isn't inside AB)
 				#	   / \
@@ -441,7 +525,10 @@ func check_new_logic(to:Vector2) -> bool:
 			#	 /     \
 			#	/       \
 			#  .A        .B
-			check_splits_new(A,B)
+			if check_splits_new(A,B):
+				var Q = line_points[-3]
+				O = line_points[-2]
+				latest_non_zero_side_of_swing = get_side_of_full_swing(Q,O,A,B)
 			return true
 			
 		
@@ -538,8 +625,19 @@ class PointComparatorByAngleWithSegment:
 		self.E = end
 		self.OE = end-origin
 
-	func compare_points_asc(P1,P2):
-		return pseudoangle(P1-O,OE) > pseudoangle(P2-O,OE)
+	func compare_points_asc(P1:Vector2,P2:Vector2):
+		print("PSEUDOANGLES")
+		print("P1:", P1," angle:%.16f"%pseudoangle(P1-O,OE)," distance:",P1.distance_squared_to(O))
+		print("P2:", P2," angle:%.16f"%pseudoangle(P2-O,OE)," distance:",P2.distance_squared_to(O))
+		var pa1 = pseudoangle(P1-O,OE)
+		var pa2 = pseudoangle(P2-O,OE)
+		if is_equal_approx(pa1,pa2):
+			if P1.distance_squared_to(O)<=P2.distance_squared_to(O):
+				return true
+			return false
+		if pa1 > pa2:
+			return true
+		return false
 	
 	static func pseudoangle(vec:Vector2, vec_base: Vector2 = Vector2.RIGHT):
 		return vec_base.dot(vec)/sqrt(vec_base.length_squared()*vec.length_squared())
