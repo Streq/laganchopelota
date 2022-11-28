@@ -70,6 +70,11 @@ _global_script_classes=[ {
 "path": "res://src/global/render_utils.gd"
 }, {
 "base": "Node",
+"class": "RopeUtils",
+"language": "GDScript",
+"path": "res://src/util/geometry/rope_utils.gd"
+}, {
+"base": "Node",
 "class": "StackFiniteStateMachine",
 "language": "GDScript",
 "path": "res://src/util/state_machine/stack_finite_state_machine.gd"
@@ -107,6 +112,7 @@ _global_script_class_icons={
 "Palette": "",
 "PoolArray": "",
 "RenderUtils": "",
+"RopeUtils": "",
 "StackFiniteStateMachine": "",
 "State": "",
 "StateMachine": "",

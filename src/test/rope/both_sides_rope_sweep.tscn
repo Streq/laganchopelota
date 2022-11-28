@@ -14,7 +14,7 @@ traversal_lines = 1
 position = Vector2( -2396, -1528 )
 
 [node name="point" parent="points" instance=ExtResource( 2 )]
-position = Vector2( 256.527, 249.728 )
+position = Vector2( 243.527, 205.728 )
 
 [node name="point2" parent="points" instance=ExtResource( 2 )]
 position = Vector2( 442.892, 142.986 )
@@ -41,13 +41,13 @@ script = ExtResource( 3 )
 color = Color( 0, 1, 0, 1 )
 
 [node name="0" type="Position2D" parent="rope_movement/A"]
-position = Vector2( -5752.97, -1129.54 )
+position = Vector2( -5795.61, -1132.06 )
 __meta__ = {
 "_gizmo_extents_": 0.0
 }
 
 [node name="1" type="Position2D" parent="rope_movement/A"]
-position = Vector2( -5822.5, -793.383 )
+position = Vector2( -5795.61, -614.369 )
 __meta__ = {
 "_gizmo_extents_": 0.0
 }
@@ -58,13 +58,13 @@ script = ExtResource( 3 )
 color = Color( 0, 1, 1, 1 )
 
 [node name="0" type="Position2D" parent="rope_movement/B"]
-position = Vector2( -5653.11, -1547.06 )
+position = Vector2( -5615.12, -1653.06 )
 __meta__ = {
 "_gizmo_extents_": 0.0
 }
 
 [node name="1" type="Position2D" parent="rope_movement/B"]
-position = Vector2( -5761.93, -1453.86 )
+position = Vector2( -5678.15, -1141.31 )
 __meta__ = {
 "_gizmo_extents_": 0.0
 }
