@@ -117,10 +117,14 @@ onready var _B1: Position2D = $"rope_movement/B/1"
 var lines_to_draw = []
 var lines_to_draw_outside = []
 var lines_to_draw_movement_range = []
+var lines_to_draw_demo = []
 
 onready var points: Node2D = $points
 
 export var update_the_thing := false setget set_update_the_thing
+
+export var traversal_lines := 5
+	
 
 func set_update_the_thing(val):
 	test_it_out()
@@ -203,7 +207,9 @@ func test_it_out():
 		else:
 #			print("all reals solve the equation")
 			result = []
+		result.sort()
 		point.set_text(str(result))
+		var first = true
 		for t in result:
 			var F = A0.linear_interpolate(B0,t)
 			var G = A1.linear_interpolate(B1,t)
@@ -212,8 +218,10 @@ func test_it_out():
 			
 			if (t<=1.0 
 			and t >= 0.0 
-			and max((P-F).length_squared(),(P-G).length_squared())<=(G-F).length_squared()):
+			and max((P-F).length_squared(),(P-G).length_squared())<=(G-F).length_squared()
+			and first):
 				lines_to_draw.append(line)
+				first = false
 			else:
 				lines_to_draw_outside.append(line)
 	for _t in 1000:
@@ -224,16 +232,31 @@ func test_it_out():
 #			var line = [A0+B0*t-A0*t, A1+B1*t-A1*t]
 		
 		lines_to_draw_movement_range.append(line)
+	
+	
+	
+	dt += 5
+	for offset in traversal_lines:
+		var t = dt+offset*1000/traversal_lines
+		var F = A0.linear_interpolate(B0, fmod(t/1000.0,1.0))
+		var G = A1.linear_interpolate(B1, fmod(t/1000.0,1.0))
+		lines_to_draw_demo.append([F,G])
 		
 func _ready() -> void:
 #	test_it_out()
 	pass
+
+
+var dt = 0
 func _physics_process(delta: float) -> void:
+
 	lines_to_draw = []
 	lines_to_draw_outside = []
 	lines_to_draw_movement_range = []
+	lines_to_draw_demo = []
 	test_it_out()
 	update()
+	
 	
 
 func _draw() -> void:
@@ -241,6 +264,8 @@ func _draw() -> void:
 	for line in lines_to_draw_movement_range:
 		draw_line(to_local(line[0]),to_local(line[1]),Color.red.darkened(0.8),1.0)
 	
+	for line in lines_to_draw_demo:
+		draw_line(to_local(line[0]),to_local(line[1]),Color.red.darkened(0.4),1.0)
 	
 	for line in lines_to_draw_outside:
 		draw_line(to_local(line[0]),to_local(line[1]),Color.yellow.darkened(0.8),1.0)

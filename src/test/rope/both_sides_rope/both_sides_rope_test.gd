@@ -3,8 +3,8 @@ extends Node2D
 
 """
 Bueno, la lógica en principio es como en both_sides_rope_sweep.gd:
-cuando muevo ambos extremos de la soga, se forma un cuadrilatero (o un par de triangulos si es cruzado)
-se buscan colisiones en esa área
+-cuando muevo ambos extremos de la soga, se forma un cuadrilatero (par de triangulos si es cruzado)
+-se buscan colisiones en esa área
 para cada punto de la colision, se busca si está dentro del área
 se ordenan los puntos por orden de chocada
 

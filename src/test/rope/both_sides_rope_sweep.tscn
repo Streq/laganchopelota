@@ -8,37 +8,31 @@
 [node name="Node2D" type="Node2D"]
 position = Vector2( 2399, 1532 )
 script = ExtResource( 1 )
+traversal_lines = 1
 
 [node name="points" type="Node2D" parent="."]
+position = Vector2( -2396, -1528 )
 
 [node name="point" parent="points" instance=ExtResource( 2 )]
-position = Vector2( -141, 1315 )
+position = Vector2( 256.527, 249.728 )
 
 [node name="point2" parent="points" instance=ExtResource( 2 )]
-position = Vector2( 945, 1788 )
+position = Vector2( 442.892, 142.986 )
 
 [node name="point3" parent="points" instance=ExtResource( 2 )]
-position = Vector2( 269, 1900 )
+position = Vector2( 257.62, 74.666 )
 
 [node name="point4" parent="points" instance=ExtResource( 2 )]
-position = Vector2( 15, 1790 )
-
-[node name="point5" parent="points" instance=ExtResource( 2 )]
-position = Vector2( 318, 1684 )
+position = Vector2( 340.316, 221.553 )
 
 [node name="point6" parent="points" instance=ExtResource( 2 )]
-position = Vector2( 621, 1926 )
+position = Vector2( 514.3, 212.6 )
 
-[node name="point7" parent="points" instance=ExtResource( 2 )]
-position = Vector2( 428, 1899 )
-
-[node name="point8" parent="points" instance=ExtResource( 2 )]
-position = Vector2( 610, 2049 )
-
-[node name="point9" parent="points" instance=ExtResource( 2 )]
-position = Vector2( 610, 2049 )
+[node name="point5" parent="points" instance=ExtResource( 2 )]
+position = Vector2( 593.029, 192.84 )
 
 [node name="rope_movement" type="Node2D" parent="."]
+position = Vector2( 3687, -154 )
 script = ExtResource( 4 )
 
 [node name="A" type="Node2D" parent="rope_movement"]
@@ -47,13 +41,13 @@ script = ExtResource( 3 )
 color = Color( 0, 1, 0, 1 )
 
 [node name="0" type="Position2D" parent="rope_movement/A"]
-position = Vector2( -1481, 3502 )
+position = Vector2( -5752.97, -1129.54 )
 __meta__ = {
 "_gizmo_extents_": 0.0
 }
 
 [node name="1" type="Position2D" parent="rope_movement/A"]
-position = Vector2( -1477, -675 )
+position = Vector2( -5822.5, -793.383 )
 __meta__ = {
 "_gizmo_extents_": 0.0
 }
@@ -64,13 +58,13 @@ script = ExtResource( 3 )
 color = Color( 0, 1, 1, 1 )
 
 [node name="0" type="Position2D" parent="rope_movement/B"]
-position = Vector2( 2706, 2353 )
+position = Vector2( -5653.11, -1547.06 )
 __meta__ = {
 "_gizmo_extents_": 0.0
 }
 
 [node name="1" type="Position2D" parent="rope_movement/B"]
-position = Vector2( 1989, -1217 )
+position = Vector2( -5761.93, -1453.86 )
 __meta__ = {
 "_gizmo_extents_": 0.0
 }
