@@ -1,0 +1,141 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://src/test/rope/both_sides_rope_sweep.gd" type="Script" id=1]
+[ext_resource path="res://src/test/rope/point.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/test/rope/rope_draw_test.gd" type="Script" id=3]
+[ext_resource path="res://src/test/rope/rope_movement.gd" type="Script" id=4]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="points" type="Node2D" parent="."]
+
+[node name="point" parent="points" instance=ExtResource( 2 )]
+position = Vector2( 505, 327 )
+
+[node name="point2" parent="points" instance=ExtResource( 2 )]
+position = Vector2( 448, 305 )
+
+[node name="point5" parent="points" instance=ExtResource( 2 )]
+position = Vector2( 464, 297 )
+
+[node name="point6" parent="points" instance=ExtResource( 2 )]
+position = Vector2( 446, 336 )
+
+[node name="point7" parent="points" instance=ExtResource( 2 )]
+position = Vector2( 444, 330 )
+
+[node name="point8" parent="points" instance=ExtResource( 2 )]
+position = Vector2( 450, 317 )
+
+[node name="point9" parent="points" instance=ExtResource( 2 )]
+position = Vector2( 408, 350 )
+
+[node name="point10" parent="points" instance=ExtResource( 2 )]
+position = Vector2( 666, 361 )
+
+[node name="point11" parent="points" instance=ExtResource( 2 )]
+position = Vector2( 677, 355 )
+
+[node name="point12" parent="points" instance=ExtResource( 2 )]
+position = Vector2( 670, 343 )
+
+[node name="point13" parent="points" instance=ExtResource( 2 )]
+position = Vector2( 651, 369 )
+
+[node name="point14" parent="points" instance=ExtResource( 2 )]
+position = Vector2( 647, 329 )
+
+[node name="point15" parent="points" instance=ExtResource( 2 )]
+position = Vector2( 642, 376 )
+
+[node name="point16" parent="points" instance=ExtResource( 2 )]
+position = Vector2( 614, 384 )
+
+[node name="point17" parent="points" instance=ExtResource( 2 )]
+position = Vector2( 579, 385 )
+
+[node name="point18" parent="points" instance=ExtResource( 2 )]
+position = Vector2( 559, 412 )
+
+[node name="point19" parent="points" instance=ExtResource( 2 )]
+position = Vector2( 544, 388 )
+
+[node name="point20" parent="points" instance=ExtResource( 2 )]
+position = Vector2( 521, 390 )
+
+[node name="point21" parent="points" instance=ExtResource( 2 )]
+position = Vector2( 500, 392 )
+
+[node name="point22" parent="points" instance=ExtResource( 2 )]
+position = Vector2( 473, 449 )
+
+[node name="point23" parent="points" instance=ExtResource( 2 )]
+position = Vector2( 450, 392 )
+
+[node name="point24" parent="points" instance=ExtResource( 2 )]
+position = Vector2( 423, 394 )
+
+[node name="point25" parent="points" instance=ExtResource( 2 )]
+position = Vector2( 375, 392 )
+
+[node name="point26" parent="points" instance=ExtResource( 2 )]
+position = Vector2( 396, 391 )
+
+[node name="point27" parent="points" instance=ExtResource( 2 )]
+position = Vector2( 345, 388 )
+
+[node name="point28" parent="points" instance=ExtResource( 2 )]
+position = Vector2( 232, 387 )
+
+[node name="point29" parent="points" instance=ExtResource( 2 )]
+position = Vector2( 514, 357 )
+
+[node name="point30" parent="points" instance=ExtResource( 2 )]
+position = Vector2( 311, 209 )
+
+[node name="point31" parent="points" instance=ExtResource( 2 )]
+position = Vector2( 607, 134 )
+
+[node name="point32" parent="points" instance=ExtResource( 2 )]
+position = Vector2( 678, 312 )
+
+[node name="point33" parent="points" instance=ExtResource( 2 )]
+position = Vector2( 541, 192 )
+
+[node name="point3" parent="points" instance=ExtResource( 2 )]
+position = Vector2( 247, 245 )
+
+[node name="point4" parent="points" instance=ExtResource( 2 )]
+position = Vector2( 356, 202 )
+
+[node name="rope_movement" type="Node2D" parent="."]
+script = ExtResource( 4 )
+
+[node name="A" type="Node2D" parent="rope_movement"]
+script = ExtResource( 3 )
+
+[node name="0" type="Position2D" parent="rope_movement/A"]
+__meta__ = {
+"_gizmo_extents_": 0.0
+}
+
+[node name="1" type="Position2D" parent="rope_movement/A"]
+position = Vector2( 447, 831 )
+__meta__ = {
+"_gizmo_extents_": 0.0
+}
+
+[node name="B" type="Node2D" parent="rope_movement"]
+script = ExtResource( 3 )
+
+[node name="0" type="Position2D" parent="rope_movement/B"]
+__meta__ = {
+"_gizmo_extents_": 0.0
+}
+
+[node name="1" type="Position2D" parent="rope_movement/B"]
+position = Vector2( 1101, 126 )
+__meta__ = {
+"_gizmo_extents_": 0.0
+}
