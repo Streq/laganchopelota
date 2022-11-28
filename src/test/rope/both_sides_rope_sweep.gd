@@ -116,6 +116,7 @@ onready var _B1: Position2D = $"rope_movement/B/1"
 
 var lines_to_draw = []
 var lines_to_draw_outside = []
+var lines_to_draw_movement_range = []
 
 onready var points: Node2D = $points
 
@@ -188,7 +189,7 @@ func test_it_out():
 	var sorted_point_indexes = []
 	var i = 0
 	for point in points_to_sort:
-		var P = point.global_position
+		var P : Vector2 = point.global_position
 		var B = 2.0*(A0.x*A1.y)-2.0*(A0.y*A1.x)-(A1.y*P.x)+(A0.y*P.x)+(A1.x*P.y)-(A0.x*P.y)-(A1.y*B0.x)+(P.y*B0.x)+(P.x*B1.y)-(A0.x*B1.y)-(P.x*B0.y)+(A1.x*B0.y)-(P.y*B1.x)+(A0.y*B1.x)
 		var C = -(A0.x*A1.y)+(A0.y*A1.x)+(A1.y*P.x)-(A0.y*P.x)-(A1.x*P.y)+(A0.x*P.y)
 		var result = null
@@ -204,24 +205,43 @@ func test_it_out():
 			result = []
 		point.set_text(str(result))
 		for t in result:
-			var line = [A0+B0*t-A0*t, A1+B1*t-A1*t]
+			var F = A0.linear_interpolate(B0,t)
+			var G = A1.linear_interpolate(B1,t)
+			var line = [F,G]
+#			var line = [A0+B0*t-A0*t, A1+B1*t-A1*t]
 			
-			if t<=1.0 and t >= 0.0:
+			if (t<=1.0 
+			and t >= 0.0 
+			and max((P-F).length_squared(),(P-G).length_squared())<=(G-F).length_squared()):
 				lines_to_draw.append(line)
 			else:
 				lines_to_draw_outside.append(line)
-	
+	for _t in 1000:
+		var t = _t/1000.0
+		var F = A0.linear_interpolate(B0,t)
+		var G = A1.linear_interpolate(B1,t)
+		var line = [F,G]
+#			var line = [A0+B0*t-A0*t, A1+B1*t-A1*t]
+		
+		lines_to_draw_movement_range.append(line)
+		
 func _ready() -> void:
 #	test_it_out()
 	pass
 func _physics_process(delta: float) -> void:
 	lines_to_draw = []
 	lines_to_draw_outside = []
+	lines_to_draw_movement_range = []
 	test_it_out()
 	update()
 	
 
 func _draw() -> void:
+	
+	for line in lines_to_draw_movement_range:
+		draw_line(to_local(line[0]),to_local(line[1]),Color.red.darkened(0.8),1.0)
+	
+	
 	for line in lines_to_draw_outside:
 		draw_line(to_local(line[0]),to_local(line[1]),Color.yellow.darkened(0.8),1.0)
 
