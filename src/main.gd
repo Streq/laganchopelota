@@ -13,6 +13,14 @@ func _ready() -> void:
 #	var a = [1,2,3]
 #	a.insert(a.size()-1,4)
 #	print(a)
-	var r = PoolRealArray([1,2,3])
-	r.insert(0,4)
-	print(r)
+#	var r = PoolRealArray([1,2,3])
+#	r.insert(0,4)
+#	print(r)
+	var array = []
+	append_something(array,"hola")
+	print(array)
+
+
+
+func append_something(array, something):
+	array.append(something)

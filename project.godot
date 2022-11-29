@@ -59,6 +59,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/util/color/palette.gd"
 }, {
+"base": "Reference",
+"class": "PointComparatorByAngleWithSegment",
+"language": "GDScript",
+"path": "res://src/util/geometry/point_comparator_by_angle_with_segment.gd"
+}, {
 "base": "Node",
 "class": "PoolArray",
 "language": "GDScript",
@@ -110,6 +115,7 @@ _global_script_class_icons={
 "Math": "",
 "NodeUtils": "",
 "Palette": "",
+"PointComparatorByAngleWithSegment": "",
 "PoolArray": "",
 "RenderUtils": "",
 "RopeUtils": "",

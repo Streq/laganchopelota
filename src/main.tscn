@@ -5,7 +5,7 @@
 [ext_resource path="res://assets/texture/some_autotiles.png" type="Texture" id=4]
 [ext_resource path="res://src/main.gd" type="Script" id=9]
 
-[sub_resource type="Image" id=30]
+[sub_resource type="Image" id=33]
 data = {
 "data": PoolByteArray( 240, 188, 60, 255, 21, 0, 31, 255, 21, 0, 31, 255, 15, 89, 0, 255 ),
 "format": "RGBA8",
@@ -17,7 +17,7 @@ data = {
 [sub_resource type="ImageTexture" id=31]
 flags = 0
 flags = 0
-image = SubResource( 30 )
+image = SubResource( 33 )
 size = Vector2( 4, 1 )
 
 [sub_resource type="ShaderMaterial" id=32]
