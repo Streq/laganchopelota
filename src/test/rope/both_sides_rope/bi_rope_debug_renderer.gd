@@ -1,13 +1,18 @@
 extends Node2D
+export (DynamicFont) var debug_font
 
 export var camera_path : NodePath
 onready var camera : Camera2D = get_node(camera_path) if has_node(camera_path) else null
+
+export var rope_path : NodePath
+onready var rope : Node2D = get_node(rope_path) if has_node(rope_path) else null
+
 
 var check_triangles = []
 var split_points = []
 var join_points = []
 var scanned_points = []
-var rope_points = PoolVector2Array()
+var rope_points = PoolVector2Array([Vector2(),Vector2()])
 
 func _on_bi_rope_check(O, A, B) -> void:
 	check_triangles.append(PoolVector2Array([O,A,B]))
@@ -36,6 +41,8 @@ func _process(delta: float) -> void:
 	update()
 
 func _draw() -> void:
+	var t = rope.get_global_transform_with_canvas()
+	global_transform = t
 	for draw_triangle in check_triangles:
 		draw_triangle.append(draw_triangle[0])
 		if !Geometry.triangulate_polygon(draw_triangle).empty():
@@ -59,8 +66,22 @@ func _draw() -> void:
 		draw_rect(Rect2(point+rect_offset,rect_size),Color(0.0,0.0,1.0,0.5))
 		
 	draw_polyline(rope_points,Color.green)
+	
+
+	
+	for points in scanned_points:
+		var i = 0
+		for point in points:
+			draw_string(debug_font,point,str(i))
+			i+=1
+
 	pass
 
 
 func _on_bi_rope_updated(points) -> void:
 	rope_points = points
+
+
+
+func _physics_process(delta: float) -> void:
+	update()

@@ -4,7 +4,7 @@ onready var rope = get_parent()
 
 func _physics_process(delta: float) -> void:
 	if Input.is_key_pressed(KEY_SPACE):
-		rope.step(get_global_mouse_position())
+		rope.step(rope.line_points[0], get_global_mouse_position())
 
 	
 func _unhandled_input(event: InputEvent) -> void:
@@ -16,3 +16,5 @@ func _unhandled_input(event: InputEvent) -> void:
 		rope.step(rope.line_points[0],rope.line_points[-1]+Vector2.UP)
 	if event.is_action_pressed("ui_down",true):
 		rope.step(rope.line_points[0],rope.line_points[-1]+Vector2.DOWN)
+	if event.is_action_pressed("A"):
+		rope.step(rope.line_points[0],get_global_mouse_position())

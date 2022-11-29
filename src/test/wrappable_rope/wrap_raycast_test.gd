@@ -109,7 +109,7 @@ func check_join(
 #we need to remember what was the previous swing so that we can conclude 
 #whether we are moving from A to 0 to B or from A to 0 to A back again
 var previous_non_zero_side_of_swing := 0.0
-func is_swing_from_side_to_side(Q:Vector2,O:Vector2,A:Vector2,B:Vector2):
+static func is_swing_from_side_to_side(Q:Vector2,O:Vector2,A:Vector2,B:Vector2):
 	var QO = O - Q
 	var OA = A - O
 	var OB = B - O

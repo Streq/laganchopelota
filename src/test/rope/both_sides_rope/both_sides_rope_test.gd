@@ -54,6 +54,7 @@ func step(B0:Vector2, B1:Vector2):
 	if B1_moved:
 		solve_triangular_step1(B1)
 	
+	emit_signal("updated",line_points)
 	emit_signal("step_end")
 	
 func solve_triangular_step0(B:Vector2):
@@ -135,7 +136,7 @@ func solve_triangular_step1(B:Vector2) -> bool:
 				#	    |   \
 				#       .A   .B
 				if latest_non_zero_side_of_swing1 != RopeUtils.get_side_of_swing(Q,O,B):
-#					join_last_two()
+					join_last_two1()
 					continue
 				
 				return true
@@ -150,7 +151,7 @@ func solve_triangular_step1(B:Vector2) -> bool:
 				#	/   .   \
 				#  .A   .U   .B
 				if !check_splits1(A,U):
-#					join_last_two()
+					join_last_two1()
 					A = U
 					continue
 				check_splits1(U,B)
@@ -202,6 +203,9 @@ func check_splits1(A:Vector2,B:Vector2):
 		
 	var comparator = PointComparatorByAngleWithSegment.new(O,A)
 	points_in_triangle.sort_custom(comparator, "compare_points_asc")
+	
+	emit_signal("scanned_points",points_in_triangle)
+	
 	var current_square_dist = 0
 	var at_least_one_split = false
 	for p in points_in_triangle:

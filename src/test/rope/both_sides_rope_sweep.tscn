@@ -6,65 +6,59 @@
 [ext_resource path="res://src/test/rope/rope_movement.gd" type="Script" id=4]
 
 [node name="Node2D" type="Node2D"]
-position = Vector2( 2399, 1532 )
 script = ExtResource( 1 )
 traversal_lines = 1
 
 [node name="points" type="Node2D" parent="."]
-position = Vector2( -2396, -1528 )
 
 [node name="point" parent="points" instance=ExtResource( 2 )]
-position = Vector2( 243.527, 205.728 )
+position = Vector2( 57.0615, 72.7654 )
 
 [node name="point2" parent="points" instance=ExtResource( 2 )]
-position = Vector2( 442.892, 142.986 )
+position = Vector2( 55.6582, 37.0397 )
 
 [node name="point3" parent="points" instance=ExtResource( 2 )]
-position = Vector2( 257.62, 74.666 )
+position = Vector2( 29.8354, 12.1577 )
 
 [node name="point4" parent="points" instance=ExtResource( 2 )]
-position = Vector2( 340.316, 221.553 )
+position = Vector2( 50.0232, 65.8119 )
 
 [node name="point6" parent="points" instance=ExtResource( 2 )]
-position = Vector2( 514.3, 212.6 )
+position = Vector2( 56.5209, 57.8046 )
 
 [node name="point5" parent="points" instance=ExtResource( 2 )]
-position = Vector2( 593.029, 192.84 )
+position = Vector2( 53.1329, 77.6873 )
 
 [node name="rope_movement" type="Node2D" parent="."]
-position = Vector2( 3687, -154 )
 script = ExtResource( 4 )
 
 [node name="A" type="Node2D" parent="rope_movement"]
-position = Vector2( -103, -220 )
 script = ExtResource( 3 )
 color = Color( 0, 1, 0, 1 )
 
 [node name="0" type="Position2D" parent="rope_movement/A"]
-position = Vector2( -5795.61, -1132.06 )
 __meta__ = {
 "_gizmo_extents_": 0.0
 }
 
 [node name="1" type="Position2D" parent="rope_movement/A"]
-position = Vector2( -5795.61, -614.369 )
+position = Vector2( 100, 0 )
 __meta__ = {
 "_gizmo_extents_": 0.0
 }
 
 [node name="B" type="Node2D" parent="rope_movement"]
-position = Vector2( 267, 301 )
 script = ExtResource( 3 )
 color = Color( 0, 1, 1, 1 )
 
 [node name="0" type="Position2D" parent="rope_movement/B"]
-position = Vector2( -5615.12, -1653.06 )
+position = Vector2( 0, 100 )
 __meta__ = {
 "_gizmo_extents_": 0.0
 }
 
 [node name="1" type="Position2D" parent="rope_movement/B"]
-position = Vector2( -5678.15, -1141.31 )
+position = Vector2( 100, 100 )
 __meta__ = {
 "_gizmo_extents_": 0.0
 }
