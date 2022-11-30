@@ -42,8 +42,9 @@ func _process(delta: float) -> void:
 
 func _draw() -> void:
 	var t = rope.get_global_transform_with_canvas()
-	global_transform = t
-	for draw_triangle in check_triangles:
+	
+	for triangle in check_triangles:
+		var draw_triangle = t.xform(triangle)
 		draw_triangle.append(draw_triangle[0])
 		if !Geometry.triangulate_polygon(draw_triangle).empty():
 			draw_colored_polygon(draw_triangle,Color.yellow*0.1)
@@ -61,18 +62,16 @@ func _draw() -> void:
 	var rect_size = Vector2(10,10)*zoom
 	var rect_offset = -rect_size*0.5
 	for point in split_points:
-		draw_rect(Rect2(point+rect_offset,rect_size),Color(1.0,0.0,0.0,0.5))
+		draw_rect(t.xform(Rect2(point+rect_offset,rect_size)),Color(1.0,0.0,0.0,0.5))
 	for point in join_points:
-		draw_rect(Rect2(point+rect_offset,rect_size),Color(0.0,0.0,1.0,0.5))
+		draw_rect(t.xform(Rect2(point+rect_offset,rect_size)),Color(0.0,0.0,1.0,0.5))
 		
-	draw_polyline(rope_points,Color.green)
-	
-
+	draw_polyline(t.xform(rope_points),Color.green)
 	
 	for points in scanned_points:
 		var i = 0
 		for point in points:
-			draw_string(debug_font,point,str(i))
+			draw_string(debug_font,t.xform(point),str(i))
 			i+=1
 
 	pass

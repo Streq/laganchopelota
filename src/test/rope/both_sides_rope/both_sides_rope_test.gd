@@ -57,9 +57,6 @@ func step(B0:Vector2, B1:Vector2):
 	emit_signal("updated",line_points)
 	emit_signal("step_end")
 	
-func solve_triangular_step0(B:Vector2):
-	
-	pass
 
 func solve_cuadrilateral_step(B0:Vector2,B1:Vector2):
 	pass
@@ -181,6 +178,120 @@ func solve_triangular_step1(B:Vector2) -> bool:
 		
 	return true
 
+func solve_triangular_step0(B:Vector2) -> bool:
+	var O = line_points[1]
+	var A = line_points[0] #rope pre swing position
+	line_points[0] = B
+	#       .O
+	#	   / \
+	#	  /   \
+	#	 /     \
+	#	/       \
+	#  .A        .B
+	
+	while true:
+		if A==B:
+			return false
+		O = line_points[1] #rope latest split position (or rope origin if no splits)
+		
+		emit_signal("check",O,A,B)
+		if line_points.size()>=3:
+			#rope previous split position
+			var Q := line_points[2]
+			
+			#intersection between QO's line and AB
+			#U is null if no intersection or same line
+			var U = Geometry.line_intersects_line_2d(Q,O-Q,A,B-A)
+			var parallel_swing = U == null
+			var A_is_right_at_the_middle = Geometry.line_intersects_line_2d(O,A-O,Q,O-Q) == null
+			var current_side_of_swing = RopeUtils.get_side_of_swing(Q,O,A)
+			if current_side_of_swing:
+				latest_non_zero_side_of_swing1 = current_side_of_swing
+			if parallel_swing and A_is_right_at_the_middle:
+				#       .Q
+				#       |
+				#       |
+				#       .O
+				#	    |
+				#	    .A
+				#	    |   AB is in the same line as QO
+				#	    |
+				#       .B
+				return true
+			elif RopeUtils.is_swing_from_side_to_middle(Q,O,A,B):
+				#       .Q
+				#       |
+				#       |
+				#       .O
+				#	   /|
+				#	  / |
+				#	 /  |
+				#	/   |
+				#  .A   .B
+				
+				
+				if check_splits1(A,B):
+					Q = line_points[2]
+					O = line_points[1]
+					latest_non_zero_side_of_swing1 = RopeUtils.get_side_of_full_swing(Q,O,A,B)
+				
+				return true
+			elif RopeUtils.is_swing_from_middle_to_side(Q,O,A,B):
+				#       .Q
+				#       |
+				#       |
+				#       .O
+				#	    |\
+				#	    | \
+				#	    |  \
+				#	    |   \
+				#       .A   .B
+				if latest_non_zero_side_of_swing1 != RopeUtils.get_side_of_swing(Q,O,B):
+					join_last_two1()
+					continue
+				
+				return true
+			elif RopeUtils.is_swing_from_side_to_side(Q,O,A,B):
+				#       .Q
+				#       |
+				#       |
+				#       .O
+				#	   /.\
+				#	  / . \
+				#	 /  .  \
+				#	/   .   \
+				#  .A   .U   .B
+				if !check_splits1(A,U):
+					join_last_two1()
+					A = U
+					continue
+				check_splits1(U,B)
+				return true
+			else:
+				#.Q_____.O..............(U isn't inside AB)
+				#	   / \
+				#	  /   \
+				#	 /     \
+				#	/       \
+				#  .A        .B
+				check_splits1(A,B)
+				return true
+		else:
+			#       .O
+			#	   / \
+			#	  /   \
+			#	 /     \
+			#	/       \
+			#  .A        .B
+			if check_splits1(A,B):
+				var Q = line_points[2]
+				O = line_points[1]
+				latest_non_zero_side_of_swing1 = RopeUtils.get_side_of_full_swing(Q,O,A,B)
+			return true
+			
+		
+	return true
+
 
 func check_splits1(A:Vector2,B:Vector2):
 	var O :Vector2 = line_points[-2]
@@ -216,6 +327,7 @@ func check_splits1(A:Vector2,B:Vector2):
 			RopeUtils.point_is_inside_triangle_inclusive_but_exclude_first_segment(p,line_points[-2],A,B)
 			and check_single_split1(point)
 		):
+			emit_signal("check",A,B,line_points[-2])
 			split_at1(point)
 			at_least_one_split = true
 	

@@ -46,11 +46,9 @@ camera_path = NodePath("../../Camera2D")
 rope_path = NodePath("../../bi_rope")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2( 186.76, 141.322 )
 current = true
 process_mode = 0
 script = ExtResource( 5 )
-zoom_factor = -28.0
 
 [connection signal="check" from="bi_rope" to="canvas_layer/bi_rope_debug_renderer" method="_on_bi_rope_check"]
 [connection signal="join" from="bi_rope" to="canvas_layer/bi_rope_debug_renderer" method="_on_bi_rope_join"]
