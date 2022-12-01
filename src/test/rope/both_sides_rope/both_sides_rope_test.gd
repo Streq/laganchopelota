@@ -1,4 +1,5 @@
 extends Node2D
+class_name Rope
 signal step_begin()
 signal split(point)
 signal join(point)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=39 format=2]
 
 [ext_resource path="res://assets/shader/palette.gdshader" type="Shader" id=1]
 [ext_resource path="res://src/pelota/debug/print_state.gd" type="Script" id=2]
@@ -18,8 +18,14 @@
 [ext_resource path="res://assets/audio/sfx/click.wav" type="AudioStream" id=16]
 [ext_resource path="res://assets/audio/sfx/sh.wav" type="AudioStream" id=17]
 [ext_resource path="res://src/pelota/throw_sound.gd" type="Script" id=18]
+[ext_resource path="res://assets/font/Ink Stamp.ttf" type="DynamicFontData" id=19]
+[ext_resource path="res://src/test/rope/both_sides_rope/point_loader.gd" type="Script" id=20]
+[ext_resource path="res://src/test/rope/both_sides_rope/bi_rope_debug_renderer.gd" type="Script" id=21]
+[ext_resource path="res://src/test/rope/both_sides_rope/both_sides_rope_test.gd" type="Script" id=22]
+[ext_resource path="res://src/pelota/rope_setup.gd" type="Script" id=23]
+[ext_resource path="res://src/pelota/rope/rope_pin.tscn" type="PackedScene" id=24]
 
-[sub_resource type="Image" id=47]
+[sub_resource type="Image" id=48]
 data = {
 "data": PoolByteArray( 255, 255, 255, 0, 255, 227, 99, 255, 255, 57, 8, 255, 0, 0, 0, 255 ),
 "format": "RGBA8",
@@ -28,21 +34,21 @@ data = {
 "width": 4
 }
 
-[sub_resource type="ImageTexture" id=45]
+[sub_resource type="ImageTexture" id=3]
 flags = 0
 flags = 0
-image = SubResource( 47 )
+image = SubResource( 48 )
 size = Vector2( 4, 1 )
 
-[sub_resource type="ShaderMaterial" id=46]
+[sub_resource type="ShaderMaterial" id=4]
 resource_local_to_scene = true
 shader = ExtResource( 1 )
 shader_param/palette_size = 4
 shader_param/offset = 0
 shader_param/blue_index_offset = 0.0
-shader_param/palette = SubResource( 45 )
+shader_param/palette = SubResource( 3 )
 
-[sub_resource type="Image" id=48]
+[sub_resource type="Image" id=49]
 data = {
 "data": PoolByteArray( 255, 255, 255, 0, 255, 227, 99, 255, 255, 57, 8, 255, 0, 0, 0, 255 ),
 "format": "RGBA8",
@@ -54,7 +60,7 @@ data = {
 [sub_resource type="ImageTexture" id=36]
 flags = 0
 flags = 0
-image = SubResource( 48 )
+image = SubResource( 49 )
 size = Vector2( 4, 1 )
 
 [sub_resource type="ShaderMaterial" id=37]
@@ -350,9 +356,12 @@ tracks/4/keys = {
 "values": [ 0.0 ]
 }
 
+[sub_resource type="DynamicFont" id=47]
+font_data = ExtResource( 19 )
+
 [node name="claw" type="Node2D"]
 process_priority = 1
-material = SubResource( 46 )
+material = SubResource( 4 )
 z_index = 5
 z_as_relative = false
 script = ExtResource( 4 )
@@ -378,9 +387,13 @@ script = ExtResource( 5 )
 
 [node name="grabbing" type="Node" parent="state_machine"]
 script = ExtResource( 6 )
+rope_pin_wearer_path = NodePath("../../rope_setup/pin_wearer")
+rope_pin_claw_path = NodePath("../../rope_setup/pin_claw")
 
 [node name="retrieving" type="Node" parent="state_machine"]
 script = ExtResource( 7 )
+rope_pin_wearer_path = NodePath("../../rope_setup/pin_wearer")
+rope_pin_claw_path = NodePath("../../rope_setup/pin_claw")
 
 [node name="Sprite" type="Sprite" parent="."]
 material = SubResource( 37 )
@@ -3634,6 +3647,28 @@ script = ExtResource( 18 )
 stream = ExtResource( 16 )
 bus = "sfx"
 
+[node name="rope_setup" type="Node2D" parent="."]
+script = ExtResource( 23 )
+
+[node name="bi_rope" type="Node2D" parent="rope_setup"]
+script = ExtResource( 22 )
+
+[node name="point_loader" type="Node2D" parent="rope_setup/bi_rope"]
+script = ExtResource( 20 )
+
+[node name="canvas_layer" type="CanvasLayer" parent="rope_setup/bi_rope"]
+
+[node name="bi_rope_debug_renderer" type="Node2D" parent="rope_setup/bi_rope/canvas_layer"]
+script = ExtResource( 21 )
+debug_font = SubResource( 47 )
+camera_path = NodePath("../../../Camera2D")
+rope_path = NodePath("../..")
+
+[node name="pin_claw" parent="rope_setup" instance=ExtResource( 24 )]
+
+[node name="pin_wearer" parent="rope_setup" instance=ExtResource( 24 )]
+side_of_pin = 1
+
 [connection signal="pre_state_change" from="state_machine" to="AnimationPlayer/reset_anim" method="trigger"]
 [connection signal="entered" from="state_machine/throw" to="state_machine/throw/lifetime" method="start"]
 [connection signal="entered" from="state_machine/throw" to="throw_sound" method="play"]
@@ -3643,3 +3678,10 @@ bus = "sfx"
 [connection signal="entered" from="state_machine/grabbing" to="grab_sound" method="play"]
 [connection signal="entered" from="state_machine/retrieving" to="throw_sound" method="play"]
 [connection signal="exited" from="state_machine/retrieving" to="throw_sound" method="stop"]
+[connection signal="check" from="rope_setup/bi_rope" to="rope_setup/bi_rope/canvas_layer/bi_rope_debug_renderer" method="_on_bi_rope_check"]
+[connection signal="join" from="rope_setup/bi_rope" to="rope_setup/bi_rope/canvas_layer/bi_rope_debug_renderer" method="_on_bi_rope_join"]
+[connection signal="scanned_points" from="rope_setup/bi_rope" to="rope_setup/bi_rope/canvas_layer/bi_rope_debug_renderer" method="_on_bi_rope_scanned_points"]
+[connection signal="split" from="rope_setup/bi_rope" to="rope_setup/bi_rope/canvas_layer/bi_rope_debug_renderer" method="_on_bi_rope_split"]
+[connection signal="step_begin" from="rope_setup/bi_rope" to="rope_setup/bi_rope/canvas_layer/bi_rope_debug_renderer" method="_on_bi_rope_step_begin"]
+[connection signal="step_end" from="rope_setup/bi_rope" to="rope_setup/bi_rope/canvas_layer/bi_rope_debug_renderer" method="_on_bi_rope_step_end"]
+[connection signal="updated" from="rope_setup/bi_rope" to="rope_setup/bi_rope/canvas_layer/bi_rope_debug_renderer" method="_on_bi_rope_updated"]

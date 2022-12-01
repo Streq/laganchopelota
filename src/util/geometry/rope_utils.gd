@@ -135,8 +135,16 @@ static func get_collider_global_points(entry):
 	var shape = entry.shape # The shape index of the colliding shape.
 	var shape_rid = Physics2DServer.body_get_shape(collider.get_rid(),shape)
 	var shape_data = Physics2DServer.shape_get_data(shape_rid)
+	
 	var t : Transform2D = collider.global_transform*(Physics2DServer.body_get_shape_transform(collider.get_rid(),shape))
-	var xformed_shape_data = t.xform(shape_data)
+	var points
+	var shape_type := Physics2DServer.shape_get_type(shape_rid)
+	match shape_type:
+		Physics2DServer.SHAPE_RECTANGLE:
+			points = get_rectangle_points(shape_data)
+		Physics2DServer.SHAPE_CONCAVE_POLYGON, Physics2DServer.SHAPE_CONVEX_POLYGON:
+			points = shape_data
+	var xformed_shape_data = t.xform(points)
 	return xformed_shape_data
 
 static func is_swing_from_side_to_side(Q:Vector2,O:Vector2,A:Vector2,B:Vector2):
@@ -149,3 +157,6 @@ static func is_swing_from_side_to_side(Q:Vector2,O:Vector2,A:Vector2,B:Vector2):
 	var sign_A = sign(QOxOA)
 	var sign_B = sign(QOxOB)
 	return sign_A != sign_B
+
+static func get_rectangle_points(extents):
+	return PoolVector2Array([-extents,Vector2(extents.x,-extents.y),extents,Vector2(-extents.x, extents.y)])

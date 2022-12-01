@@ -58,7 +58,10 @@ func _draw() -> void:
 #		draw_polyline(draw_triangle,Color.red*0.75)
 #		i+=1
 	
-	var zoom = camera.zoom
+	var zoom = Vector2(1,1)
+	
+	if camera:
+		zoom = camera.zoom
 	var rect_size = Vector2(10,10)*zoom
 	var rect_offset = -rect_size*0.5
 	for point in split_points:

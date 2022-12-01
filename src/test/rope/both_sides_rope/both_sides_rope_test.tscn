@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://src/test/rope/both_sides_rope/both_sides_rope_test.gd" type="Script" id=1]
 [ext_resource path="res://src/test/rope/both_sides_rope/bi_rope_debug_renderer.gd" type="Script" id=2]
@@ -7,9 +7,13 @@
 [ext_resource path="res://src/test/wrappable_rope/Camera2D.gd" type="Script" id=5]
 [ext_resource path="res://src/test/rope/both_sides_rope/state_saver.gd" type="Script" id=6]
 [ext_resource path="res://src/test/rope/both_sides_rope/point_loader.gd" type="Script" id=7]
+[ext_resource path="res://src/test/wrappable_rope/Polygon2D.gd" type="Script" id=8]
 
 [sub_resource type="DynamicFont" id=1]
 font_data = ExtResource( 4 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 49, 46 )
 
 [node name="Node2D" type="Node2D"]
 
@@ -21,13 +25,29 @@ script = ExtResource( 3 )
 
 [node name="point_loader" type="Node2D" parent="bi_rope"]
 script = ExtResource( 7 )
-vector_array = "[(192.407684, 312.906891), (485, 449), (514, 459), (541, 451), (565, 443), (583, 423), (596, 396), (601, 363), (594, 326), (590, 305), (577, 283), (556, 282), (192.407684, 317.906891)]"
+
+[node name="canvas_layer" type="CanvasLayer" parent="bi_rope"]
+
+[node name="bi_rope_debug_renderer" type="Node2D" parent="bi_rope/canvas_layer"]
+script = ExtResource( 2 )
+debug_font = SubResource( 1 )
+camera_path = NodePath("../../../Camera2D")
+rope_path = NodePath("../..")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2( 239, 183 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
 polygon = PoolVector2Array( 27, 61, 71, -38, -34, -73, -64, -30, -55, 33, -22, 55 )
+
+[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D/CollisionPolygon2D"]
+z_index = -1
+color = Color( 0.235294, 0.235294, 0.235294, 1 )
+script = ExtResource( 8 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2( 219, -58 )
+shape = SubResource( 2 )
 
 [node name="StaticBody2D2" type="StaticBody2D" parent="."]
 position = Vector2( 694, 162 )
@@ -36,6 +56,11 @@ position = Vector2( 694, 162 )
 position = Vector2( 4, -9 )
 polygon = PoolVector2Array( 20, 28, 15, -37, -55, -34, -53, 24 )
 
+[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D2/CollisionPolygon2D"]
+z_index = -1
+color = Color( 0.235294, 0.235294, 0.235294, 1 )
+script = ExtResource( 8 )
+
 [node name="StaticBody2D3" type="StaticBody2D" parent="."]
 position = Vector2( 501, 398 )
 
@@ -43,13 +68,10 @@ position = Vector2( 501, 398 )
 position = Vector2( 4, -9 )
 polygon = PoolVector2Array( 36, 62, 60, 54, 78, 34, 91, 7, 96, -26, 89, -63, 85, -84, 72, -106, 51, -107, 34, -104, 18, -99, 3, -93, -13, -85, -29, -73, -45, -60, -55, -50, -65, -34, -72, -21, -77, -6, -79, 13, -71, 24, -47, 47, -20, 60, 9, 70 )
 
-[node name="canvas_layer" type="CanvasLayer" parent="."]
-
-[node name="bi_rope_debug_renderer" type="Node2D" parent="canvas_layer"]
-script = ExtResource( 2 )
-debug_font = SubResource( 1 )
-camera_path = NodePath("../../Camera2D")
-rope_path = NodePath("../../bi_rope")
+[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D3/CollisionPolygon2D"]
+z_index = -1
+color = Color( 0.235294, 0.235294, 0.235294, 1 )
+script = ExtResource( 8 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 480, 270 )
@@ -62,10 +84,10 @@ script = ExtResource( 6 )
 camera_path = NodePath("../Camera2D")
 rope_path = NodePath("../bi_rope")
 
-[connection signal="check" from="bi_rope" to="canvas_layer/bi_rope_debug_renderer" method="_on_bi_rope_check"]
-[connection signal="join" from="bi_rope" to="canvas_layer/bi_rope_debug_renderer" method="_on_bi_rope_join"]
-[connection signal="scanned_points" from="bi_rope" to="canvas_layer/bi_rope_debug_renderer" method="_on_bi_rope_scanned_points"]
-[connection signal="split" from="bi_rope" to="canvas_layer/bi_rope_debug_renderer" method="_on_bi_rope_split"]
-[connection signal="step_begin" from="bi_rope" to="canvas_layer/bi_rope_debug_renderer" method="_on_bi_rope_step_begin"]
-[connection signal="step_end" from="bi_rope" to="canvas_layer/bi_rope_debug_renderer" method="_on_bi_rope_step_end"]
-[connection signal="updated" from="bi_rope" to="canvas_layer/bi_rope_debug_renderer" method="_on_bi_rope_updated"]
+[connection signal="check" from="bi_rope" to="bi_rope/canvas_layer/bi_rope_debug_renderer" method="_on_bi_rope_check"]
+[connection signal="join" from="bi_rope" to="bi_rope/canvas_layer/bi_rope_debug_renderer" method="_on_bi_rope_join"]
+[connection signal="scanned_points" from="bi_rope" to="bi_rope/canvas_layer/bi_rope_debug_renderer" method="_on_bi_rope_scanned_points"]
+[connection signal="split" from="bi_rope" to="bi_rope/canvas_layer/bi_rope_debug_renderer" method="_on_bi_rope_split"]
+[connection signal="step_begin" from="bi_rope" to="bi_rope/canvas_layer/bi_rope_debug_renderer" method="_on_bi_rope_step_begin"]
+[connection signal="step_end" from="bi_rope" to="bi_rope/canvas_layer/bi_rope_debug_renderer" method="_on_bi_rope_step_end"]
+[connection signal="updated" from="bi_rope" to="bi_rope/canvas_layer/bi_rope_debug_renderer" method="_on_bi_rope_updated"]

@@ -38,19 +38,19 @@ data = {
 "width": 4
 }
 
-[sub_resource type="ImageTexture" id=39]
+[sub_resource type="ImageTexture" id=3]
 flags = 0
 flags = 0
 image = SubResource( 44 )
 size = Vector2( 4, 1 )
 
-[sub_resource type="ShaderMaterial" id=40]
+[sub_resource type="ShaderMaterial" id=4]
 resource_local_to_scene = true
 shader = ExtResource( 1 )
 shader_param/palette_size = 4
 shader_param/offset = 0
 shader_param/blue_index_offset = 0.0
-shader_param/palette = SubResource( 39 )
+shader_param/palette = SubResource( 3 )
 
 [sub_resource type="CircleShape2D" id=23]
 radius = 15.0
@@ -111,7 +111,7 @@ tracks/0/keys = {
 }
 
 [node name="pelota" type="RigidBody2D"]
-material = SubResource( 40 )
+material = SubResource( 4 )
 position = Vector2( 147, 77 )
 z_index = 10
 collision_layer = 2
@@ -138,7 +138,6 @@ script = ExtResource( 29 )
 shape = SubResource( 23 )
 
 [node name="claw" parent="." instance=ExtResource( 3 )]
-material = SubResource( 40 )
 
 [node name="display" type="Node2D" parent="."]
 material = SubResource( 37 )

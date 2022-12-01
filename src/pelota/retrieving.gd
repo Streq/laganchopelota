@@ -1,5 +1,10 @@
 extends State
 
+export var rope_pin_wearer_path : NodePath
+onready var rope_pin_wearer : RopePin = get_node(rope_pin_wearer_path)
+export var rope_pin_claw_path : NodePath
+onready var rope_pin_claw : RopePin = get_node(rope_pin_claw_path)
+
 func _enter(params):
 	root.animation_player.play(name)
 	call_deferred("reparent_to_world")
@@ -19,10 +24,12 @@ func _physics_update(delta: float):
 	if wearer_vel.dot(root.global_position - wearer.global_position)<0.0:
 		final_vel += wearer_vel
 	root.global_position += (final_vel)*delta
-	var dir = root.global_position.direction_to(root.wearer.global_position)
-	root.velocity += dir*root.retrieve_acceleration*delta
+	
+	var pull_direction = rope_pin_claw.get_pull_direction()
+#	var dir = root.global_position.direction_to(root.wearer.global_position)
+	root.velocity += pull_direction*root.retrieve_acceleration*delta
 	root.velocity *= (1.0-delta*root.retrieve_drag)
-	root.rotation = (-dir).angle()
+	root.rotation = (-pull_direction).angle()
 
 func _on_touching_someone(someone):
 	if someone == root.wearer:

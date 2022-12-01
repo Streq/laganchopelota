@@ -74,6 +74,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/global/render_utils.gd"
 }, {
+"base": "Node2D",
+"class": "Rope",
+"language": "GDScript",
+"path": "res://src/test/rope/both_sides_rope/both_sides_rope_test.gd"
+}, {
+"base": "Node2D",
+"class": "RopePin",
+"language": "GDScript",
+"path": "res://src/pelota/rope_pin.gd"
+}, {
 "base": "Node",
 "class": "RopeUtils",
 "language": "GDScript",
@@ -118,6 +128,8 @@ _global_script_class_icons={
 "PointComparatorByAngleWithSegment": "",
 "PoolArray": "",
 "RenderUtils": "",
+"Rope": "",
+"RopePin": "",
 "RopeUtils": "",
 "StackFiniteStateMachine": "",
 "State": "",
