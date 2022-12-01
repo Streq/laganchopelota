@@ -1,5 +1,8 @@
 extends State
 
+export var pin_claw_path : NodePath
+onready var pin_claw: RopePin = get_node(pin_claw_path)
+
 onready var lifetime: Timer = $lifetime
 
 # Initialize the state. E.g. change the animation
@@ -31,7 +34,7 @@ func _physics_update(delta: float):
 	var dir_to_wearer = root.global_position.direction_to(root.wearer.global_position)
 	root.velocity += dir_to_wearer*root.throw_decceleration*delta
 	root.velocity *= (1.0-delta*root.throw_drag)
-	
+	root.global_rotation = (-pin_claw.get_pull_direction()).angle()
 	if !root.wearer.input_state.A.is_pressed():
 		goto("retrieving")
 		return

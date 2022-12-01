@@ -376,10 +376,11 @@ start_state = "idle"
 
 [node name="throw" type="Node" parent="state_machine"]
 script = ExtResource( 9 )
+pin_claw_path = NodePath("../../rope_setup/pin_claw")
 
 [node name="lifetime" type="Timer" parent="state_machine/throw"]
 process_mode = 0
-wait_time = 0.75
+wait_time = 2.0
 one_shot = true
 
 [node name="idle" type="Node" parent="state_machine"]
@@ -440,104 +441,6 @@ anims/retrieving = SubResource( 39 )
 anims/throw = SubResource( 40 )
 
 [node name="reset_anim" parent="AnimationPlayer" instance=ExtResource( 13 )]
-
-[node name="chain" type="Node2D" parent="."]
-process_priority = 10
-material = SubResource( 37 )
-use_parent_material = true
-z_index = -1
-script = ExtResource( 12 )
-
-[node name="links" type="Node2D" parent="chain"]
-use_parent_material = true
-
-[node name="0" type="Sprite" parent="chain/links"]
-use_parent_material = true
-texture = ExtResource( 11 )
-
-[node name="1" type="Sprite" parent="chain/links"]
-use_parent_material = true
-texture = ExtResource( 11 )
-
-[node name="2" type="Sprite" parent="chain/links"]
-use_parent_material = true
-texture = ExtResource( 11 )
-
-[node name="3" type="Sprite" parent="chain/links"]
-use_parent_material = true
-texture = ExtResource( 11 )
-
-[node name="4" type="Sprite" parent="chain/links"]
-use_parent_material = true
-texture = ExtResource( 11 )
-
-[node name="5" type="Sprite" parent="chain/links"]
-use_parent_material = true
-texture = ExtResource( 11 )
-
-[node name="6" type="Sprite" parent="chain/links"]
-use_parent_material = true
-texture = ExtResource( 11 )
-
-[node name="7" type="Sprite" parent="chain/links"]
-use_parent_material = true
-texture = ExtResource( 11 )
-
-[node name="8" type="Sprite" parent="chain/links"]
-use_parent_material = true
-texture = ExtResource( 11 )
-
-[node name="9" type="Sprite" parent="chain/links"]
-use_parent_material = true
-texture = ExtResource( 11 )
-
-[node name="10" type="Sprite" parent="chain/links"]
-use_parent_material = true
-texture = ExtResource( 11 )
-
-[node name="11" type="Sprite" parent="chain/links"]
-use_parent_material = true
-texture = ExtResource( 11 )
-
-[node name="12" type="Sprite" parent="chain/links"]
-use_parent_material = true
-texture = ExtResource( 11 )
-
-[node name="13" type="Sprite" parent="chain/links"]
-use_parent_material = true
-texture = ExtResource( 11 )
-
-[node name="14" type="Sprite" parent="chain/links"]
-use_parent_material = true
-texture = ExtResource( 11 )
-
-[node name="15" type="Sprite" parent="chain/links"]
-use_parent_material = true
-texture = ExtResource( 11 )
-
-[node name="16" type="Sprite" parent="chain/links"]
-use_parent_material = true
-texture = ExtResource( 11 )
-
-[node name="17" type="Sprite" parent="chain/links"]
-use_parent_material = true
-texture = ExtResource( 11 )
-
-[node name="18" type="Sprite" parent="chain/links"]
-use_parent_material = true
-texture = ExtResource( 11 )
-
-[node name="19" type="Sprite" parent="chain/links"]
-use_parent_material = true
-texture = ExtResource( 11 )
-
-[node name="20" type="Sprite" parent="chain/links"]
-use_parent_material = true
-texture = ExtResource( 11 )
-
-[node name="21" type="Sprite" parent="chain/links"]
-use_parent_material = true
-texture = ExtResource( 11 )
 
 [node name="aim_pivot" type="Node2D" parent="."]
 visible = false
@@ -3648,21 +3551,133 @@ stream = ExtResource( 16 )
 bus = "sfx"
 
 [node name="rope_setup" type="Node2D" parent="."]
+use_parent_material = true
 script = ExtResource( 23 )
 
 [node name="bi_rope" type="Node2D" parent="rope_setup"]
+use_parent_material = true
 script = ExtResource( 22 )
 
 [node name="point_loader" type="Node2D" parent="rope_setup/bi_rope"]
 script = ExtResource( 20 )
 
 [node name="canvas_layer" type="CanvasLayer" parent="rope_setup/bi_rope"]
+visible = false
 
 [node name="bi_rope_debug_renderer" type="Node2D" parent="rope_setup/bi_rope/canvas_layer"]
+visible = false
 script = ExtResource( 21 )
 debug_font = SubResource( 47 )
 camera_path = NodePath("../../../Camera2D")
 rope_path = NodePath("../..")
+
+[node name="chain" type="Node2D" parent="rope_setup/bi_rope"]
+process_priority = 10
+material = SubResource( 4 )
+z_index = -1
+script = ExtResource( 12 )
+rope_path = NodePath("..")
+
+[node name="links" type="Node2D" parent="rope_setup/bi_rope/chain"]
+use_parent_material = true
+
+[node name="0" type="Sprite" parent="rope_setup/bi_rope/chain/links"]
+use_parent_material = true
+texture = ExtResource( 11 )
+
+[node name="1" type="Sprite" parent="rope_setup/bi_rope/chain/links"]
+use_parent_material = true
+texture = ExtResource( 11 )
+
+[node name="2" type="Sprite" parent="rope_setup/bi_rope/chain/links"]
+use_parent_material = true
+texture = ExtResource( 11 )
+
+[node name="3" type="Sprite" parent="rope_setup/bi_rope/chain/links"]
+use_parent_material = true
+texture = ExtResource( 11 )
+
+[node name="4" type="Sprite" parent="rope_setup/bi_rope/chain/links"]
+use_parent_material = true
+texture = ExtResource( 11 )
+
+[node name="5" type="Sprite" parent="rope_setup/bi_rope/chain/links"]
+use_parent_material = true
+texture = ExtResource( 11 )
+
+[node name="6" type="Sprite" parent="rope_setup/bi_rope/chain/links"]
+use_parent_material = true
+texture = ExtResource( 11 )
+
+[node name="7" type="Sprite" parent="rope_setup/bi_rope/chain/links"]
+use_parent_material = true
+texture = ExtResource( 11 )
+
+[node name="8" type="Sprite" parent="rope_setup/bi_rope/chain/links"]
+use_parent_material = true
+texture = ExtResource( 11 )
+
+[node name="9" type="Sprite" parent="rope_setup/bi_rope/chain/links"]
+use_parent_material = true
+texture = ExtResource( 11 )
+
+[node name="10" type="Sprite" parent="rope_setup/bi_rope/chain/links"]
+use_parent_material = true
+texture = ExtResource( 11 )
+
+[node name="11" type="Sprite" parent="rope_setup/bi_rope/chain/links"]
+use_parent_material = true
+texture = ExtResource( 11 )
+
+[node name="12" type="Sprite" parent="rope_setup/bi_rope/chain/links"]
+use_parent_material = true
+texture = ExtResource( 11 )
+
+[node name="13" type="Sprite" parent="rope_setup/bi_rope/chain/links"]
+use_parent_material = true
+texture = ExtResource( 11 )
+
+[node name="14" type="Sprite" parent="rope_setup/bi_rope/chain/links"]
+use_parent_material = true
+texture = ExtResource( 11 )
+
+[node name="15" type="Sprite" parent="rope_setup/bi_rope/chain/links"]
+use_parent_material = true
+texture = ExtResource( 11 )
+
+[node name="16" type="Sprite" parent="rope_setup/bi_rope/chain/links"]
+use_parent_material = true
+texture = ExtResource( 11 )
+
+[node name="17" type="Sprite" parent="rope_setup/bi_rope/chain/links"]
+use_parent_material = true
+texture = ExtResource( 11 )
+
+[node name="18" type="Sprite" parent="rope_setup/bi_rope/chain/links"]
+use_parent_material = true
+texture = ExtResource( 11 )
+
+[node name="19" type="Sprite" parent="rope_setup/bi_rope/chain/links"]
+use_parent_material = true
+texture = ExtResource( 11 )
+
+[node name="20" type="Sprite" parent="rope_setup/bi_rope/chain/links"]
+use_parent_material = true
+texture = ExtResource( 11 )
+
+[node name="21" type="Sprite" parent="rope_setup/bi_rope/chain/links"]
+use_parent_material = true
+texture = ExtResource( 11 )
+
+[node name="Path2D" type="Path2D" parent="rope_setup/bi_rope/chain"]
+self_modulate = Color( 0, 0.2, 1, 1 )
+
+[node name="PathFollow2D" type="PathFollow2D" parent="rope_setup/bi_rope/chain/Path2D"]
+position = Vector2( 195, -30 )
+rotation = 1.90433
+
+[node name="palette_client" parent="rope_setup/bi_rope/chain" instance=ExtResource( 3 )]
+type = 1
 
 [node name="pin_claw" parent="rope_setup" instance=ExtResource( 24 )]
 
