@@ -30,8 +30,9 @@ MUEVO LA SOGA ESTANDO ENROSCADA
 """
 
 var line_points := PoolVector2Array([Vector2(), Vector2()])
-var current_step_joins1 = PoolVector2Array()
-var current_step_joins0 = PoolVector2Array()
+#var current_step_joins1 = PoolVector2Array()
+#var current_step_joins0 = PoolVector2Array()
+var current_step_joins = [[],[]]
 
 
 func step(B0:Vector2, B1:Vector2):
@@ -44,15 +45,15 @@ func step(B0:Vector2, B1:Vector2):
 	
 	
 	if B0_moved and B1_moved:
-		if line_points.size()==2:
-			solve_cuadrilateral_step(B0,B1)
-		else:
-			solve_triangular_step0(B0)
-			solve_triangular_step1(B1)
-	if B0_moved:
-		solve_triangular_step0(B0)
-	if B1_moved:
-		solve_triangular_step1(B1)
+#		if line_points.size()==2:
+#			solve_cuadrilateral_step(B0,B1)
+#		else:
+		solve_triangular_step(B0, 0, 1)
+		solve_triangular_step(B1, -1, -1)
+	elif B0_moved:
+		solve_triangular_step(B0, 0, 1)
+	elif B1_moved:
+		solve_triangular_step(B1, -1, -1)
 	
 	emit_signal("updated",line_points)
 	emit_signal("step_end")
@@ -61,13 +62,12 @@ func step(B0:Vector2, B1:Vector2):
 func solve_cuadrilateral_step(B0:Vector2,B1:Vector2):
 	pass
 
-var latest_non_zero_side_of_swing0 := 0.0
-var latest_non_zero_side_of_swing1 := 0.0
+var latest_non_zero_side_of_swing := [0.0,0.0]
 
-func solve_triangular_step1(B:Vector2) -> bool:
-	var O = line_points[-2]
-	var A = line_points[-1] #rope pre swing position
-	line_points[-1] = B
+func solve_triangular_step(B:Vector2, start:int, increment:int) -> bool:
+	var O = line_points[start+increment]
+	var A = line_points[start] #rope pre swing position
+	line_points[start] = B
 	#       .O
 	#	   / \
 	#	  /   \
@@ -78,12 +78,12 @@ func solve_triangular_step1(B:Vector2) -> bool:
 	while true:
 		if A==B:
 			return false
-		O = line_points[-2] #rope latest split position (or rope origin if no splits)
+		O = line_points[start+increment] #rope latest split position (or rope origin if no splits)
 		
 		emit_signal("check",O,A,B)
 		if line_points.size()>=3:
 			#rope previous split position
-			var Q := line_points[-3]
+			var Q := line_points[start+increment*2]
 			
 			#intersection between QO's line and AB
 			#U is null if no intersection or same line
@@ -92,7 +92,7 @@ func solve_triangular_step1(B:Vector2) -> bool:
 			var A_is_right_at_the_middle = Geometry.line_intersects_line_2d(O,A-O,Q,O-Q) == null
 			var current_side_of_swing = RopeUtils.get_side_of_swing(Q,O,A)
 			if current_side_of_swing:
-				latest_non_zero_side_of_swing1 = current_side_of_swing
+				latest_non_zero_side_of_swing[start] = current_side_of_swing
 			if parallel_swing and A_is_right_at_the_middle:
 				#       .Q
 				#       |
@@ -116,10 +116,10 @@ func solve_triangular_step1(B:Vector2) -> bool:
 				#  .A   .B
 				
 				
-				if check_splits1(A,B):
-					Q = line_points[-3]
-					O = line_points[-2]
-					latest_non_zero_side_of_swing1 = RopeUtils.get_side_of_full_swing(Q,O,A,B)
+				if check_splits(A,B,start,increment):
+					Q = line_points[start+increment*2]
+					O = line_points[start+increment]
+					latest_non_zero_side_of_swing[start] = RopeUtils.get_side_of_full_swing(Q,O,A,B)
 				
 				return true
 			elif RopeUtils.is_swing_from_middle_to_side(Q,O,A,B):
@@ -132,8 +132,9 @@ func solve_triangular_step1(B:Vector2) -> bool:
 				#	    |  \
 				#	    |   \
 				#       .A   .B
-				if latest_non_zero_side_of_swing1 != RopeUtils.get_side_of_swing(Q,O,B):
-					join_last_two1()
+				if latest_non_zero_side_of_swing[start] != RopeUtils.get_side_of_swing(Q,O,B):
+					current_step_joins[start].append(O)
+					join_point(start+increment)
 					continue
 				
 				return true
@@ -147,11 +148,12 @@ func solve_triangular_step1(B:Vector2) -> bool:
 				#	 /  .  \
 				#	/   .   \
 				#  .A   .U   .B
-				if !check_splits1(A,U):
-					join_last_two1()
+				if !check_splits(A,U,start,increment):
+					current_step_joins[start].append(O)
+					join_point(start+increment)
 					A = U
 					continue
-				check_splits1(U,B)
+				check_splits(U,B,start,increment)
 				return true
 			else:
 				#.Q_____.O..............(U isn't inside AB)
@@ -160,7 +162,7 @@ func solve_triangular_step1(B:Vector2) -> bool:
 				#	 /     \
 				#	/       \
 				#  .A        .B
-				check_splits1(A,B)
+				check_splits(A,B,start,increment)
 				return true
 		else:
 			#       .O
@@ -169,132 +171,19 @@ func solve_triangular_step1(B:Vector2) -> bool:
 			#	 /     \
 			#	/       \
 			#  .A        .B
-			if check_splits1(A,B):
-				var Q = line_points[-3]
-				O = line_points[-2]
-				latest_non_zero_side_of_swing1 = RopeUtils.get_side_of_full_swing(Q,O,A,B)
-			return true
-			
-		
-	return true
-
-func solve_triangular_step0(B:Vector2) -> bool:
-	var O = line_points[1]
-	var A = line_points[0] #rope pre swing position
-	line_points[0] = B
-	#       .O
-	#	   / \
-	#	  /   \
-	#	 /     \
-	#	/       \
-	#  .A        .B
-	
-	while true:
-		if A==B:
-			return false
-		O = line_points[1] #rope latest split position (or rope origin if no splits)
-		
-		emit_signal("check",O,A,B)
-		if line_points.size()>=3:
-			#rope previous split position
-			var Q := line_points[2]
-			
-			#intersection between QO's line and AB
-			#U is null if no intersection or same line
-			var U = Geometry.line_intersects_line_2d(Q,O-Q,A,B-A)
-			var parallel_swing = U == null
-			var A_is_right_at_the_middle = Geometry.line_intersects_line_2d(O,A-O,Q,O-Q) == null
-			var current_side_of_swing = RopeUtils.get_side_of_swing(Q,O,A)
-			if current_side_of_swing:
-				latest_non_zero_side_of_swing1 = current_side_of_swing
-			if parallel_swing and A_is_right_at_the_middle:
-				#       .Q
-				#       |
-				#       |
-				#       .O
-				#	    |
-				#	    .A
-				#	    |   AB is in the same line as QO
-				#	    |
-				#       .B
-				return true
-			elif RopeUtils.is_swing_from_side_to_middle(Q,O,A,B):
-				#       .Q
-				#       |
-				#       |
-				#       .O
-				#	   /|
-				#	  / |
-				#	 /  |
-				#	/   |
-				#  .A   .B
-				
-				
-				if check_splits1(A,B):
-					Q = line_points[2]
-					O = line_points[1]
-					latest_non_zero_side_of_swing1 = RopeUtils.get_side_of_full_swing(Q,O,A,B)
-				
-				return true
-			elif RopeUtils.is_swing_from_middle_to_side(Q,O,A,B):
-				#       .Q
-				#       |
-				#       |
-				#       .O
-				#	    |\
-				#	    | \
-				#	    |  \
-				#	    |   \
-				#       .A   .B
-				if latest_non_zero_side_of_swing1 != RopeUtils.get_side_of_swing(Q,O,B):
-					join_last_two1()
-					continue
-				
-				return true
-			elif RopeUtils.is_swing_from_side_to_side(Q,O,A,B):
-				#       .Q
-				#       |
-				#       |
-				#       .O
-				#	   /.\
-				#	  / . \
-				#	 /  .  \
-				#	/   .   \
-				#  .A   .U   .B
-				if !check_splits1(A,U):
-					join_last_two1()
-					A = U
-					continue
-				check_splits1(U,B)
-				return true
-			else:
-				#.Q_____.O..............(U isn't inside AB)
-				#	   / \
-				#	  /   \
-				#	 /     \
-				#	/       \
-				#  .A        .B
-				check_splits1(A,B)
-				return true
-		else:
-			#       .O
-			#	   / \
-			#	  /   \
-			#	 /     \
-			#	/       \
-			#  .A        .B
-			if check_splits1(A,B):
-				var Q = line_points[2]
-				O = line_points[1]
-				latest_non_zero_side_of_swing1 = RopeUtils.get_side_of_full_swing(Q,O,A,B)
+			if check_splits(A,B,start,increment):
+				var Q = line_points[start+increment*2]
+				O = line_points[start+increment]
+				latest_non_zero_side_of_swing[start] = RopeUtils.get_side_of_full_swing(Q,O,A,B)
 			return true
 			
 		
 	return true
 
 
-func check_splits1(A:Vector2,B:Vector2):
-	var O :Vector2 = line_points[-2]
+
+func check_splits(A:Vector2,B:Vector2, start:int, increment:int):
+	var O :Vector2 = line_points[start+increment]
 #	draw_triangles.append(PoolVector2Array([O,A,B]))
 	
 	var points_in_triangle = RopeUtils.get_all_collider_points_inside_triangle(
@@ -307,9 +196,9 @@ func check_splits1(A:Vector2,B:Vector2):
 	
 	if points_in_triangle.size()==1:
 		var point = points_in_triangle[0]
-		var valid = check_single_split1(point)
+		var valid = check_single_split(point, start, increment)
 		if valid:
-			split_at1(point)
+			split(point,increment)
 		return valid
 		
 	var comparator = PointComparatorByAngleWithSegment.new(O,A)
@@ -324,40 +213,36 @@ func check_splits1(A:Vector2,B:Vector2):
 		var point :Vector2 = p
 #		draw_internal_triangles.append(PoolVector2Array([A,B,line_points[-2]]))
 		if (
-			RopeUtils.point_is_inside_triangle_inclusive_but_exclude_first_segment(p,line_points[-2],A,B)
-			and check_single_split1(point)
+			RopeUtils.point_is_inside_triangle_inclusive_but_exclude_first_segment(p,line_points[start+increment],A,B)
+			and check_single_split(point,start,increment)
 		):
-			emit_signal("check",A,B,line_points[-2])
-			split_at1(point)
+			split(point,increment)
+			emit_signal("check",A,B,line_points[start+increment])
 			at_least_one_split = true
 	
 	return at_least_one_split
 
-func check_single_split1(at):
-	var valid = (current_step_joins1.find(at) == -1 and line_points[-2]!=at)
+
+func check_single_split(at,start,increment):
+	var valid = (current_step_joins[start].find(at) == -1 and line_points[start+increment]!=at)
 	return valid
 
-func check_single_split0(at):
-	var valid = (current_step_joins0.find(at) == -1 and line_points[1]!=at)
-	return valid
 	
-func split_at1(point):
+
+func split(point, index_of_point_before_slit):
 	print("splitting:", point)
 	emit_signal("split",point)
-	line_points.insert(line_points.size()-1,point)
+	line_points.insert(posmod(index_of_point_before_slit,line_points.size()), point)
 #	draw_points.append(point)
 	pass
 	
-func clear_caches():
-	current_step_joins0 = PoolVector2Array()
-	current_step_joins1 = PoolVector2Array()
 
-func join_last_two0():
-	pass
-	
-func join_last_two1():
-	var join_point = line_points[-2]
+func clear_caches():
+	current_step_joins[0] = []
+	current_step_joins[-1] = []
+
+func join_point(index):
+	var join_point = line_points[index]
 	print("joining:",join_point)
 	emit_signal("join",join_point)
-	current_step_joins1.append(join_point)
-	line_points.remove(line_points.size()-2)
+	line_points.remove(posmod(index,line_points.size()))

@@ -17,10 +17,10 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion and Input.is_mouse_button_pressed(BUTTON_MIDDLE):
 		var mouse_motion : InputEventMouseMotion = event
 		position -= mouse_motion.relative*zoom
-		
-	if event.is_action_pressed("B"):
-		print("zoom_factor:", zoom_factor)
-		print("camera_global_position:", global_position)
+#
+#	if event.is_action_pressed("B"):
+#		print("zoom_factor:", zoom_factor)
+#		print("camera_global_position:", global_position)
 func _physics_process(delta: float) -> void:
 	self.anchor_mode
 

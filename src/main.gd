@@ -16,11 +16,40 @@ func _ready() -> void:
 #	var r = PoolRealArray([1,2,3])
 #	r.insert(0,4)
 #	print(r)
-	var array = []
-	append_something(array,"hola")
-	print(array)
 
 
+#	var array = []
+#	append_something(array,"hola")
+#	print(array)
+	
+#	var map = {
+#		"s":PoolVector2Array()
+#	}
+#	map.s.append(Vector2(1,1))
+#
+#	var arr = [PoolVector2Array()]
+#	arr[0].append(Vector2())
+#
+#
+#	print(map)
+#	print(arr)
+	var arr = [1,2,3]
+	var e = 4
+	
+	insert(arr,1,e)
+	insert(arr,-1,e)
 
+	print(arr)
+	
 func append_something(array, something):
 	array.append(something)
+
+
+
+func insert_begin(arr:Array, val):
+	arr.insert(0, val)
+	
+func insert_second(arr:Array, val):
+	arr.insert(1, val)
+func insert(arr:Array, increment, val):
+	arr.insert(posmod(increment,arr.size()), val)
