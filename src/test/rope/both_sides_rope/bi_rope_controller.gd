@@ -18,13 +18,13 @@ func _physics_process(delta: float) -> void:
 			
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_left",true):
-		rope.step(rope.line_points[0],rope.line_points[-1]+Vector2.LEFT)
+		rope.double_step(rope.line_points[0],rope.line_points[-1]+Vector2.LEFT)
 	if event.is_action_pressed("ui_right",true):
-		rope.step(rope.line_points[0],rope.line_points[-1]+Vector2.RIGHT)
+		rope.double_step(rope.line_points[0],rope.line_points[-1]+Vector2.RIGHT)
 	if event.is_action_pressed("ui_up",true):
-		rope.step(rope.line_points[0],rope.line_points[-1]+Vector2.UP)
+		rope.double_step(rope.line_points[0],rope.line_points[-1]+Vector2.UP)
 	if event.is_action_pressed("ui_down",true):
-		rope.step(rope.line_points[0],rope.line_points[-1]+Vector2.DOWN)
+		rope.double_step(rope.line_points[0],rope.line_points[-1]+Vector2.DOWN)
 	if event.is_action_pressed("A"):
 		move_back()
 	if event.is_action_pressed("B"):
@@ -33,11 +33,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		move_both()
 	
 func move_back():
-	rope.step(rope.line_points[0],get_global_mouse_position())
+	rope.double_step(rope.line_points[0],get_global_mouse_position())
 	controlling_front = false
 	last_pressed = "A"
 func move_front():
-	rope.step(get_global_mouse_position(),rope.line_points[-1])
+	rope.double_step(get_global_mouse_position(),rope.line_points[-1])
 	controlling_front = true
 	last_pressed = "B"
 
@@ -45,7 +45,7 @@ func move_both():
 	var target = get_global_mouse_position() 
 	var distance = rope.line_points[-1] - rope.line_points[0]
 	if controlling_front:
-		rope.step(target, target+distance)
+		rope.double_step(target, target+distance)
 	else:
-		rope.step(target-distance, target)
+		rope.double_step(target-distance, target)
 	last_pressed = "C"

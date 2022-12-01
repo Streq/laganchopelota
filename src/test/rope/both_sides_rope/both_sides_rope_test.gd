@@ -34,8 +34,10 @@ var line_points := PoolVector2Array([Vector2(), Vector2()])
 #var current_step_joins0 = PoolVector2Array()
 var current_step_joins = [[],[]]
 
+func _ready() -> void:
+	emit_signal("updated",line_points)
 
-func step(B0:Vector2, B1:Vector2):
+func double_step(B0:Vector2, B1:Vector2):
 	emit_signal("step_begin")
 	clear_caches()
 	
@@ -48,23 +50,36 @@ func step(B0:Vector2, B1:Vector2):
 #		if line_points.size()==2:
 #			solve_cuadrilateral_step(B0,B1)
 #		else:
-		solve_triangular_step(B0, 0, 1)
-		solve_triangular_step(B1, -1, -1)
+		single_step(B0, 1)
+		single_step(B1, -1)
 	elif B0_moved:
-		solve_triangular_step(B0, 0, 1)
+		single_step(B0, 1)
 	elif B1_moved:
-		solve_triangular_step(B1, -1, -1)
+		single_step(B1, -1)
 	
 	emit_signal("updated",line_points)
 	emit_signal("step_end")
 	
+func step(B:Vector2, increment):
+	var start = min(increment,0)
+	emit_signal("step_begin")
+	clear_caches()
+	
+	var B_moved = B != line_points[start]
+	if B_moved:
+		single_step(B, increment)
+	
+	emit_signal("updated",line_points)
+	emit_signal("step_end")
+
 
 func solve_cuadrilateral_step(B0:Vector2,B1:Vector2):
 	pass
 
 var latest_non_zero_side_of_swing := [0.0,0.0]
 
-func solve_triangular_step(B:Vector2, start:int, increment:int) -> bool:
+func single_step(B:Vector2, increment:int) -> bool:
+	var start = min(increment, 0)
 	var O = line_points[start+increment]
 	var A = line_points[start] #rope pre swing position
 	line_points[start] = B
