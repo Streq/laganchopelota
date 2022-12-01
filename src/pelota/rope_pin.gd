@@ -14,3 +14,6 @@ func get_pull_direction():
 	var end = rope.line_points[start_index]
 	var origin = rope.line_points[start_index+side_of_pin]
 	return end.direction_to(origin)
+
+func reset_rope_position_to_self():
+	rope.line_points = PoolVector2Array([global_position, global_position])

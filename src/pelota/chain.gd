@@ -19,7 +19,7 @@ func _process(delta: float) -> void:
 
 	for child in links.get_children():
 		path_follow_2d.unit_offset = i/size
-		print(path_follow_2d.offset)
+#		print(path_follow_2d.offset)
 		child.global_position = path_follow_2d.global_position
 		child.global_rotation = 0
 		i+=1.0

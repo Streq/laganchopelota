@@ -31,14 +31,22 @@ MUEVO LA SOGA ESTANDO ENROSCADA
 """
 
 var line_points := PoolVector2Array([Vector2(), Vector2()])
-#var current_step_joins1 = PoolVector2Array()
-#var current_step_joins0 = PoolVector2Array()
 var current_step_joins = [[],[]]
+var active = true
+
+func enable():
+	active = true
+func disable():
+	active = false
 
 func _ready() -> void:
 	emit_signal("updated",line_points)
 
 func double_step(B0:Vector2, B1:Vector2):
+	if !active:
+		line_points[0] = B0
+		line_points[-1] = B1
+		return
 	emit_signal("step_begin")
 	clear_caches()
 	
@@ -81,6 +89,9 @@ var latest_non_zero_side_of_swing := [0.0,0.0]
 
 func single_step(B:Vector2, increment:int) -> bool:
 	var start = min(increment, 0)
+	if !active:
+		line_points[start] = B
+		return false
 	var O = line_points[start+increment]
 	var A = line_points[start] #rope pre swing position
 	line_points[start] = B
@@ -262,3 +273,4 @@ func join_point(index):
 	print("joining:",join_point)
 	emit_signal("join",join_point)
 	line_points.remove(posmod(index,line_points.size()))
+
