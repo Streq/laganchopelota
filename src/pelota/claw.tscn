@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=2]
+[gd_scene load_steps=40 format=2]
 
 [ext_resource path="res://assets/shader/palette.gdshader" type="Shader" id=1]
 [ext_resource path="res://src/pelota/debug/print_state.gd" type="Script" id=2]
@@ -358,6 +358,11 @@ tracks/4/keys = {
 
 [sub_resource type="DynamicFont" id=47]
 font_data = ExtResource( 19 )
+
+[sub_resource type="Curve2D" id=50]
+_data = {
+"points": PoolVector2Array(  )
+}
 
 [node name="claw" type="Node2D"]
 process_priority = 1
@@ -3671,6 +3676,7 @@ texture = ExtResource( 11 )
 
 [node name="Path2D" type="Path2D" parent="rope_setup/bi_rope/chain"]
 self_modulate = Color( 0, 0.2, 1, 1 )
+curve = SubResource( 50 )
 
 [node name="PathFollow2D" type="PathFollow2D" parent="rope_setup/bi_rope/chain/Path2D"]
 position = Vector2( 195, -30 )
