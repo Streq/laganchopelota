@@ -10,7 +10,7 @@ var player_fell_for_it = false
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	yield(owner,"ready")
-	print(global_scale)
+#	print(global_scale)
 	scale.x = get_parent().scale.x
 
 

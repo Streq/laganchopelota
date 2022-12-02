@@ -9,9 +9,9 @@ func _init(origin:Vector2,end:Vector2):
 	self.OE = end-origin
 
 func compare_points_asc(P1:Vector2,P2:Vector2):
-	print("PSEUDOANGLES")
-	print("P1:", P1," angle:%.16f"%pseudoangle(P1-O,OE)," distance:",P1.distance_squared_to(O))
-	print("P2:", P2," angle:%.16f"%pseudoangle(P2-O,OE)," distance:",P2.distance_squared_to(O))
+#	print("PSEUDOANGLES")
+#	print("P1:", P1," angle:%.16f"%pseudoangle(P1-O,OE)," distance:",P1.distance_squared_to(O))
+#	print("P2:", P2," angle:%.16f"%pseudoangle(P2-O,OE)," distance:",P2.distance_squared_to(O))
 	var pa1 = pseudoangle(P1-O,OE)
 	var pa2 = pseudoangle(P2-O,OE)
 	if is_equal_approx(pa1,pa2):
