@@ -97,7 +97,7 @@ position = Vector2( -736, 288 )
 position = Vector2( 0, -136 )
 
 [node name="left_side" type="CollisionPolygon2D" parent="pivot/gap2/StaticBody2D" groups=["fill_tilemap_polygon"]]
-position = Vector2( -448, -208 )
+position = Vector2( -448, -200 )
 polygon = PoolVector2Array( -192, 240, -192, 272, 832, 272, 832, 240 )
 
 [node name="left_side3" type="CollisionPolygon2D" parent="pivot/gap2/StaticBody2D" groups=["fill_tilemap_polygon"]]
@@ -109,11 +109,11 @@ position = Vector2( 1280, -392 )
 polygon = PoolVector2Array( -192, 240, -192, 272, 1056, 272, 1056, 240 )
 
 [node name="left_side2" type="CollisionPolygon2D" parent="pivot/gap2/StaticBody2D" groups=["fill_tilemap_polygon"]]
-position = Vector2( 1280, -208 )
+position = Vector2( 1280, -200 )
 polygon = PoolVector2Array( -192, 240, -192, 272, 832, 272, 832, 240 )
 
 [node name="right_side" type="CollisionPolygon2D" parent="pivot/gap2/StaticBody2D" groups=["fill_tilemap_polygon"]]
-position = Vector2( 768, -208 )
+position = Vector2( 768, -200 )
 polygon = PoolVector2Array( -192, 240, -192, 272, 128, 272, 128, 240 )
 
 [connection signal="area_entered" from="pivot/burla/camera_detector" to="pivot/burla" method="_on_camera_detector_area_entered"]

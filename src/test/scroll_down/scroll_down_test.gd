@@ -16,15 +16,14 @@ func _physics_process(delta: float) -> void:
 func win():
 	win_label.show()
 	yield(get_tree().create_timer(2.0),"timeout")
-	get_tree().reload_current_scene()
+	Playjam.win()
 	
 func lose():
 	lose_label.show()
 	game_over.play()
 	music.stop()
 	yield(game_over,"finished")
-	
-	get_tree().reload_current_scene()
+	Playjam.lose()
 	
 
 

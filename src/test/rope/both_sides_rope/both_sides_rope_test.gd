@@ -257,7 +257,7 @@ func check_single_split(at,start,increment):
 	
 
 func split(point, index_of_point_before_slit):
-	print("splitting:", point)
+#	print("splitting:", point)
 	emit_signal("split",point)
 	line_points.insert(posmod(index_of_point_before_slit,line_points.size()), point)
 #	draw_points.append(point)
@@ -270,7 +270,7 @@ func clear_caches():
 
 func join_point(index):
 	var join_point = line_points[index]
-	print("joining:",join_point)
+#	print("joining:",join_point)
 	emit_signal("join",join_point)
 	line_points.remove(posmod(index,line_points.size()))
 

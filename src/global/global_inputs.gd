@@ -12,5 +12,6 @@ func _unhandled_key_input(event: InputEventKey) -> void:
 					
 					get_tree().reload_current_scene()
 			KEY_F:
-				OS.window_fullscreen = !OS.window_fullscreen
+				if !OS.has_feature("playjam"):
+					OS.window_fullscreen = !OS.window_fullscreen
 		

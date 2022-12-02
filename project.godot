@@ -148,12 +148,14 @@ config/icon="res://assets/texture/icon.png"
 
 GlobalPalette="*res://src/util/color/GlobalPalette.tscn"
 GlobalInputs="res://src/global/global_inputs.gd"
+Playjam="*res://src/playjam/playjam.tscn"
 
 [display]
 
 window/size/width=960
 window/size/height=540
 window/stretch/mode="viewport"
+window/size/fullscreen.playjam=true
 
 [editor_plugins]
 
