@@ -7,7 +7,8 @@ onready var music: AudioStreamPlayer = $music
 onready var intro_music: AudioStreamPlayer = $intro_music
 onready var game_over: AudioStreamPlayer = $game_over
 
-export var camera_speed := 25.0
+export var camera_speed := 15.0
+
 func _physics_process(delta: float) -> void:
 	camera_2d.position.y-=camera_speed*delta
 
