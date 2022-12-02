@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=2]
+[gd_scene load_steps=41 format=2]
 
 [ext_resource path="res://assets/shader/palette.gdshader" type="Shader" id=1]
 [ext_resource path="res://src/pelota/debug/print_state.gd" type="Script" id=2]
@@ -25,7 +25,7 @@
 [ext_resource path="res://src/pelota/rope_setup.gd" type="Script" id=23]
 [ext_resource path="res://src/pelota/rope/rope_pin.tscn" type="PackedScene" id=24]
 
-[sub_resource type="Image" id=51]
+[sub_resource type="Image" id=54]
 data = {
 "data": PoolByteArray( 255, 255, 255, 0, 255, 227, 99, 255, 255, 57, 8, 255, 0, 0, 0, 255 ),
 "format": "RGBA8",
@@ -37,7 +37,7 @@ data = {
 [sub_resource type="ImageTexture" id=3]
 flags = 0
 flags = 0
-image = SubResource( 51 )
+image = SubResource( 54 )
 size = Vector2( 4, 1 )
 
 [sub_resource type="ShaderMaterial" id=4]
@@ -48,7 +48,7 @@ shader_param/offset = 0
 shader_param/blue_index_offset = 0.0
 shader_param/palette = SubResource( 3 )
 
-[sub_resource type="Image" id=52]
+[sub_resource type="Image" id=55]
 data = {
 "data": PoolByteArray( 255, 255, 255, 0, 255, 227, 99, 255, 255, 57, 8, 255, 0, 0, 0, 255 ),
 "format": "RGBA8",
@@ -60,7 +60,7 @@ data = {
 [sub_resource type="ImageTexture" id=36]
 flags = 0
 flags = 0
-image = SubResource( 52 )
+image = SubResource( 55 )
 size = Vector2( 4, 1 )
 
 [sub_resource type="ShaderMaterial" id=37]
@@ -364,11 +364,15 @@ _data = {
 "points": PoolVector2Array(  )
 }
 
-[node name="claw" type="Node2D"]
+[sub_resource type="CircleShape2D" id=53]
+radius = 2.0
+
+[node name="claw" type="KinematicBody2D"]
 process_priority = 1
 material = SubResource( 4 )
 z_index = 5
 z_as_relative = false
+collision_layer = 0
 script = ExtResource( 4 )
 throw_drag = 1.0
 retrieve_drag = 3.0
@@ -3689,6 +3693,9 @@ type = 1
 
 [node name="pin_wearer" parent="rope_setup" instance=ExtResource( 24 )]
 side_of_pin = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 53 )
 
 [connection signal="pre_state_change" from="state_machine" to="AnimationPlayer/reset_anim" method="trigger"]
 [connection signal="entered" from="state_machine/throw" to="state_machine/throw/lifetime" method="start"]

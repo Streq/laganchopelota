@@ -23,9 +23,12 @@ func _physics_update(delta: float):
 	var wearer_vel = wearer.linear_velocity
 	if wearer_vel.dot(root.global_position - wearer.global_position)<0.0:
 		final_vel += wearer_vel
-	root.global_position += (final_vel)*delta
+	root.move_and_slide(final_vel)
+#	root.global_position += (final_vel)*delta
 	
 	var pull_direction = rope_pin_claw.get_pull_direction()
+	
+	root.move_and_slide(pull_direction*100.0)
 #	var dir = root.global_position.direction_to(root.wearer.global_position)
 	root.velocity += pull_direction*root.retrieve_acceleration*delta
 	root.velocity *= (1.0-delta*root.retrieve_drag)

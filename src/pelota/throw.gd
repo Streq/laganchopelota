@@ -30,7 +30,8 @@ func _exit():
 	
 # Called during _physics_process
 func _physics_update(delta: float):
-	root.global_position += root.velocity*delta
+	root.velocity = root.move_and_slide(root.velocity)
+#	root.global_position += root.velocity*delta
 	var pull_direction = pin_claw.get_pull_direction()
 	root.velocity += pull_direction*root.throw_decceleration*delta
 	root.velocity *= (1.0-delta*root.throw_drag)

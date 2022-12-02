@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://src/test/rope/both_sides_rope/both_sides_rope_test.gd" type="Script" id=1]
 [ext_resource path="res://src/test/rope/both_sides_rope/bi_rope_debug_renderer.gd" type="Script" id=2]
@@ -7,33 +7,9 @@
 [ext_resource path="res://src/test/wrappable_rope/Camera2D.gd" type="Script" id=5]
 [ext_resource path="res://src/test/rope/both_sides_rope/state_saver.gd" type="Script" id=6]
 [ext_resource path="res://src/test/rope/both_sides_rope/point_loader.gd" type="Script" id=7]
-[ext_resource path="res://assets/shader/palette.gdshader" type="Shader" id=8]
 [ext_resource path="res://src/pelota/pelota.tscn" type="PackedScene" id=9]
 [ext_resource path="res://src/test/rope/both_sides_rope/rope_pin.gd" type="Script" id=10]
 [ext_resource path="res://src/test/wrappable_rope/Polygon2D.gd" type="Script" id=11]
-
-[sub_resource type="Image" id=5]
-data = {
-"data": PoolByteArray( 255, 255, 255, 0, 255, 227, 99, 255, 255, 57, 8, 255, 0, 0, 0, 255 ),
-"format": "RGBA8",
-"height": 1,
-"mipmaps": false,
-"width": 4
-}
-
-[sub_resource type="ImageTexture" id=3]
-flags = 0
-flags = 0
-image = SubResource( 5 )
-size = Vector2( 4, 1 )
-
-[sub_resource type="ShaderMaterial" id=4]
-resource_local_to_scene = true
-shader = ExtResource( 8 )
-shader_param/palette_size = 4
-shader_param/offset = 0
-shader_param/blue_index_offset = 0.0
-shader_param/palette = SubResource( 3 )
 
 [sub_resource type="DynamicFont" id=1]
 font_data = ExtResource( 4 )
@@ -41,7 +17,6 @@ font_data = ExtResource( 4 )
 [node name="Node2D" type="Node2D"]
 
 [node name="pelota" parent="." instance=ExtResource( 9 )]
-material = SubResource( 4 )
 position = Vector2( 427, 279 )
 
 [node name="rope_pin" type="Node2D" parent="pelota"]
