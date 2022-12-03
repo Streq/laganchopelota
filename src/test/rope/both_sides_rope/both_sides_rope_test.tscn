@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://src/test/rope/both_sides_rope/both_sides_rope_test.gd" type="Script" id=1]
 [ext_resource path="res://src/test/rope/both_sides_rope/bi_rope_debug_renderer.gd" type="Script" id=2]
@@ -11,9 +11,6 @@
 
 [sub_resource type="DynamicFont" id=1]
 font_data = ExtResource( 4 )
-
-[sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 49, 46 )
 
 [node name="Node2D" type="Node2D"]
 
@@ -45,10 +42,6 @@ z_index = -1
 color = Color( 0.235294, 0.235294, 0.235294, 1 )
 script = ExtResource( 8 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2( 219, -58 )
-shape = SubResource( 2 )
-
 [node name="StaticBody2D2" type="StaticBody2D" parent="."]
 position = Vector2( 694, 162 )
 
@@ -57,6 +50,15 @@ position = Vector2( 4, -9 )
 polygon = PoolVector2Array( 20, 28, 15, -37, -55, -34, -53, 24 )
 
 [node name="Polygon2D" type="Polygon2D" parent="StaticBody2D2/CollisionPolygon2D"]
+z_index = -1
+color = Color( 0.235294, 0.235294, 0.235294, 1 )
+script = ExtResource( 8 )
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D2"]
+position = Vector2( -275, -85 )
+polygon = PoolVector2Array( 20, 28, 116, 11, 15, -37, -55, -34, -53, 24, -12, 77 )
+
+[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D2/CollisionPolygon2D2"]
 z_index = -1
 color = Color( 0.235294, 0.235294, 0.235294, 1 )
 script = ExtResource( 8 )
