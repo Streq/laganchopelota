@@ -36,11 +36,13 @@ func quit():
 
 func restart():
 	restart_display.show()
+	AudioServer.set_bus_mute(0,true)
 	yield(get_tree().create_timer(1.0),"timeout")
 	GlobalPalette.reload()
 	restart_display.hide()
 	get_tree().reload_current_scene()
-
+	AudioServer.set_bus_mute(0,false)
+	
 
 func _ready() -> void:
 #	return
@@ -118,3 +120,6 @@ func key(action,code):
 	var keyButton = InputEventKey.new()
 	keyButton.scancode = code
 	InputMap.action_add_event(action, keyButton)
+	
+	
+	
