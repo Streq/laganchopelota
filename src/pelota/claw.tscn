@@ -20,8 +20,8 @@
 [ext_resource path="res://src/pelota/throw_sound.gd" type="Script" id=18]
 [ext_resource path="res://assets/font/Ink Stamp.ttf" type="DynamicFontData" id=19]
 [ext_resource path="res://src/test/rope/both_sides_rope/point_loader.gd" type="Script" id=20]
-[ext_resource path="res://src/test/rope/both_sides_rope/bi_rope_debug_renderer.gd" type="Script" id=21]
-[ext_resource path="res://src/test/rope/both_sides_rope/both_sides_rope_test.gd" type="Script" id=22]
+[ext_resource path="res://src/test/rope/both_sides_rope/wrappable_rope_2d_renderer.gd" type="Script" id=21]
+[ext_resource path="res://src/test/rope/both_sides_rope/wrappable_rope_2d.gd" type="Script" id=22]
 [ext_resource path="res://src/pelota/rope_setup.gd" type="Script" id=23]
 [ext_resource path="res://src/pelota/rope/rope_pin.tscn" type="PackedScene" id=24]
 
