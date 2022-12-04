@@ -77,7 +77,7 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "Rope",
 "language": "GDScript",
-"path": "res://src/test/rope/both_sides_rope/wrappable_rope_2d.gd"
+"path": "res://src/util/geometry/rope/wrappable_rope_2d.gd"
 }, {
 "base": "Node2D",
 "class": "RopePin",
@@ -87,7 +87,7 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "RopeUtils",
 "language": "GDScript",
-"path": "res://src/util/geometry/rope_utils.gd"
+"path": "res://src/util/geometry/rope/rope_utils.gd"
 }, {
 "base": "Node",
 "class": "StackFiniteStateMachine",

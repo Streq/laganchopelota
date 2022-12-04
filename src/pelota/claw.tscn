@@ -20,12 +20,12 @@
 [ext_resource path="res://src/pelota/throw_sound.gd" type="Script" id=18]
 [ext_resource path="res://assets/font/Ink Stamp.ttf" type="DynamicFontData" id=19]
 [ext_resource path="res://src/test/rope/both_sides_rope/point_loader.gd" type="Script" id=20]
-[ext_resource path="res://src/test/rope/both_sides_rope/wrappable_rope_2d_renderer.gd" type="Script" id=21]
-[ext_resource path="res://src/test/rope/both_sides_rope/wrappable_rope_2d.gd" type="Script" id=22]
+[ext_resource path="res://src/util/geometry/rope/wrappable_rope_2d_renderer.gd" type="Script" id=21]
+[ext_resource path="res://src/util/geometry/rope/wrappable_rope_2d.gd" type="Script" id=22]
 [ext_resource path="res://src/pelota/rope_setup.gd" type="Script" id=23]
 [ext_resource path="res://src/pelota/rope/rope_pin.tscn" type="PackedScene" id=24]
 
-[sub_resource type="Image" id=54]
+[sub_resource type="Image" id=59]
 data = {
 "data": PoolByteArray( 255, 255, 255, 0, 255, 227, 99, 255, 255, 57, 8, 255, 0, 0, 0, 255 ),
 "format": "RGBA8",
@@ -34,21 +34,21 @@ data = {
 "width": 4
 }
 
-[sub_resource type="ImageTexture" id=3]
+[sub_resource type="ImageTexture" id=55]
 flags = 0
 flags = 0
-image = SubResource( 54 )
+image = SubResource( 59 )
 size = Vector2( 4, 1 )
 
-[sub_resource type="ShaderMaterial" id=4]
+[sub_resource type="ShaderMaterial" id=56]
 resource_local_to_scene = true
 shader = ExtResource( 1 )
 shader_param/palette_size = 4
 shader_param/offset = 0
 shader_param/blue_index_offset = 0.0
-shader_param/palette = SubResource( 3 )
+shader_param/palette = SubResource( 55 )
 
-[sub_resource type="Image" id=55]
+[sub_resource type="Image" id=60]
 data = {
 "data": PoolByteArray( 255, 255, 255, 0, 255, 227, 99, 255, 255, 57, 8, 255, 0, 0, 0, 255 ),
 "format": "RGBA8",
@@ -60,7 +60,7 @@ data = {
 [sub_resource type="ImageTexture" id=36]
 flags = 0
 flags = 0
-image = SubResource( 55 )
+image = SubResource( 60 )
 size = Vector2( 4, 1 )
 
 [sub_resource type="ShaderMaterial" id=37]
@@ -71,8 +71,8 @@ shader_param/offset = 0
 shader_param/blue_index_offset = 0.0
 shader_param/palette = SubResource( 36 )
 
-[sub_resource type="RectangleShape2D" id=33]
-extents = Vector2( 4, 5 )
+[sub_resource type="CircleShape2D" id=58]
+radius = 6.5
 
 [sub_resource type="CircleShape2D" id=35]
 radius = 19.105
@@ -369,7 +369,7 @@ radius = 2.0
 
 [node name="claw" type="KinematicBody2D"]
 process_priority = 1
-material = SubResource( 4 )
+material = SubResource( 56 )
 z_index = 5
 z_as_relative = false
 collision_layer = 0
@@ -420,8 +420,8 @@ __meta__ = {
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="grab_area"]
-position = Vector2( 5, 0 )
-shape = SubResource( 33 )
+position = Vector2( 3.5, 0 )
+shape = SubResource( 58 )
 
 [node name="wearer_detect_area" type="Area2D" parent="."]
 collision_layer = 0
@@ -3582,7 +3582,7 @@ rope_path = NodePath("../..")
 
 [node name="chain" type="Node2D" parent="rope_setup/bi_rope"]
 process_priority = 10
-material = SubResource( 4 )
+material = SubResource( 56 )
 z_index = -1
 script = ExtResource( 12 )
 rope_path = NodePath("..")
