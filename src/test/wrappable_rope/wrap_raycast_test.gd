@@ -291,7 +291,7 @@ func _draw() -> void:
 		draw_polyline(draw_triangle,Color.red*0.75)
 		i+=1
 	
-	var zoom = $Camera2D.zoom
+	var zoom = $mouse_zoomable_camera.zoom
 	var rect_size = Vector2(10,10)*zoom
 	var rect_offset = -rect_size*0.5
 	for point in draw_points:

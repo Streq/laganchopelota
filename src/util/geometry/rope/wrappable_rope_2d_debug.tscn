@@ -2,8 +2,8 @@
 
 [ext_resource path="res://assets/font/Ink Stamp.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://src/util/geometry/rope/wrappable_rope_2d.gd" type="Script" id=2]
-[ext_resource path="res://src/test/rope/both_sides_rope/point_loader.gd" type="Script" id=3]
-[ext_resource path="res://src/test/rope/both_sides_rope/state_saver.gd" type="Script" id=4]
+[ext_resource path="res://src/util/geometry/rope/point_loader.gd" type="Script" id=3]
+[ext_resource path="res://src/util/geometry/rope/state_saver.gd" type="Script" id=4]
 [ext_resource path="res://src/util/geometry/rope/wrappable_rope_2d_controller.gd" type="Script" id=5]
 [ext_resource path="res://src/util/geometry/rope/wrappable_rope_2d_renderer.gd" type="Script" id=6]
 

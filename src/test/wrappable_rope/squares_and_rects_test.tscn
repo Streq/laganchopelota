@@ -3,7 +3,7 @@
 [ext_resource path="res://src/test/wrappable_rope/wrap_raycast_test.gd" type="Script" id=1]
 [ext_resource path="res://src/map/segments/segment0.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/test/wrappable_rope/start_from.gd" type="Script" id=3]
-[ext_resource path="res://src/test/wrappable_rope/Camera2D.gd" type="Script" id=4]
+[ext_resource path="res://src/util/camera/mouse_zoomable_camera.gd" type="Script" id=4]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 1 )

@@ -1,10 +1,10 @@
 [gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://src/util/geometry/rope/wrappable_rope_2d_debug.tscn" type="PackedScene" id=1]
-[ext_resource path="res://src/test/wrappable_rope/Camera2D.gd" type="Script" id=5]
+[ext_resource path="res://src/util/camera/mouse_zoomable_camera.gd" type="Script" id=5]
 [ext_resource path="res://assets/shader/palette.gdshader" type="Shader" id=8]
 [ext_resource path="res://src/pelota/pelota.tscn" type="PackedScene" id=9]
-[ext_resource path="res://src/test/rope/both_sides_rope/rope_pin.gd" type="Script" id=10]
+[ext_resource path="res://src/util/geometry/rope/rope_pin.gd" type="Script" id=10]
 [ext_resource path="res://src/test/wrappable_rope/Polygon2D.gd" type="Script" id=11]
 
 [sub_resource type="Image" id=5]
