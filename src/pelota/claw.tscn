@@ -34,19 +34,19 @@ data = {
 "width": 4
 }
 
-[sub_resource type="ImageTexture" id=55]
+[sub_resource type="ImageTexture" id=20]
 flags = 0
 flags = 0
 image = SubResource( 59 )
 size = Vector2( 4, 1 )
 
-[sub_resource type="ShaderMaterial" id=56]
+[sub_resource type="ShaderMaterial" id=21]
 resource_local_to_scene = true
 shader = ExtResource( 1 )
 shader_param/palette_size = 4
 shader_param/offset = 0
 shader_param/blue_index_offset = 0.0
-shader_param/palette = SubResource( 55 )
+shader_param/palette = SubResource( 20 )
 
 [sub_resource type="Image" id=60]
 data = {
@@ -369,7 +369,7 @@ radius = 2.0
 
 [node name="claw" type="KinematicBody2D"]
 process_priority = 1
-material = SubResource( 56 )
+material = SubResource( 21 )
 z_index = 5
 z_as_relative = false
 collision_layer = 0
@@ -3582,7 +3582,7 @@ rope_path = NodePath("../..")
 
 [node name="chain" type="Node2D" parent="rope_setup/bi_rope"]
 process_priority = 10
-material = SubResource( 56 )
+material = SubResource( 21 )
 z_index = -1
 script = ExtResource( 12 )
 rope_path = NodePath("..")

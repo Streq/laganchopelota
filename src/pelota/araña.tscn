@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=2]
+[gd_scene load_steps=40 format=2]
 
 [ext_resource path="res://assets/shader/palette.gdshader" type="Shader" id=1]
 [ext_resource path="res://src/transform/fix_rotation.gd" type="Script" id=2]
@@ -7,7 +7,7 @@
 [ext_resource path="res://assets/texture/pelota.png" type="Texture" id=5]
 [ext_resource path="res://assets/texture/eye_white.png" type="Texture" id=6]
 [ext_resource path="res://src/test/rope/pupil_movement.gd" type="Script" id=7]
-[ext_resource path="res://src/pelota/pelota.gd" type="Script" id=8]
+[ext_resource path="res://src/pelota/araña.gd" type="Script" id=8]
 [ext_resource path="res://assets/texture/eye_pupil.png" type="Texture" id=9]
 [ext_resource path="res://assets/texture/eye_border.png" type="Texture" id=10]
 [ext_resource path="res://src/pelota/input_state.gd" type="Script" id=11]
@@ -15,7 +15,8 @@
 [ext_resource path="res://src/transform/fix_rotation.tscn" type="PackedScene" id=13]
 [ext_resource path="res://src/HUD/energy_bar_segment.tscn" type="PackedScene" id=14]
 [ext_resource path="res://src/HUD/energy_bar.gd" type="Script" id=15]
-[ext_resource path="res://src/pelota/dead_pelota.tscn" type="PackedScene" id=16]
+[ext_resource path="res://src/characters/state/character_state.gd" type="Script" id=16]
+[ext_resource path="res://src/util/state_machine/state_machine.tscn" type="PackedScene" id=17]
 [ext_resource path="res://src/pelota/particle.tscn" type="PackedScene" id=18]
 [ext_resource path="res://src/pelota/pedo.gd" type="Script" id=19]
 [ext_resource path="res://assets/audio/sfx/pedo2.wav" type="AudioStream" id=20]
@@ -28,8 +29,9 @@
 [ext_resource path="res://assets/audio/sfx/bounce.wav" type="AudioStream" id=27]
 [ext_resource path="res://src/pelota/pipe_detect.gd" type="Script" id=28]
 [ext_resource path="res://src/pelota/bar.gd" type="Script" id=29]
+[ext_resource path="res://src/pelota/dead_pelota.tscn" type="PackedScene" id=30]
 
-[sub_resource type="Image" id=41]
+[sub_resource type="Image" id=44]
 data = {
 "data": PoolByteArray( 255, 255, 255, 0, 255, 227, 99, 255, 255, 57, 8, 255, 0, 0, 0, 255 ),
 "format": "RGBA8",
@@ -38,24 +40,24 @@ data = {
 "width": 4
 }
 
-[sub_resource type="ImageTexture" id=20]
+[sub_resource type="ImageTexture" id=42]
 flags = 0
 flags = 0
-image = SubResource( 41 )
+image = SubResource( 44 )
 size = Vector2( 4, 1 )
 
-[sub_resource type="ShaderMaterial" id=21]
+[sub_resource type="ShaderMaterial" id=43]
 resource_local_to_scene = true
 shader = ExtResource( 1 )
 shader_param/palette_size = 4
 shader_param/offset = 0
 shader_param/blue_index_offset = 0.0
-shader_param/palette = SubResource( 20 )
+shader_param/palette = SubResource( 42 )
 
 [sub_resource type="CircleShape2D" id=23]
 radius = 15.0
 
-[sub_resource type="Image" id=42]
+[sub_resource type="Image" id=45]
 data = {
 "data": PoolByteArray( 255, 255, 255, 0, 255, 227, 99, 255, 255, 57, 8, 255, 0, 0, 0, 255 ),
 "format": "RGBA8",
@@ -67,7 +69,7 @@ data = {
 [sub_resource type="ImageTexture" id=40]
 flags = 0
 flags = 0
-image = SubResource( 42 )
+image = SubResource( 45 )
 size = Vector2( 4, 1 )
 
 [sub_resource type="ShaderMaterial" id=37]
@@ -110,19 +112,19 @@ tracks/0/keys = {
 "values": [ Vector2( 1.2, 1.2 ), Vector2( 1, 1 ) ]
 }
 
-[node name="pelota" type="RigidBody2D"]
-material = SubResource( 21 )
+[node name="pelota" type="KinematicBody2D"]
+material = SubResource( 43 )
 position = Vector2( 147, 77 )
 z_index = 10
 collision_layer = 2
-continuous_cd = 2
-contacts_reported = 2
-contact_monitor = true
-can_sleep = false
 script = ExtResource( 8 )
-jump_speed = 150.0
 PARTICLE = ExtResource( 18 )
-DEAD_PELOTA = ExtResource( 16 )
+DEAD_PELOTA = ExtResource( 30 )
+
+[node name="state_machine" parent="." instance=ExtResource( 17 )]
+
+[node name="CharacterState" type="Node" parent="state_machine"]
+script = ExtResource( 16 )
 
 [node name="jump" type="Node2D" parent="."]
 show_behind_parent = true
@@ -138,6 +140,7 @@ script = ExtResource( 29 )
 shape = SubResource( 23 )
 
 [node name="claw" parent="." instance=ExtResource( 3 )]
+material = SubResource( 43 )
 
 [node name="display" type="Node2D" parent="."]
 material = SubResource( 37 )

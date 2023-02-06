@@ -29,6 +29,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/util/controller/button_state.gd"
 }, {
+"base": "KinematicBody2D",
+"class": "Character",
+"language": "GDScript",
+"path": "res://src/characters/character.gd"
+}, {
+"base": "State",
+"class": "CharacterState",
+"language": "GDScript",
+"path": "res://src/characters/state/character_state.gd"
+}, {
 "base": "Reference",
 "class": "ColorUtils",
 "language": "GDScript",
@@ -119,6 +129,8 @@ _global_script_class_icons={
 "AudioCrossfadePlayer": "",
 "Bool": "",
 "ButtonState": "",
+"Character": "",
+"CharacterState": "",
 "ColorUtils": "",
 "GeometryUtils": "",
 "InputUtils": "",
@@ -149,6 +161,7 @@ config/icon="res://assets/texture/icon.png"
 GlobalPalette="*res://src/util/color/GlobalPalette.tscn"
 GlobalInputs="res://src/global/global_inputs.gd"
 Playjam="*res://src/playjam/playjam.tscn"
+Levels="*res://src/global/Levels.tscn"
 
 [display]
 

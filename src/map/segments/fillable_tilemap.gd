@@ -14,5 +14,6 @@ func _ready() -> void:
 			rect_in_global_coords, 
 			0
 		)
+		print(rect_in_global_coords)
 		
 	update_bitmask_region()
