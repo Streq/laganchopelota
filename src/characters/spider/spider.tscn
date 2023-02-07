@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://src/characters/character.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/characters/spider/state/idle.gd" type="Script" id=2]
@@ -7,7 +7,7 @@
 [ext_resource path="res://assets/shader/palette.gdshader" type="Shader" id=5]
 [ext_resource path="res://src/util/color/palette_client.tscn" type="PackedScene" id=6]
 
-[sub_resource type="Image" id=8]
+[sub_resource type="Image" id=12]
 data = {
 "data": PoolByteArray( 255, 255, 255, 0, 252, 252, 252, 255, 60, 188, 252, 255, 0, 112, 236, 255 ),
 "format": "RGBA8",
@@ -19,7 +19,7 @@ data = {
 [sub_resource type="ImageTexture" id=6]
 flags = 0
 flags = 0
-image = SubResource( 8 )
+image = SubResource( 12 )
 size = Vector2( 4, 1 )
 
 [sub_resource type="ShaderMaterial" id=7]
@@ -54,7 +54,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ 3 ]
+"values": [ 4 ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("pivot/Sprite:vframes")
@@ -93,6 +93,132 @@ tracks/4/keys = {
 "values": [ 1.0 ]
 }
 
+[sub_resource type="Animation" id=9]
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("pivot/Sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 3 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("pivot/Sprite:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 4 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("pivot/Sprite:vframes")
+tracks/2/interp = 1
+tracks/2/loop_wrap = false
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 3 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("pivot/Sprite:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = false
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("pivot/Sprite:frame")
+tracks/4/interp = 1
+tracks/4/loop_wrap = false
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 8.0 ]
+}
+
+[sub_resource type="Animation" id=11]
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("pivot/Sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 3 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("pivot/Sprite:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 4 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("pivot/Sprite:vframes")
+tracks/2/interp = 1
+tracks/2/loop_wrap = false
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 3 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("pivot/Sprite:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = false
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("pivot/Sprite:frame")
+tracks/4/interp = 1
+tracks/4/loop_wrap = false
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 9.0 ]
+}
+
 [sub_resource type="Animation" id=1]
 length = 0.2
 tracks/0/type = "value"
@@ -117,7 +243,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ 3 ]
+"values": [ 4 ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("pivot/Sprite:vframes")
@@ -210,7 +336,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ 3 ]
+"values": [ 4 ]
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath("pivot/Sprite:vframes")
@@ -263,13 +389,23 @@ start_state = "idle"
 script = ExtResource( 2 )
 animation = "idle"
 
-[node name="walk" type="Node" parent="state_machine" index="1"]
+[node name="corner" type="Node" parent="state_machine" index="1"]
+script = ExtResource( 2 )
+animation = "corner"
+
+[node name="corner_concave" type="Node" parent="state_machine" index="2"]
+script = ExtResource( 2 )
+animation = "corner_concave"
+
+[node name="walk" type="Node" parent="state_machine" index="3"]
 script = ExtResource( 4 )
 animation = "walk"
 
 [node name="animation_player" parent="." index="1"]
 playback_speed = 32.0
 anims/air = SubResource( 4 )
+anims/corner = SubResource( 9 )
+anims/corner_concave = SubResource( 11 )
 anims/idle = SubResource( 1 )
 anims/walk = SubResource( 2 )
 
@@ -281,7 +417,7 @@ position = Vector2( 0, 2 )
 use_parent_material = true
 position = Vector2( 0, -2 )
 texture = ExtResource( 3 )
-hframes = 3
+hframes = 4
 vframes = 3
 frame = 1
 __meta__ = {
@@ -299,7 +435,7 @@ unique_name_in_owner = true
 position = Vector2( -1, 7 )
 rotation = 1.57079
 enabled = true
-cast_to = Vector2( -1.62125e-05, 7 )
+cast_to = Vector2( 0, 7 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." index="4"]
 position = Vector2( 0, 2 )

@@ -24,6 +24,8 @@ func advance(step_size := 1.0):
 #		root.pivot.rotation = Vector2(root.facing_dir,0)
 		print(collision.normal)
 		root.pivot.rotation = PI/2 + collision.normal.angle()
+		goto("corner_concave")
+		return
 	else:
 		no_more_floor_detect.force_raycast_update()
 		if !no_more_floor_detect.is_colliding():
@@ -31,4 +33,5 @@ func advance(step_size := 1.0):
 			if corner_detect.is_colliding():
 				root.pivot.rotation = PI/2 + corner_detect.get_collision_normal().angle()
 				root.global_position = corner_detect.get_collision_point()-Vector2.DOWN.rotated(root.pivot.rotation)*4
-				
+				goto("corner")
+				return
