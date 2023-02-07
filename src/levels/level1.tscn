@@ -11,7 +11,7 @@
 [ext_resource path="res://assets/texture/some_autotiles.png" type="Texture" id=16]
 [ext_resource path="res://src/map/segments/fillable_tilemap.gd" type="Script" id=17]
 
-[sub_resource type="Image" id=16]
+[sub_resource type="Image" id=62]
 data = {
 "data": PoolByteArray( 240, 188, 60, 255, 0, 0, 0, 255, 4, 35, 0, 255, 14, 84, 0, 255 ),
 "format": "RGBA8",
@@ -20,19 +20,19 @@ data = {
 "width": 4
 }
 
-[sub_resource type="ImageTexture" id=11]
+[sub_resource type="ImageTexture" id=56]
 flags = 0
 flags = 0
-image = SubResource( 16 )
+image = SubResource( 62 )
 size = Vector2( 4, 1 )
 
-[sub_resource type="ShaderMaterial" id=12]
+[sub_resource type="ShaderMaterial" id=3]
 resource_local_to_scene = true
 shader = ExtResource( 14 )
 shader_param/palette_size = 4
 shader_param/offset = 0
 shader_param/blue_index_offset = 0.0
-shader_param/palette = SubResource( 11 )
+shader_param/palette = SubResource( 56 )
 
 [sub_resource type="TileSet" id=9]
 0/name = "some_autotiles.png 0"
@@ -59,7 +59,7 @@ shader_param/palette = SubResource( 11 )
 0/shapes = [  ]
 0/z_index = 0
 
-[sub_resource type="Image" id=17]
+[sub_resource type="Image" id=63]
 data = {
 "data": PoolByteArray( 255, 255, 255, 0, 255, 227, 99, 255, 57, 189, 24, 255, 0, 0, 0, 255 ),
 "format": "RGBA8",
@@ -68,24 +68,24 @@ data = {
 "width": 4
 }
 
-[sub_resource type="ImageTexture" id=14]
+[sub_resource type="ImageTexture" id=60]
 flags = 0
 flags = 0
-image = SubResource( 17 )
+image = SubResource( 63 )
 size = Vector2( 4, 1 )
 
-[sub_resource type="ShaderMaterial" id=15]
+[sub_resource type="ShaderMaterial" id=61]
 resource_local_to_scene = true
 shader = ExtResource( 14 )
 shader_param/palette_size = 4
 shader_param/offset = 0
 shader_param/blue_index_offset = 0.0
-shader_param/palette = SubResource( 14 )
+shader_param/palette = SubResource( 60 )
 
 [node name="level" type="Node2D"]
 
 [node name="terrain" type="TileMap" parent="."]
-material = SubResource( 12 )
+material = SubResource( 3 )
 tile_set = SubResource( 9 )
 cell_size = Vector2( 16, 16 )
 format = 1
@@ -143,7 +143,7 @@ autowrap = true
 uppercase = true
 
 [node name="square" parent="." instance=ExtResource( 3 )]
-material = SubResource( 15 )
+material = SubResource( 61 )
 position = Vector2( 464, 305 )
 
 [node name="follow_player_controller" type="Node2D" parent="square"]

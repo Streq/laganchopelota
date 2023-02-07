@@ -125,20 +125,25 @@ static func query_triangle(
 	var query = Physics2DShapeQueryParameters.new()
 	query.collision_layer = physics_layers
 	query.shape_rid = query_shape.get_rid()
+	
+	
 	return space.intersect_shape(query)
 
 
 static func get_collider_global_points(entry):
 	var collider = entry.collider # The colliding object.
+	print (entry)
 	var collider_id = entry.collider_id # The colliding object's ID.
 	var rid = entry.rid # The intersecting object's RID.
 	var shape = entry.shape # The shape index of the colliding shape.
-	var shape_rid = Physics2DServer.body_get_shape(collider.get_rid(),shape)
+#	entry.collider.query(entry)
+	var shape_rid = Physics2DServer.body_get_shape(rid, shape)
 	var shape_data = Physics2DServer.shape_get_data(shape_rid)
 	
-	var t : Transform2D = collider.global_transform*(Physics2DServer.body_get_shape_transform(collider.get_rid(),shape))
+	var t : Transform2D = collider.global_transform*(Physics2DServer.body_get_shape_transform(rid,shape))
 	var points
 	var shape_type := Physics2DServer.shape_get_type(shape_rid)
+	
 	match shape_type:
 		Physics2DServer.SHAPE_RECTANGLE:
 			points = get_rectangle_points(shape_data)

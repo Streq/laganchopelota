@@ -29,12 +29,19 @@ onready var pivot: Node2D = $"%pivot"
 
 
 var velocity := Vector2()
+var linear_velocity := Vector2() setget set_linear_velocity, get_linear_velocity
+
 var previous_velocity := Vector2()
 var dead = false
 
 func _ready() -> void:
 	state_machine.initialize()
 
+func get_linear_velocity():
+	return velocity
+
+func set_linear_velocity(val:Vector2):
+	velocity = val
 
 func _physics_process(delta: float) -> void:
 	previous_velocity = velocity
@@ -59,3 +66,6 @@ func die():
 	state_machine._change_state("air_dead")
 	emit_signal("dying")
 	emit_signal("dead")
+
+func apply_central_impulse(impulse):
+	velocity+=impulse

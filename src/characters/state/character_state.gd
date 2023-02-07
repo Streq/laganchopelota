@@ -8,6 +8,8 @@ export var on_finish_goto_state := ""
 export var is_dead_state := false
 
 func enter(params):
+	if(name == "concave_corner"):
+		breakpoint
 	root.animation_player.play("RESET")
 	root.animation_player.advance(0.0)
 	root.animation_player.play(animation)

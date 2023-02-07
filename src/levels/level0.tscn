@@ -69,7 +69,7 @@ data = {
 "width": 4
 }
 
-[sub_resource type="ImageTexture" id=42]
+[sub_resource type="ImageTexture" id=45]
 flags = 0
 flags = 0
 image = SubResource( 63 )
@@ -81,7 +81,7 @@ shader = ExtResource( 14 )
 shader_param/palette_size = 4
 shader_param/offset = 0
 shader_param/blue_index_offset = 0.0
-shader_param/palette = SubResource( 42 )
+shader_param/palette = SubResource( 45 )
 
 [sub_resource type="Image" id=64]
 data = {
