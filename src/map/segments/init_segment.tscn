@@ -13,7 +13,7 @@
 [ext_resource path="res://assets/texture/B.png" type="Texture" id=11]
 [ext_resource path="res://src/map/segments/instructions.gd" type="Script" id=12]
 
-[sub_resource type="Image" id=25]
+[sub_resource type="Image" id=71]
 data = {
 "data": PoolByteArray( 255, 227, 99, 255, 116, 128, 44, 255, 0, 77, 73, 255, 21, 0, 31, 255 ),
 "format": "RGBA8",
@@ -25,7 +25,7 @@ data = {
 [sub_resource type="ImageTexture" id=8]
 flags = 0
 flags = 0
-image = SubResource( 25 )
+image = SubResource( 71 )
 size = Vector2( 4, 1 )
 
 [sub_resource type="ShaderMaterial" id=9]
@@ -53,7 +53,7 @@ Label/fonts/font = SubResource( 6 )
 [sub_resource type="CircleShape2D" id=5]
 radius = 14.0
 
-[sub_resource type="Image" id=26]
+[sub_resource type="Image" id=72]
 data = {
 "data": PoolByteArray( 255, 255, 255, 0, 255, 227, 99, 255, 255, 57, 8, 255, 0, 0, 0, 255 ),
 "format": "RGBA8",
@@ -62,25 +62,25 @@ data = {
 "width": 4
 }
 
-[sub_resource type="ImageTexture" id=20]
+[sub_resource type="ImageTexture" id=64]
 flags = 0
 flags = 0
-image = SubResource( 26 )
+image = SubResource( 72 )
 size = Vector2( 4, 1 )
 
-[sub_resource type="ShaderMaterial" id=21]
+[sub_resource type="ShaderMaterial" id=65]
 resource_local_to_scene = true
 shader = ExtResource( 8 )
 shader_param/palette_size = 4
 shader_param/offset = 0
 shader_param/blue_index_offset = 0.0
-shader_param/palette = SubResource( 20 )
+shader_param/palette = SubResource( 64 )
 
 [sub_resource type="AtlasTexture" id=13]
 atlas = ExtResource( 10 )
 region = Rect2( 0, 0, 32, 32 )
 
-[sub_resource type="Image" id=27]
+[sub_resource type="Image" id=73]
 data = {
 "data": PoolByteArray( 255, 255, 255, 0, 255, 227, 99, 255, 57, 189, 24, 255, 0, 0, 0, 255 ),
 "format": "RGBA8",
@@ -89,19 +89,19 @@ data = {
 "width": 4
 }
 
-[sub_resource type="ImageTexture" id=23]
+[sub_resource type="ImageTexture" id=69]
 flags = 0
 flags = 0
-image = SubResource( 27 )
+image = SubResource( 73 )
 size = Vector2( 4, 1 )
 
-[sub_resource type="ShaderMaterial" id=24]
+[sub_resource type="ShaderMaterial" id=70]
 resource_local_to_scene = true
 shader = ExtResource( 8 )
 shader_param/palette_size = 4
 shader_param/offset = 0
 shader_param/blue_index_offset = 0.0
-shader_param/palette = SubResource( 23 )
+shader_param/palette = SubResource( 69 )
 
 [sub_resource type="AtlasTexture" id=17]
 atlas = ExtResource( 11 )
@@ -239,7 +239,7 @@ margin_right = 492.0
 margin_bottom = 32.0
 
 [node name="TextureRect" type="TextureRect" parent="instructions/labels_pivot/playjam_instructions/HBoxContainer"]
-material = SubResource( 21 )
+material = SubResource( 65 )
 margin_right = 32.0
 margin_bottom = 32.0
 texture = SubResource( 13 )
@@ -263,7 +263,7 @@ margin_right = 492.0
 margin_bottom = 68.0
 
 [node name="TextureRect2" type="TextureRect" parent="instructions/labels_pivot/playjam_instructions/HBoxContainer2"]
-material = SubResource( 24 )
+material = SubResource( 70 )
 margin_right = 32.0
 margin_bottom = 32.0
 texture = SubResource( 17 )

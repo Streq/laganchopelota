@@ -22,8 +22,10 @@ func _physics_process(delta: float) -> void:
 		MODE.MOUSE:
 			var dist_to_mouse = get_parent().get_global_mouse_position()-get_parent().global_position
 			get_parent().input_state.dir = dist_to_mouse.limit_length()
+			get_parent().input_state.aim_dir = dist_to_mouse.limit_length()
 		MODE.KEYBOARD,MODE.JOYSTICK:
 			get_parent().input_state.dir = Input.get_vector("ui_left","ui_right","ui_up","ui_down")
+			get_parent().input_state.aim_dir = Input.get_vector("ui_left","ui_right","ui_up","ui_down")
 	
 func is_game_event(event:InputEvent)->bool:
 	for action in ["ui_left","ui_right","ui_down","ui_up","A","B"]:

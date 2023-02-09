@@ -148,7 +148,6 @@ static func get_collider_global_points(entry):
 		var tilemap : TileMap = collider
 		var cell: Vector2 = entry.metadata
 		var quadrant = (cell / tilemap.cell_quadrant_size).floor()
-		print(quadrant)
 		t = t.translated(quadrant*tilemap.cell_quadrant_size*tilemap.cell_size)
 	
 	

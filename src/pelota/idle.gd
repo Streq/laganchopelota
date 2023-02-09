@@ -24,7 +24,7 @@ func _physics_update(delta: float):
 	var wearer = root.wearer
 #	if !is_instance_valid(wearer):
 #		return
-	var input_dir = root.wearer.input_state.dir
+	var input_dir = root.wearer.input_state.aim_dir
 	if input_dir:
 		dir = spin_toward_dir(dir,input_dir,delta)
 	root.global_position = wearer.global_position+dir*root.distance_from_wearer
