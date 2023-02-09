@@ -140,7 +140,21 @@ static func get_collider_global_points(entry):
 	var shape_rid = Physics2DServer.body_get_shape(rid, shape)
 	var shape_data = Physics2DServer.shape_get_data(shape_rid)
 	
-	var t : Transform2D = collider.global_transform*(Physics2DServer.body_get_shape_transform(rid,shape))
+	print(typeof(collider))
+		
+	var t := Transform2D.IDENTITY
+	
+	if collider is TileMap:
+		var tilemap : TileMap = collider
+		var cell: Vector2 = entry.metadata
+		var quadrant = (cell / tilemap.cell_quadrant_size).floor()
+		print(quadrant)
+		t = t.translated(quadrant*tilemap.cell_quadrant_size*tilemap.cell_size)
+	
+	
+	t = collider.global_transform*t*(Physics2DServer.body_get_shape_transform(rid,shape))
+	
+	
 	var points
 	var shape_type := Physics2DServer.shape_get_type(shape_rid)
 	
