@@ -14,6 +14,8 @@ export var retrieve_acceleration := 1000.0
 export var throw_decceleration := 1000.0
 export var pull_force := 1000.0
 
+export var distance_from_wearer := 16.0
+
 var velocity := Vector2()
 
 onready var wearer_detect_area: Area2D = $wearer_detect_area

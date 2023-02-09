@@ -150,6 +150,7 @@ static func get_collider_global_points(entry):
 		Physics2DServer.SHAPE_CONCAVE_POLYGON, Physics2DServer.SHAPE_CONVEX_POLYGON:
 			points = shape_data
 	var xformed_shape_data = t.xform(points)
+	print(xformed_shape_data)
 	return xformed_shape_data
 
 static func is_swing_from_side_to_side(Q:Vector2,O:Vector2,A:Vector2,B:Vector2):

@@ -9,12 +9,10 @@ func _physics_update(delta):
 	if root.is_on_wall():
 		root.velocity *= 1.0-delta*5.0
 		
-		root.pivot.rotation = Vector2.DOWN.angle_to(-root.get_slide_collision(0).normal)
-		goto("idle")
-		return
 	root.velocity += root.gravity*delta
 	
-	if root.input_state.B.is_pressed():
-		goto("air_closed")
+	if !root.input_state.B.is_pressed():
+		goto("air")
 		return
+	
 	

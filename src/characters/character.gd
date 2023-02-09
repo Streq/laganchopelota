@@ -47,7 +47,7 @@ func _physics_process(delta: float) -> void:
 	previous_velocity = velocity
 	
 	emit_signal("pre_move")
-	velocity = move_and_slide(velocity, Vector2.UP)
+	velocity = move_and_slide(velocity)
 	emit_signal("post_move")
 	
 	velocity += gravity*delta
@@ -55,6 +55,7 @@ func _physics_process(delta: float) -> void:
 	
 	state_machine.physics_update(delta)
 	animation_player.advance(delta)
+	
 	
 	if dead:
 		die()

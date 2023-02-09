@@ -2,6 +2,7 @@ extends CharacterState
 signal advance
 onready var no_more_floor_detect: RayCast2D = $"%no_more_floor_detect"
 onready var corner_detect: RayCast2D = $"%corner_detect"
+onready var stick_to_wall: Node = $"%stick_to_wall"
 
 var queued_goto = null
 var queued_params = null
@@ -9,7 +10,7 @@ var queued_params = null
 func _enter(params):
 	turning = false
 	queue_goto(null,null)
-	pass
+	stick_to_wall.enabled = true
 	
 
 func _physics_update(delta):
@@ -19,18 +20,31 @@ func _physics_update(delta):
 			return
 		goto(queued_goto)
 		return
-			
+	
 	if turning:
 		return
-	root.velocity.x = 0
+	
+	if root.input_state.B.is_just_pressed():
+		root.velocity = Vector2(root.facing_dir,-1).rotated(root.pivot.rotation)*100.0
+		goto("air")
+		return
+	
+	
+	if !root.is_on_wall():
+		goto("air")
+		return
+	
+	root.velocity = Vector2.DOWN.rotated(root.pivot.rotation)
 	var input_dir : Vector2 = root.input_state.dir
 	
 	
 	var rotated_input_dir = input_dir.rotated(-root.pivot.rotation)
+	
+	
 	if is_equal_approx(rotated_input_dir.x,0.0):
 		goto("idle")
 		return
-	print(rotated_input_dir)
+#	print(rotated_input_dir)
 	
 	root.facing_dir = rotated_input_dir.x
 	pass
@@ -40,17 +54,17 @@ func advance(step_size := 1.0):
 	emit_signal("advance")
 	if root.state_machine.current != self:
 		return
-	print("advancing")
+#	print("advancing")
 	var r :KinematicBody2D = root
 	var collision = r.move_and_collide(Vector2(root.facing_dir*step_size, 0.0).rotated(root.pivot.rotation))
 	if collision:
-		print(collision)
+#		print(collision)
 #		root.pivot.rotation = Vector2(root.facing_dir,0)
-		print(collision.normal)
+#		print(collision.normal)
 		turning = true
 #		yield(self,"advance")
 		queue_goto("corner_concave",[collision])
-		print("corner_concave")
+#		print("corner_concave")
 		return
 	else:
 		no_more_floor_detect.force_raycast_update()

@@ -27,7 +27,7 @@ func _physics_update(delta: float):
 	var input_dir = root.wearer.input_state.dir
 	if input_dir:
 		dir = spin_toward_dir(dir,input_dir,delta)
-	root.global_position = wearer.global_position+dir*16.0
+	root.global_position = wearer.global_position+dir*root.distance_from_wearer
 	root.global_rotation = dir.angle()
 	
 	if owner.wearer.input_state.A.is_just_pressed():
