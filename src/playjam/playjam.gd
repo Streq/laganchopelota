@@ -29,10 +29,11 @@ func lose():
 		restart()
 
 func quit():
-	if is_playjam():
+#	if is_playjam():
+	if OS.has_feature("pc"):
 		get_tree().quit(QUIT)
-	else:
-		OS.window_fullscreen = false
+#	else:
+#	OS.window_fullscreen = false
 
 func restart():
 	restart_display.show()

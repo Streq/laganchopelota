@@ -24,7 +24,10 @@ func lose():
 	music.stop()
 	yield(game_over,"finished")
 	Playjam.lose()
-	
+
+func _ready() -> void:
+	if OS.has_feature("pc"):
+		OS.window_fullscreen = true
 
 
 func _on_player_lose_zone_area_entered(area: Area2D) -> void:
